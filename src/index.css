@@ -1,0 +1,38 @@
+:root {
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --input-bg: rgba(15, 23, 42, 0.6);
+  --input-border: rgba(148, 163, 184, 0.2);
+  --input-focus: #3b82f6;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-color);
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.3) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0.2) 0, transparent 50%);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+}
