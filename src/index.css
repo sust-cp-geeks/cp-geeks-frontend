@@ -26,9 +26,6 @@ body {
     radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0.2) 0, transparent 50%);
   color: var(--text-color);
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
