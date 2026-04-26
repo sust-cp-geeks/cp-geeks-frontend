@@ -101,6 +101,9 @@ function Profile() {
           <div className="profile-header">
             <h1>My Profile</h1>
             <p>Manage your account settings and competitive programming handles</p>
+            <p style={{ fontSize: '0.85em', color: '#ff9800', marginTop: '0.5rem', fontStyle: 'italic' }}>
+              * Note: You can only add 1 Codeforces and Vjudge account for now.
+            </p>
           </div>
 
           <div className="profile-info-section">
