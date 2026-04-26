@@ -13,22 +13,70 @@ function Auth() {
 
   const navigate = useNavigate();
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login attempt with:', { email, password, role });
-    alert(`Logged in as ${email} with role ${role}`);
-    localStorage.setItem('role', role);
-    if (role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/news');
+    
+    try {
+      // 1. Send network request to the backend
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Only sending email and password as per the backend spec
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json().catch(() => ({}));
+        
+        // Save the authentication token (if backend uses JWT)
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
+        localStorage.setItem('role', role);
+        
+        // Redirect the user
+        if (role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/news');
+        }
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        alert(`Login failed: ${errorData.message || 'Invalid credentials'}`);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      alert("Could not connect to the server.");
     }
   };
 
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signup attempt with:', { name, regNumber, email, password });
-    alert(`Registered ${name} (${regNumber}) with email ${email}`);
+    
+    try {
+      // Send register request to the backend
+      const response = await fetch('http://localhost:8080/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Mapping regNumber to reg_number as expected by Rust backend
+        body: JSON.stringify({ reg_number: regNumber, name, email, password }),
+      });
+
+      if (response.ok) {
+        alert('Registration successful! Please log in.');
+        toggleMode(); // Switch to login view
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        alert(`Registration failed: ${errorData.message || 'Something went wrong'}`);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      alert("Could not connect to the server.");
+    }
   };
 
   const toggleMode = () => {

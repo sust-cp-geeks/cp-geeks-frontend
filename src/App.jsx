@@ -6,6 +6,7 @@ import News from './pages/News';
 import Contest from './pages/Contest';
 import Discussion from './pages/Discussion';
 import Admin from './pages/Admin';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/contest" element={<Contest />} />
             <Route path="/discussion" element={<Discussion />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
       </div>
