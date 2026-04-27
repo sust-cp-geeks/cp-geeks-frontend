@@ -6,7 +6,6 @@ import News from './pages/News';
 import Announcements from './pages/Announcements';
 import Contest from './pages/Contest';
 import Discussion from './pages/Discussion';
-import Admin from './pages/Admin';
 import Profile from './pages/Profile';
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
             <Route path="/announcements" element={<Announcements />} />
             <Route path="/contest" element={<Contest />} />
             <Route path="/discussion" element={<Discussion />} />
-            <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>

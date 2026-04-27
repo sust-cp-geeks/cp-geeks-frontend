@@ -39,11 +39,7 @@ function Auth() {
         localStorage.setItem('role', userRole);
         
         // Redirect the user
-        if (userRole === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/news');
-        }
+        navigate('/news');
       } else {
         const errorData = await response.json().catch(() => ({}));
         alert(`Login failed: ${errorData.message || 'Invalid credentials'}`);
