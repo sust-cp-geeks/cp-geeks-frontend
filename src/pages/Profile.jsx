@@ -118,7 +118,9 @@ function Profile() {
               </div>
               <div className="info-group">
                 <span className="info-label">Current Role</span>
-                <span className="info-value role-badge">{localStorage.getItem('role') || 'Student'}</span>
+                <span className="info-value role-badge">
+                  {profile?.is_admin ? 'Admin' : 'Student'}
+                </span>
               </div>
             </div>
 

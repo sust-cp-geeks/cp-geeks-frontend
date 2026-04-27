@@ -125,14 +125,7 @@ function Auth() {
               />
             </div>
             
-            <div className="form-group">
-              <label htmlFor="login-role">Role</label>
-              <select id="login-role" className="form-input" value={role} onChange={(e) => setRole(e.target.value)}>
-                <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
-                <option value="student">Student</option>
-              </select>
-            </div>
+
             
             <button type="submit" className="submit-btn" style={{marginTop: '1.5rem'}}>
               Sign In
@@ -192,14 +185,7 @@ function Auth() {
               />
             </div>
             
-            <div className="form-group">
-              <label htmlFor="signup-role">Role</label>
-              <select id="signup-role" className="form-input" value={role} onChange={(e) => setRole(e.target.value)}>
-                <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
-                <option value="student">Student</option>
-              </select>
-            </div>
+
             
             <button type="submit" className="submit-btn" style={{marginTop: '1.5rem'}}>
               Sign Up
