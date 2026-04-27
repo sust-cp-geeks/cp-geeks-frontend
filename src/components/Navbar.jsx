@@ -32,6 +32,9 @@ const Navbar = () => {
           <li className={location.pathname === '/news' ? 'active' : ''}>
             <Link to="/news">News</Link>
           </li>
+          <li className={location.pathname === '/announcements' ? 'active' : ''}>
+            <Link to="/announcements">Announcements</Link>
+          </li>
           <li className={location.pathname === '/contest' ? 'active' : ''}>
             <Link to="/contest">Contest</Link>
           </li>
@@ -47,8 +50,6 @@ const Navbar = () => {
         </ul>
 
         <div className="navbar-auth">
-          {role === 'admin' && <Link to="/admin" className="create-post-btn">Create Post</Link>}
-          
           {token ? (
             <>
               <Link to="/profile" className="auth-btn" style={{ marginRight: '10px' }}>Profile</Link>

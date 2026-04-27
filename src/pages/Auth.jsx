@@ -34,10 +34,12 @@ function Auth() {
         if (data.token) {
           localStorage.setItem('token', data.token);
         }
-        localStorage.setItem('role', role);
+        
+        const userRole = data.user?.is_admin ? 'admin' : 'student';
+        localStorage.setItem('role', userRole);
         
         // Redirect the user
-        if (role === 'admin') {
+        if (userRole === 'admin') {
           navigate('/admin');
         } else {
           navigate('/news');

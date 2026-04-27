@@ -18,14 +18,6 @@ const SQUAD = [
   { name: 'Tanvir Islam',   handle: '@tanvir_cf',  role: 'Reserve',         initials: 'TI', bg: '#FAECE7', fg: '#4A1B0C' },
 ];
 
-const ANNOUNCEMENTS = [
-  { date: 'Apr 22, 2026', cat: 'Contest', headline: 'Registration for ICPC Dhaka Regional 2026 is now open',         author: 'Committee' },
-  { date: 'Apr 18, 2026', cat: 'Update',  headline: 'New problem set added to the training archive — 50 DP problems', author: 'Admin'     },
-  { date: 'Apr 15, 2026', cat: 'Alert',   headline: 'Deadline to submit team nominations is May 3 — dont miss it',   author: 'Committee' },
-  { date: 'Apr 10, 2026', cat: 'System',  headline: 'Judging queue migrated to faster infra — submission times improved', author: 'DevOps' },
-  { date: 'Apr 01, 2026', cat: 'Update',  headline: 'Welcome to CPGeeks v2 — leaderboards and stats are live',        author: 'Admin'     },
-];
-
 const CAT_STYLES = {
   Contest: { background: '#FAEEDA', color: '#854F0B', border: '0.5px solid #FAC775' },
   System:  { background: '#E6F1FB', color: '#185FA5', border: '0.5px solid #B5D4F4' },
@@ -60,6 +52,23 @@ const SectionLabel = ({ text }) => (
 
 export default function News() {
   const countdown = useCountdown(CONTEST.targetISO);
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/announcements')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setAnnouncements(data.data.map(item => ({
+            cat: item.category || 'Update',
+            headline: item.title,
+            date: new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            author: 'Admin'
+          })));
+        }
+      })
+      .catch(err => console.error("Failed to fetch announcements:", err));
+  }, []);
 
   return (
     <div style={{ fontFamily: "'Syne', sans-serif", padding: '2rem', maxWidth: 1000, margin: '0 auto' }}>
@@ -105,15 +114,19 @@ export default function News() {
       {/* ── Announcements ── */}
       <SectionLabel text="announcements" />
       <div>
-        {ANNOUNCEMENTS.map((a, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '12px 0', borderBottom: i < ANNOUNCEMENTS.length - 1 ? '0.5px solid var(--color-border-tertiary, #ddd)' : 'none' }}>
-            <span style={{ ...mono, fontSize: 12, padding: '3px 10px', borderRadius: 99, flexShrink: 0, marginTop: 3, ...CAT_STYLES[a.cat] }}>{a.cat}</span>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 4 }}>{a.headline}</div>
-              <div style={{ ...mono, fontSize: 12, color: 'var(--color-text-secondary, #888)' }}>{a.date} · {a.author}</div>
+        {announcements.length > 0 ? (
+          announcements.map((a, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '12px 0', borderBottom: i < announcements.length - 1 ? '0.5px solid var(--color-border-tertiary, #ddd)' : 'none' }}>
+              <span style={{ ...mono, fontSize: 12, padding: '3px 10px', borderRadius: 99, flexShrink: 0, marginTop: 3, ...(CAT_STYLES[a.cat] || CAT_STYLES['Update']) }}>{a.cat}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 4 }}>{a.headline}</div>
+                <div style={{ ...mono, fontSize: 12, color: 'var(--color-text-secondary, #888)' }}>{a.date} · {a.author}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div style={{ ...mono, fontSize: 14, color: 'var(--color-text-secondary, #888)' }}>No announcements yet.</div>
+        )}
       </div>
     </div>
   );
