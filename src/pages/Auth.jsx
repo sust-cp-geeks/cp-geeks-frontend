@@ -35,7 +35,7 @@ function Auth() {
           localStorage.setItem('token', data.token);
         }
         
-        const userRole = data.user?.is_admin ? 'admin' : 'student';
+        const userRole = data.user?.is_admin ? 'admin' : (data.user?.is_manager ? 'manager' : 'student');
         localStorage.setItem('role', userRole);
         
         // Redirect the user
