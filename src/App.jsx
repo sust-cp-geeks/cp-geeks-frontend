@@ -7,6 +7,7 @@ import Announcements from './pages/Announcements';
 import Contest from './pages/Contest';
 import Discussion from './pages/Discussion';
 import Profile from './pages/Profile';
+import Events from './pages/Events';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
             <Route path="/contest" element={<Contest />} />
             <Route path="/discussion" element={<Discussion />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/events" element={<Events />} />
           </Routes>
         </main>
       </div>
