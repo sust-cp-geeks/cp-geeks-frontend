@@ -9,6 +9,7 @@ function Auth() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [regNumber, setRegNumber] = useState('');
+  const [codeforcesHandle, setCodeforcesHandle] = useState('');
   const [role, setRole] = useState('student');
 
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function Auth() {
         navigate('/news');
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Login failed: ${errorData.message || 'Invalid credentials'}`);
+        alert(`Login failed: ${errorData.error || errorData.message || 'Invalid credentials'}`);
       }
     } catch (err) {
       console.error("Network error:", err);
@@ -61,7 +62,7 @@ function Auth() {
           'Content-Type': 'application/json',
         },
         // Mapping regNumber to reg_number as expected by Rust backend
-        body: JSON.stringify({ reg_number: regNumber, name, email, password }),
+        body: JSON.stringify({ reg_number: regNumber, name, email, password, codeforces_handle: codeforcesHandle }),
       });
 
       if (response.ok) {
@@ -69,7 +70,7 @@ function Auth() {
         toggleMode(); // Switch to login view
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Registration failed: ${errorData.message || 'Something went wrong'}`);
+        alert(`Registration failed: ${errorData.error || errorData.message || 'Something went wrong'}`);
       }
     } catch (err) {
       console.error("Network error:", err);
@@ -84,6 +85,7 @@ function Auth() {
     setPassword('');
     setName('');
     setRegNumber('');
+    setCodeforcesHandle('');
   };
 
   return (
@@ -183,7 +185,17 @@ function Auth() {
               />
             </div>
             
-
+            <div className="form-group">
+              <label htmlFor="signup-cf">Codeforces Handle (Optional)</label>
+              <input 
+                type="text" 
+                id="signup-cf"
+                className="form-input"
+                value={codeforcesHandle}
+                onChange={(e) => setCodeforcesHandle(e.target.value)}
+                placeholder="tourist"
+              />
+            </div>
             
             <button type="submit" className="submit-btn" style={{marginTop: '1.5rem'}}>
               Sign Up

@@ -23,7 +23,8 @@ const Codeforces = () => {
         const result = await response.json();
         setLeaderboard(result.data || []);
       } else {
-        setError('Failed to fetch leaderboard');
+        const errorData = await response.json().catch(() => ({}));
+        setError(errorData.error || errorData.message || 'Failed to fetch leaderboard');
       }
     } catch (err) {
       setError('Could not connect to the server');
@@ -124,7 +125,7 @@ const Codeforces = () => {
                     <tr key={user.user_id}>
                       <td>#{user.rank}</td>
                       <td>{user.name}</td>
-                      <td style={{ color: getRankColor(user.current_rating ? 'expert' : 'unrated') }}>
+                      <td style={{ color: getRankColor(user.current_rank || 'unrated') }}>
                         {user.codeforces_handle}
                       </td>
                       <td>{user.current_rating || 'Unrated'}</td>
