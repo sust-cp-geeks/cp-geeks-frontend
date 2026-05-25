@@ -1,16 +1,42 @@
-# React + Vite
+# SUST CPGeeks Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend application for the SUST CPGeeks platform, built with React and Vite.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js (v18 or higher recommended)
+- npm (Node Package Manager)
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Follow these steps to run the frontend application on your local machine:
 
-## Expanding the ESLint configuration
+1. **Install Dependencies**
+   Navigate to the project directory and install the required dependencies:
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Start the Development Server**
+   Run the following command to start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+
+3. **View in Browser**
+   Once the server is running, open your browser and navigate to the URL shown in your terminal (typically [http://localhost:5173/](http://localhost:5173/)).
+
+## Available Scripts
+
+In the project directory, you can run the following commands:
+
+- `npm run dev`: Starts the development server with Hot Module Replacement (HMR).
+- `npm run build`: Builds the application for production to the `dist` folder.
+- `npm run preview`: Boot up a local static web server that serves the files from `dist` to preview the production build locally.
+- `npm run lint`: Runs ESLint to check for code quality and syntax issues.
+
+## Technology Stack
+
+- **React** (v19)
+- **Vite** (Build Tool)
+- **React Router DOM** (Routing)
