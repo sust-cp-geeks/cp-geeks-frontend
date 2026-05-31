@@ -25,7 +25,10 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <Link to="/">SUST CPGEEKS</Link>
+          <Link to="/">
+            <img src="/logo.png" alt="Logo" className="navbar-logo-img" />
+            <span>SUST CPGEEKS</span>
+          </Link>
         </div>
         
         <ul className="navbar-links">
@@ -58,11 +61,10 @@ const Navbar = () => {
         <div className="navbar-auth">
           {token ? (
             <>
-              <Link to="/profile" className="auth-btn" style={{ marginRight: '10px' }}>Profile</Link>
+              <Link to="/profile" className="auth-btn">Profile</Link>
               <button 
                 onClick={handleLogout} 
-                className="auth-btn" 
-                style={{ backgroundColor: 'transparent', border: '1px solid white', cursor: 'pointer' }}
+                className="auth-btn btn-outline"
               >
                 Logout
               </button>

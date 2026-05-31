@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Auth.css';
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   
   // Form states
   const [email, setEmail] = useState('');
@@ -90,6 +92,11 @@ function Auth() {
 
   return (
     <div className="auth-page-wrapper">
+      <div className="auth-background-effects">
+        <div className="glow-orb orb-1"></div>
+        <div className="glow-orb orb-2"></div>
+        <div className="glow-orb orb-3"></div>
+      </div>
       <div className="login-container">
         <div className="login-card">
         <div className="login-header">
@@ -112,17 +119,26 @@ function Auth() {
               />
             </div>
             
-            <div className="form-group">
+            <div className="form-group password-group">
               <label htmlFor="login-password">Password</label>
-              <input 
-                type="password" 
-                id="login-password"
-                className="form-input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required 
-              />
+              <div className="password-input-wrapper">
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  id="login-password"
+                  className="form-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required 
+                />
+                <button 
+                  type="button" 
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
             </div>
             
 
@@ -172,17 +188,26 @@ function Auth() {
               />
             </div>
             
-            <div className="form-group">
+            <div className="form-group password-group">
               <label htmlFor="signup-password">Password</label>
-              <input 
-                type="password" 
-                id="signup-password"
-                className="form-input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required 
-              />
+              <div className="password-input-wrapper">
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  id="signup-password"
+                  className="form-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required 
+                />
+                <button 
+                  type="button" 
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
             </div>
             
             <div className="form-group">

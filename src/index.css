@@ -1,6 +1,6 @@
 :root {
   --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --bg-color: #0f172a;
+  --bg-color: #182F5C;
   --text-color: #f8fafc;
   --card-bg: rgba(30, 41, 59, 0.7);
   --card-border: rgba(255, 255, 255, 0.1);
@@ -20,10 +20,6 @@
 body {
   font-family: var(--font-family);
   background: var(--bg-color);
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.3) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0.2) 0, transparent 50%);
   color: var(--text-color);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;

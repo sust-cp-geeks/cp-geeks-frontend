@@ -11,11 +11,12 @@ import Codeforces from './pages/Codeforces';
 import Profile from './pages/Profile';
 import Events from './pages/Events';
 import Problems from './pages/Problems';
+import VjudgeRanker from './pages/VjudgeRanker';
 
 const pageVariants = {
   initial: (direction) => ({
     opacity: 0,
-    x: direction > 0 ? 30 : -30,
+    x: direction > 0 ? 50 : -50,
   }),
   animate: {
     opacity: 1,
@@ -24,7 +25,7 @@ const pageVariants = {
   },
   exit: (direction) => ({
     opacity: 0,
-    x: direction > 0 ? -30 : 30,
+    x: direction > 0 ? -50 : 50,
     transition: { duration: 0.3, ease: 'easeInOut' }
   })
 };
@@ -49,8 +50,9 @@ const routeOrder = {
   '/problems': 5,
   '/codeforces': 6,
   '/events': 7,
-  '/profile': 8,
-  '/auth': 9,
+  '/vjudge-ranker': 8,
+  '/profile': 9,
+  '/auth': 10,
 };
 
 function AppContent() {
@@ -88,6 +90,7 @@ function AppContent() {
             <Route path="/profile" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
             <Route path="/profile/:id" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
             <Route path="/events" element={<AnimatedPage direction={direction}><Events /></AnimatedPage>} />
+            <Route path="/vjudge-ranker" element={<AnimatedPage direction={direction}><VjudgeRanker /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
       </main>

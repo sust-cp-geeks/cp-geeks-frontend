@@ -3,6 +3,50 @@
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 80px);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-background-effects {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: floatOrb 10s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+  width: 400px; height: 400px;
+  background: rgba(165, 232, 222, 0.4);
+  top: -100px; left: -100px;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 500px; height: 500px;
+  background: rgba(96, 165, 250, 0.3);
+  bottom: -200px; right: -100px;
+  animation-delay: -3s;
+}
+
+.orb-3 {
+  width: 300px; height: 300px;
+  background: rgba(165, 232, 222, 0.2);
+  top: 40%; left: 60%;
+  animation-delay: -6s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 50px) scale(1.1); }
 }
 
 .login-container {
@@ -11,25 +55,38 @@
   align-items: center;
   padding: 2rem;
   width: 100%;
+  z-index: 1;
 }
 
 .login-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
+  background: rgba(8, 15, 30, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1.5rem;
   padding: 3rem 2.5rem;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  animation: slideUp 0.5s ease-out forwards;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(165, 232, 222, 0.05);
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  position: relative;
+}
+
+.login-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, #A5E8DE, #60a5fa, #A5E8DE);
+  z-index: -1;
+  opacity: 0.15;
+  filter: blur(12px);
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -44,16 +101,20 @@
 
 .login-header h1 {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  background: linear-gradient(135deg, #A5E8DE, #60a5fa);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+  transition: text-shadow 0.3s ease;
 }
 
 .login-header p {
-  color: #94a3b8;
+  color: #e2e8f0;
   font-size: 0.95rem;
+  transition: text-shadow 0.3s ease;
 }
 
 .form-group {
@@ -64,50 +125,78 @@
 .form-group label {
   display: block;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #cbd5e1;
+  color: #ffffff;
+  transition: text-shadow 0.3s ease;
 }
 
 .form-input {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: var(--input-bg);
-  border: 1px solid var(--input-border);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 0.75rem;
-  color: var(--text-color);
+  color: #ffffff;
   font-size: 1rem;
   transition: all 0.2s ease;
   outline: none;
 }
 
 .form-input::placeholder {
-  color: #64748b;
+  color: #94a3b8;
+}
+
+.form-input:hover {
+  border-color: rgba(165, 232, 222, 0.6);
+  box-shadow: 0 0 12px rgba(165, 232, 222, 0.15);
+  background: rgba(15, 23, 42, 0.95);
+  transform: translateY(-1px);
 }
 
 .form-input:focus {
-  border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: #A5E8DE;
+  box-shadow: 0 0 0 3px rgba(165, 232, 222, 0.2), 0 0 15px rgba(165, 232, 222, 0.4);
+  background: rgba(15, 23, 42, 1);
+  transform: translateY(-1px);
 }
 
 .submit-btn {
   width: 100%;
   padding: 0.875rem;
-  background: var(--primary-color);
+  background: linear-gradient(135deg, #3b82f6, #A5E8DE);
   color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   border: none;
   border-radius: 0.75rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(165, 232, 222, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+
+.submit-btn:hover::after {
+  left: 150%;
 }
 
 .submit-btn:hover {
-  background: var(--primary-hover);
+  background: linear-gradient(135deg, #2563eb, #83d1c5);
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 10px 20px -3px rgba(165, 232, 222, 0.5);
 }
 
 .submit-btn:active {
@@ -118,17 +207,57 @@
   margin-top: 2rem;
   text-align: center;
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: #e2e8f0;
 }
 
 .login-footer a {
-  color: var(--primary-color);
+  color: #A5E8DE;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
+  font-weight: 600;
+  transition: all 0.2s;
 }
 
 .login-footer a:hover {
-  color: #60a5fa;
+  color: #ffffff;
   text-decoration: underline;
+  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+}
+
+/* Hover effects for texts inside card */
+.login-card:hover .login-header h1 {
+  text-shadow: 0 0 15px rgba(165, 232, 222, 0.6);
+}
+
+.login-card:hover .login-header p,
+.login-card:hover .form-group label {
+  text-shadow: 0 0 8px rgba(165, 232, 222, 0.5);
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper .form-input {
+  padding-right: 4rem;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s;
+  outline: none;
+}
+
+.password-toggle-btn:hover,
+.password-toggle-btn:focus {
+  color: #A5E8DE;
 }
