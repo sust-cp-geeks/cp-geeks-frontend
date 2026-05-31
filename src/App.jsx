@@ -8,6 +8,7 @@ import Contest from './pages/Contest';
 import Discussion from './pages/Discussion';
 import Profile from './pages/Profile';
 import Events from './pages/Events';
+import VjudgeRanker from './pages/VjudgeRanker';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/vjudge-ranker" element={<VjudgeRanker />} />
           </Routes>
         </main>
       </div>

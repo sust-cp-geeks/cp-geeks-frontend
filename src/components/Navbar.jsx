@@ -47,6 +47,9 @@ const Navbar = () => {
           <li className={location.pathname === '/events' ? 'active' : ''}>
             <Link to="/events">Events</Link>
           </li>
+          <li className={location.pathname === '/vjudge-ranker' ? 'active' : ''}>
+            <Link to="/vjudge-ranker">VjudgeRanker</Link>
+          </li>
         </ul>
 
         <div className="navbar-auth">
