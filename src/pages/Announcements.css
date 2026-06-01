@@ -1,3 +1,8 @@
+/* 
+green : #15805d
+light blue : #60a5fa
+*/
+
 .announcements-page {
   font-family: 'Syne', sans-serif;
   padding: 2rem;
@@ -16,12 +21,12 @@
   font-size: 36px;
   font-weight: 800;
   margin: 0;
-  color: var(--color-text-primary, #333);
+  color: #60a5fa;
 }
 
 .create-btn {
   background-color: #1D9E75;
-  color: white;
+  color: black;
   border: none;
   padding: 10px 20px;
   font-size: 14px;
@@ -37,12 +42,14 @@
 }
 
 .create-form-modal {
-  background: var(--color-background-secondary, #f9f9f9);
-  border: 1px solid var(--color-border-secondary, #ddd);
+  background: var(--card-bg, rgba(30, 41, 59, 0.7));
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #f8fafc;
 }
 
 .create-form-modal h3 {
@@ -50,6 +57,7 @@
   margin-bottom: 1rem;
   font-size: 20px;
   font-weight: 700;
+  color: #60a5fa;
 }
 
 .form-group {
@@ -61,34 +69,32 @@
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: #3C3489; /* Same blue as save changes */
+  color: #60a5fa;
 }
 
-.form-input, .form-textarea {
+.form-input,
+.form-textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
   border-radius: 8px;
   font-family: inherit;
   font-size: 14px;
-  background-color: #fff;
-  color: #3C3489;
+  background-color: var(--input-bg, rgba(15, 23, 42, 0.6));
+  color: #f8fafc;
+  color-scheme: dark;
   box-sizing: border-box;
   font-variant-numeric: lining-nums;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Ensure the placeholder / default text in the date input is also colored properly */
-.form-input[type="date"]::-webkit-datetime-edit,
-.form-input[type="date"]::-webkit-datetime-edit-text,
-.form-input[type="date"]::-webkit-datetime-edit-fields-wrapper,
-.form-input[type="date"]::-webkit-calendar-picker-indicator,
-.form-input[type="time"]::-webkit-datetime-edit,
-.form-input[type="time"]::-webkit-datetime-edit-text,
-.form-input[type="time"]::-webkit-datetime-edit-fields-wrapper,
-.form-input[type="time"]::-webkit-calendar-picker-indicator {
-  color: #3C3489;
-  filter: none;
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
+
 
 .form-textarea {
   resize: vertical;
@@ -103,8 +109,8 @@
 
 .cancel-btn {
   background-color: transparent;
-  color: #666;
-  border: 1px solid #ccc;
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 600;
@@ -114,12 +120,12 @@
 }
 
 .cancel-btn:hover {
-  background-color: #eee;
-  color: #333;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .save-btn {
-  background-color: #3C3489;
+  background-color: #60a5fa;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -127,11 +133,12 @@
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s;
 }
 
 .save-btn:hover {
-  background-color: #2a2461;
+  background-color: #3b82f6;
+  transform: translateY(-2px);
 }
 
 .announcements-list {
@@ -159,20 +166,20 @@
   padding: 1.5rem;
   font-size: 16px;
   line-height: 1.6;
-  color: var(--color-text-primary, #333);
+  color: #020202;
   border-right: 1px dashed var(--color-border-tertiary, #e0e0e0);
   font-variant-numeric: lining-nums;
 }
 
 .announcement-date-box {
   width: 150px;
-  background: #FAECE7;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  color: #4A1B0C;
+  color: #60a5fa;
   flex-shrink: 0;
 }
 

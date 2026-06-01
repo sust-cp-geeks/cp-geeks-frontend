@@ -1,6 +1,6 @@
 :root {
   --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --bg-color: #1d2930;
+  --bg-color: #021549; /*#021549 */
   --text-color: #f8fafc;
   --card-bg: rgba(30, 41, 59, 0.7);
   --card-border: rgba(255, 255, 255, 0.1);
