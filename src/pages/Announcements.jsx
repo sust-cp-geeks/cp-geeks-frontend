@@ -186,7 +186,7 @@ export default function Announcements() {
                       <div className="date-day">{dateData.day}</div>
                       <div className="date-month-year">{dateData.monthYear}</div>
                       {dateData.timeStr && (
-                        <div style={{ marginTop: '8px', fontSize: '15px', fontWeight: '700', fontFamily: "'JetBrains Mono', monospace", color: '#3C3489' }}>
+                        <div style={{ marginTop: '8px', fontSize: '15px', fontWeight: '700', fontFamily: "'JetBrains Mono', monospace", color: '#0f766e' }}>
                           {dateData.timeStr}
                         </div>
                       )}
