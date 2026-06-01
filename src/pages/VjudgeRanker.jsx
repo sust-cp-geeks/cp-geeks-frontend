@@ -3,7 +3,7 @@ import './VjudgeRanker.css';
 
 export default function VjudgeRanker() {
   const [title, setTitle] = useState('VJudge Standings');
-  const [contestIdsRaw, setContestIdsRaw] = useState('');
+  const [contestInputs, setContestInputs] = useState([{ value: '', title: '', loading: false }]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
@@ -14,7 +14,50 @@ export default function VjudgeRanker() {
   // Reset error when inputs change
   useEffect(() => {
     setError('');
-  }, [title, contestIdsRaw]);
+  }, [title, contestInputs]);
+
+  const handleInputBlur = async (index) => {
+    const input = contestInputs[index].value.trim();
+    if (!input) return;
+
+    // Extract numeric ID from URL (e.g. https://vjudge.net/contest/815719)
+    const urlMatch = input.match(/\/contest\/(\d+)/);
+    let idStr = urlMatch ? urlMatch[1] : input;
+
+    const num = Number(idStr);
+    if (isNaN(num) || num <= 0 || !Number.isInteger(num)) {
+      return; // invalid ID, don't fetch
+    }
+
+    if (contestInputs[index].loading) return;
+
+    const newInputs = [...contestInputs];
+    newInputs[index].loading = true;
+    setContestInputs(newInputs);
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/ranker/contest-title/${num}`);
+      const data = await response.json();
+      if (response.ok && data.success) {
+        const updatedInputs = [...contestInputs];
+        updatedInputs[index] = {
+          ...updatedInputs[index],
+          title: data.title || '',
+          loading: false
+        };
+        setContestInputs(updatedInputs);
+      } else {
+        const updatedInputs = [...contestInputs];
+        updatedInputs[index].loading = false;
+        setContestInputs(updatedInputs);
+      }
+    } catch (err) {
+      console.error(err);
+      const updatedInputs = [...contestInputs];
+      updatedInputs[index].loading = false;
+      setContestInputs(updatedInputs);
+    }
+  };
 
   const handleAnalyze = async (e) => {
     e.preventDefault();
@@ -22,22 +65,28 @@ export default function VjudgeRanker() {
     setResult(null);
     setSessionId('');
 
-    // Parse IDs: split by spaces, commas, or newlines
-    const idStrings = contestIdsRaw.split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
-    
-    if (idStrings.length === 0) {
-      setError('Please enter at least one VJudge contest ID.');
-      return;
-    }
-
     const contest_ids = [];
-    for (const str of idStrings) {
-      const num = Number(str);
+    const custom_titles = [];
+    for (let i = 0; i < contestInputs.length; i++) {
+      const input = contestInputs[i].value.trim();
+      if (!input) continue;
+
+      // Extract numeric ID from URL (e.g. https://vjudge.net/contest/815719)
+      const urlMatch = input.match(/\/contest\/(\d+)/);
+      let idStr = urlMatch ? urlMatch[1] : input;
+
+      const num = Number(idStr);
       if (isNaN(num) || num <= 0 || !Number.isInteger(num)) {
-        setError(`"${str}" is not a valid contest ID. IDs must be positive integers.`);
+        setError(`"${input}" is not a valid contest ID or URL. IDs must be positive integers.`);
         return;
       }
       contest_ids.push(num);
+      custom_titles.push(contestInputs[i].title.trim());
+    }
+    
+    if (contest_ids.length === 0) {
+      setError('Please enter at least one VJudge contest ID or URL.');
+      return;
     }
 
     setLoading(true);
@@ -57,7 +106,8 @@ export default function VjudgeRanker() {
         body: JSON.stringify({
           title: title.trim() || 'VJudge Standings',
           contest_ids,
-          problem_weights: null
+          problem_weights: null,
+          custom_titles: custom_titles.length > 0 ? custom_titles : null
         })
       });
 
@@ -95,9 +145,6 @@ export default function VjudgeRanker() {
   ) || [];
 
   const getPodiumBadge = (rank) => {
-    if (rank === 1) return <span className="podium-badge gold">🥇 Rank 1</span>;
-    if (rank === 2) return <span className="podium-badge silver">🥈 Rank 2</span>;
-    if (rank === 3) return <span className="podium-badge bronze">🥉 Rank 3</span>;
     return <span className="regular-rank">#{rank}</span>;
   };
 
@@ -112,7 +159,6 @@ export default function VjudgeRanker() {
 
       <div className="ranker-grid">
         <div className="ranker-form-card">
-          <h2>Configure Standings</h2>
           <form onSubmit={handleAnalyze}>
             <div className="form-group">
               <label htmlFor="title-input">Standings Title</label>
@@ -128,16 +174,148 @@ export default function VjudgeRanker() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="contests-input">VJudge Contest ID(s)</label>
-              <textarea
-                id="contests-input"
-                className="form-textarea"
-                rows="4"
-                placeholder="Enter one or multiple IDs (comma, space, or newline separated)&#10;e.g. 811682, 811683"
-                value={contestIdsRaw}
-                onChange={(e) => setContestIdsRaw(e.target.value)}
-                required
-              />
+              <label>Add your selected contests URLs/Contest IDs</label>
+              <div className="contest-inputs-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {contestInputs.map((inputObj, index) => (
+                  <div key={index} className="contest-input-row-card" style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'auto 1.5fr 2fr auto',
+                    gap: '12px',
+                    alignItems: 'center',
+                    background: 'rgba(30, 41, 59, 0.4)',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    borderRadius: '10px',
+                    padding: '10px 14px',
+                    transition: 'all 0.2s ease'
+                  }}>
+                    {/* Column 1: Serial Number */}
+                    <div style={{
+                      fontWeight: '700',
+                      color: 'var(--primary-color)',
+                      fontSize: '1rem',
+                      minWidth: '24px',
+                      height: '24px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: 'rgba(59, 130, 246, 0.1)',
+                      border: '1px solid rgba(59, 130, 246, 0.2)',
+                      borderRadius: '50%',
+                    }}>
+                      {index + 1}
+                    </div>
+
+                    {/* Column 2: Input Field for Contest URL/ID */}
+                    <div style={{ width: '100%' }}>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Contest ID or URL"
+                        value={inputObj.value}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const newInputs = [...contestInputs];
+                          newInputs[index].value = e.target.value;
+                          setContestInputs(newInputs);
+                        }}
+                        onBlur={() => handleInputBlur(index)}
+                        required
+                      />
+                    </div>
+
+                    {/* Column 3: Modifiable Contest Title */}
+                    <div style={{ position: 'relative', width: '100%' }}>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder={inputObj.loading ? "Fetching title..." : "Custom Contest Title (Optional)"}
+                        value={inputObj.title}
+                        disabled={inputObj.loading}
+                        style={{
+                          margin: 0,
+                          padding: '0.6rem 0.8rem',
+                          fontSize: '0.9rem',
+                          borderColor: inputObj.title ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255,255,255,0.1)'
+                        }}
+                        onChange={(e) => {
+                          const newInputs = [...contestInputs];
+                          newInputs[index].title = e.target.value;
+                          setContestInputs(newInputs);
+                        }}
+                      />
+                      {inputObj.loading && (
+                        <div style={{
+                          position: 'absolute',
+                          right: '10px',
+                          top: '50%',
+                          transform: 'translateY(-50%)'
+                        }}>
+                          <span className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px' }}></span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Column 4: Delete Button */}
+                    <div>
+                      {contestInputs.length > 1 ? (
+                        <button
+                          type="button"
+                          className="remove-contest-btn"
+                          onClick={() => {
+                            setContestInputs(contestInputs.filter((_, i) => i !== index));
+                          }}
+                          style={{
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            color: '#ef4444',
+                            border: '1px solid rgba(239, 68, 68, 0.2)',
+                            borderRadius: '8px',
+                            padding: '0.6rem 0.8rem',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '0.9rem',
+                            transition: 'all 0.2s',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = '#ef4444';
+                            e.currentTarget.style.color = 'white';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                            e.currentTarget.style.color = '#ef4444';
+                          }}
+                        >
+                          Delete
+                        </button>
+                      ) : (
+                        <div style={{ width: '60px' }}></div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="add-contest-btn"
+                onClick={() => setContestInputs([...contestInputs, { value: '', title: '', loading: false }])}
+                style={{
+                  background: 'rgba(59, 130, 246, 0.1)',
+                  color: '#60a5fa',
+                  border: '1px dashed #3b82f6',
+                  borderRadius: '6px',
+                  padding: '0.6rem 1rem',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  marginTop: '15px',
+                  width: '100%',
+                  textAlign: 'center',
+                  transition: 'background 0.2s'
+                }}
+              >
+                + Add new contest
+              </button>
             </div>
 
             {error && <div className="error-alert">{error}</div>}
@@ -163,7 +341,7 @@ export default function VjudgeRanker() {
                 <span className="stat-val">{result.total_contests}</span>
               </div>
               <div className="stat-card">
-                <span className="stat-label">Participants</span>
+                <span className="stat-label">Unique Participants</span>
                 <span className="stat-val">{result.total_participants}</span>
               </div>
             </div>
@@ -206,8 +384,10 @@ export default function VjudgeRanker() {
                 <tr>
                   <th>Rank</th>
                   <th>VJudge Handle</th>
+                  <th className="text-center">Contests</th>
                   <th className="text-center">Total Solved</th>
                   <th className="text-center">Total Penalty</th>
+                  <th className="text-center">Total Upsolved</th>
                   <th className="text-center">Details</th>
                 </tr>
               </thead>
@@ -227,11 +407,17 @@ export default function VjudgeRanker() {
                           <td className="handle-col">
                             <span className="user-handle">{row.handle}</span>
                           </td>
+                          <td className="participation-col text-center font-bold">
+                            {row.contests_participated}
+                          </td>
                           <td className="solved-col text-center font-bold">
                             {row.problems_solved}
                           </td>
                           <td className="penalty-col text-center font-mono">
                             {row.total_penalty}
+                          </td>
+                          <td className="upsolved-col text-center font-bold">
+                            {row.total_upsolved || 0}
                           </td>
                           <td className="details-toggle-col text-center">
                             <button className="details-toggle-btn">
@@ -241,7 +427,7 @@ export default function VjudgeRanker() {
                         </tr>
                         {isExpanded && (
                           <tr className="details-subrow">
-                            <td colSpan="5">
+                            <td colSpan="7">
                               <div className="contest-breakdown-container">
                                 <h4>Contest-wise Breakdown</h4>
                                 <div className="breakdown-cards-grid">
@@ -256,8 +442,31 @@ export default function VjudgeRanker() {
                                           <span className="val font-bold">{detail.solved}</span>
                                         </div>
                                         <div className="breakdown-stat">
+                                          <span className="lbl">Upsolved</span>
+                                          <span className="val font-bold">{detail.upsolved || 0}</span>
+                                        </div>
+                                        <div className="breakdown-stat">
                                           <span className="lbl">Penalty</span>
                                           <span className="val font-mono">{detail.penalty}</span>
+                                        </div>
+                                        <div className="breakdown-stat" style={{ minWidth: '80px' }}>
+                                          <span className="lbl">Participated</span>
+                                          <span 
+                                            className="val font-bold" 
+                                            style={{
+                                              color: detail.participated ? '#10b981' : '#f43f5e',
+                                              background: detail.participated ? 'rgba(16, 185, 129, 0.1)' : 'rgba(244, 63, 94, 0.1)',
+                                              padding: '2px 8px',
+                                              borderRadius: '4px',
+                                              fontSize: '0.75rem',
+                                              display: 'inline-block',
+                                              textAlign: 'center',
+                                              marginTop: '2px',
+                                              border: detail.participated ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid rgba(244, 63, 94, 0.2)'
+                                            }}
+                                          >
+                                            {detail.participated ? 'Yes' : 'No'}
+                                          </span>
                                         </div>
                                       </div>
                                     </div>
@@ -272,7 +481,7 @@ export default function VjudgeRanker() {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="5" className="empty-table-state">
+                    <td colSpan="7" className="empty-table-state">
                       {searchQuery ? 'No participants match your search query.' : 'No participant data available.'}
                     </td>
                   </tr>
