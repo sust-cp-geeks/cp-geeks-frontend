@@ -235,7 +235,7 @@
 .leaderboard-header-row h2 {
   font-size: 1.6rem;
   margin: 0;
-  color: #f8fafc;
+  color: #60a5fa;
 }
 
 .search-box-container {
@@ -291,7 +291,7 @@
 .leaderboard-table th {
   padding: 1rem 1.25rem;
   font-weight: 700;
-  color: #94a3b8;
+  color: #60a5fa;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -303,6 +303,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.95rem;
   vertical-align: middle;
+  color: #60a5fa;
 }
 
 .leaderboard-row {
@@ -365,18 +366,18 @@
 }
 
 .regular-rank {
-  color: #64748b;
+  color: #60a5fa;
   font-weight: 700;
   padding-left: 10px;
 }
 
 .user-handle {
   font-weight: 600;
-  color: #e2e8f0;
+  color: #60a5fa;
 }
 
 .top-tier .user-handle {
-  color: #ffffff;
+  color: #60a5fa;
   font-weight: 700;
 }
 

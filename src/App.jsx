@@ -10,6 +10,7 @@ import Discussion from './pages/Discussion';
 import Codeforces from './pages/Codeforces';
 import Profile from './pages/Profile';
 import Events from './pages/Events';
+import EventDetails from './pages/EventDetails';
 import Problems from './pages/Problems';
 import VjudgeRanker from './pages/VjudgeRanker';
 
@@ -61,6 +62,7 @@ function AppContent() {
 
   const getBaseRoute = (path) => {
     if (path.startsWith('/profile')) return '/profile';
+    if (path.startsWith('/events/')) return '/events';
     return path;
   };
 
@@ -90,6 +92,7 @@ function AppContent() {
             <Route path="/profile" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
             <Route path="/profile/:id" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
             <Route path="/events" element={<AnimatedPage direction={direction}><Events /></AnimatedPage>} />
+            <Route path="/events/:id" element={<AnimatedPage direction={direction}><EventDetails /></AnimatedPage>} />
             <Route path="/vjudge-ranker" element={<AnimatedPage direction={direction}><VjudgeRanker /></AnimatedPage>} />
           </Routes>
         </AnimatePresence>
