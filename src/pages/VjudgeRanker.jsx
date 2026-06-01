@@ -383,6 +383,7 @@ export default function VjudgeRanker() {
               <thead>
                 <tr>
                   <th>Rank</th>
+                  <th>Name</th>
                   <th>VJudge Handle</th>
                   <th className="text-center">Contests</th>
                   <th className="text-center">Total Solved</th>
@@ -403,6 +404,9 @@ export default function VjudgeRanker() {
                         >
                           <td className="rank-col">
                             {getPodiumBadge(row.rank)}
+                          </td>
+                          <td className="name-col font-bold" style={{ color: row.real_name === 'unregistered' ? '#94a3b8' : 'var(--primary-color)' }}>
+                            {row.real_name}
                           </td>
                           <td className="handle-col">
                             <span className="user-handle">{row.handle}</span>
@@ -427,7 +431,7 @@ export default function VjudgeRanker() {
                         </tr>
                         {isExpanded && (
                           <tr className="details-subrow">
-                            <td colSpan="7">
+                            <td colSpan="8">
                               <div className="contest-breakdown-container">
                                 <h4>Contest-wise Breakdown</h4>
                                 <div className="breakdown-cards-grid">
@@ -481,7 +485,7 @@ export default function VjudgeRanker() {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="7" className="empty-table-state">
+                    <td colSpan="8" className="empty-table-state">
                       {searchQuery ? 'No participants match your search query.' : 'No participant data available.'}
                     </td>
                   </tr>
