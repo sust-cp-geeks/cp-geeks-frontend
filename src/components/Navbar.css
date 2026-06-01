@@ -46,7 +46,7 @@
   height: 40px;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
 .navbar-logo a:hover {
@@ -69,7 +69,7 @@
 
 .navbar-links li a {
   text-decoration: none;
-  color: #94a3b8;
+  color: #A5E8DE;
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.6rem 1.2rem;
@@ -86,9 +86,9 @@
 }
 
 .navbar-links li.active a {
-  color: #60a5fa;
-  background: rgba(59, 130, 246, 0.15);
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+  color: var(--primary-color);
+  background: rgba(165, 232, 222, 0.15);
+  box-shadow: 0 0 15px rgba(165, 232, 222, 0.15);
 }
 
 .navbar-links li.active a::after {
@@ -99,9 +99,9 @@
   transform: translateX(-50%);
   width: 20px;
   height: 3px;
-  background: #60a5fa;
+  background: var(--primary-color);
   border-radius: 3px 3px 0 0;
-  box-shadow: 0 -2px 10px rgba(96, 165, 250, 0.5);
+  box-shadow: 0 -2px 10px rgba(165, 232, 222, 0.5);
 }
 
 .navbar-auth {
@@ -113,14 +113,14 @@
 
 .navbar-auth .auth-btn {
   text-decoration: none;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: #0f172a;
   padding: 0.6rem 1.5rem;
   border-radius: 9999px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.95rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(165, 232, 222, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   letter-spacing: 0.3px;
@@ -128,8 +128,8 @@
 
 .navbar-auth .auth-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  box-shadow: 0 6px 20px rgba(165, 232, 222, 0.5);
+  background: linear-gradient(135deg, #bcf0e8, var(--primary-color));
 }
 
 .navbar-auth .auth-btn:active {

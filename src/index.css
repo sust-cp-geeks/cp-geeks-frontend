@@ -1,14 +1,14 @@
 :root {
   --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --bg-color: #182F5C;
+  --bg-color: #1d2930;
   --text-color: #f8fafc;
   --card-bg: rgba(30, 41, 59, 0.7);
   --card-border: rgba(255, 255, 255, 0.1);
   --input-bg: rgba(15, 23, 42, 0.6);
   --input-border: rgba(148, 163, 184, 0.2);
-  --input-focus: #3b82f6;
-  --primary-color: #3b82f6;
-  --primary-hover: #2563eb;
+  --input-focus: #a0b2cf;
+  --primary-color: #A5E8DE;
+  --primary-hover: #60a5fa;
 }
 
 * {
