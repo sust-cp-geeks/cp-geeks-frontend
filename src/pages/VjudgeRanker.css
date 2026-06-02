@@ -211,6 +211,27 @@
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
 }
 
+.download-pdf-no-details-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  background: linear-gradient(135deg, #475569, #334155);
+  color: white;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.download-pdf-no-details-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
+}
+
 .pdf-icon {
   animation: bounceSlow 2s infinite;
 }
@@ -513,4 +534,23 @@
 @keyframes bounceSlow {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
+}
+
+.merge-input-row-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: center;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .merge-input-row-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 }
