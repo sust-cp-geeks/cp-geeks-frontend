@@ -258,3 +258,17 @@
 .password-toggle-btn:focus {
   color: #A5E8DE;
 }
+
+.forgot-password-link {
+  color: #A5E8DE;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.forgot-password-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+}
