@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Profile.css';
 
 function Profile() {
@@ -14,23 +14,28 @@ function Profile() {
   const [cfHandle, setCfHandle] = useState('');
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [id]);
 
   const fetchProfile = async () => {
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (!token && !id) {
       navigate('/auth');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/me', {
-        headers: {
+      const url = id 
+        ? `http://localhost:8080/api/users/${id}` 
+        : 'http://localhost:8080/api/users/me';
+        
+      const response = await fetch(url, {
+        headers: token ? {
           'Authorization': `Bearer ${token}`
-        }
+        } : {}
       });
 
       if (response.ok) {
@@ -99,11 +104,13 @@ function Profile() {
       <div className="profile-container">
         <div className="profile-card">
           <div className="profile-header">
-            <h1>My Profile</h1>
-            <p>Manage your account settings and competitive programming handles</p>
-            <p style={{ fontSize: '0.85em', color: '#ff9800', marginTop: '0.5rem', fontStyle: 'italic' }}>
-              * Note: You can only add 1 Codeforces and Vjudge account for now.
-            </p>
+            <h1>{id ? `${profile?.name}'s Profile` : 'My Profile'}</h1>
+            <p>{id ? 'Viewing competitive programming handles and info' : 'Manage your account settings and competitive programming handles'}</p>
+            {!id && (
+              <p style={{ fontSize: '0.85em', color: '#ff9800', marginTop: '0.5rem', fontStyle: 'italic' }}>
+                * Note: You can only add 1 Codeforces and Vjudge account for now.
+              </p>
+            )}
           </div>
 
           <div className="profile-info-section">
@@ -202,11 +209,13 @@ function Profile() {
                   </span>
                 </div>
                 
-                <div className="profile-actions-center">
-                  <button onClick={() => setIsEditing(true)} className="edit-profile-btn">
-                    Edit Profile
-                  </button>
-                </div>
+                {!id && (
+                  <div className="profile-actions-center">
+                    <button onClick={() => setIsEditing(true)} className="edit-profile-btn">
+                      Edit Profile
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

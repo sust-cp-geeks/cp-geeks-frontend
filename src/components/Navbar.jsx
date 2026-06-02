@@ -7,10 +7,27 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState('');
   const [token, setToken] = useState('');
+  const [profileName, setProfileName] = useState('');
 
   useEffect(() => {
+    const currentToken = localStorage.getItem('token') || '';
     setRole(localStorage.getItem('role') || '');
-    setToken(localStorage.getItem('token') || '');
+    setToken(currentToken);
+
+    if (currentToken) {
+      fetch('http://localhost:8080/api/users/me', {
+        headers: { 'Authorization': `Bearer ${currentToken}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data) {
+          setProfileName(data.data.name);
+        }
+      })
+      .catch(console.error);
+    } else {
+      setProfileName('');
+    }
   }, [location.pathname]);
 
   const handleLogout = () => {
@@ -18,6 +35,7 @@ const Navbar = () => {
     localStorage.removeItem('role');
     setRole('');
     setToken('');
+    setProfileName('');
     navigate('/');
   };
 
@@ -60,15 +78,16 @@ const Navbar = () => {
 
         <div className="navbar-auth">
           {token ? (
-            <>
-              <Link to="/profile" className="auth-btn">Profile</Link>
+            <div className="auth-user-info">
+              <span className="user-greeting">Welcome, {profileName}</span>
+              <span className="divider">|</span>
               <button 
                 onClick={handleLogout} 
-                className="auth-btn btn-outline"
+                className="auth-logout-btn"
               >
                 Logout
               </button>
-            </>
+            </div>
           ) : (
             <Link to="/auth" className="auth-btn">Login/Register</Link>
           )}

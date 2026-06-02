@@ -29,3 +29,32 @@ body {
 #root {
   width: 100%;
 }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-container {
+  display: flex;
+  max-width: 1600px;
+  width: 95%;
+  margin: 0 auto;
+  flex: 1;
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .layout-container {
+    padding: 0 1rem;
+    width: 100%;
+  }
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 1.5rem 0;
+}

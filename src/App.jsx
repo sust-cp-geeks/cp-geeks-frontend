@@ -13,6 +13,7 @@ import Events from './pages/Events';
 import EventDetails from './pages/EventDetails';
 import Problems from './pages/Problems';
 import VjudgeRanker from './pages/VjudgeRanker';
+import RightSidebar from './components/RightSidebar';
 
 const pageVariants = {
   initial: (direction) => ({
@@ -78,25 +79,28 @@ function AppContent() {
   return (
     <div className="app-container">
       <Navbar />
-      <main className="main-content" style={{ overflowX: 'hidden' }}>
-        <AnimatePresence mode="wait" custom={direction}>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Navigate to="/news" replace />} />
-            <Route path="/auth" element={<AnimatedPage direction={direction}><Auth /></AnimatedPage>} />
-            <Route path="/news" element={<AnimatedPage direction={direction}><News /></AnimatedPage>} />
-            <Route path="/announcements" element={<AnimatedPage direction={direction}><Announcements /></AnimatedPage>} />
-            <Route path="/contest" element={<AnimatedPage direction={direction}><Contest /></AnimatedPage>} />
-            <Route path="/discussion" element={<AnimatedPage direction={direction}><Discussion /></AnimatedPage>} />
-            <Route path="/problems" element={<AnimatedPage direction={direction}><Problems /></AnimatedPage>} />
-            <Route path="/codeforces" element={<AnimatedPage direction={direction}><Codeforces /></AnimatedPage>} />
-            <Route path="/profile" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
-            <Route path="/profile/:id" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
-            <Route path="/events" element={<AnimatedPage direction={direction}><Events /></AnimatedPage>} />
-            <Route path="/events/:id" element={<AnimatedPage direction={direction}><EventDetails /></AnimatedPage>} />
-            <Route path="/vjudge-ranker" element={<AnimatedPage direction={direction}><VjudgeRanker /></AnimatedPage>} />
-          </Routes>
-        </AnimatePresence>
-      </main>
+      <div className="layout-container">
+        <main className="main-content" style={{ overflowX: 'hidden' }}>
+          <AnimatePresence mode="wait" custom={direction}>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Navigate to="/news" replace />} />
+              <Route path="/auth" element={<AnimatedPage direction={direction}><Auth /></AnimatedPage>} />
+              <Route path="/news" element={<AnimatedPage direction={direction}><News /></AnimatedPage>} />
+              <Route path="/announcements" element={<AnimatedPage direction={direction}><Announcements /></AnimatedPage>} />
+              <Route path="/contest" element={<AnimatedPage direction={direction}><Contest /></AnimatedPage>} />
+              <Route path="/discussion" element={<AnimatedPage direction={direction}><Discussion /></AnimatedPage>} />
+              <Route path="/problems" element={<AnimatedPage direction={direction}><Problems /></AnimatedPage>} />
+              <Route path="/codeforces" element={<AnimatedPage direction={direction}><Codeforces /></AnimatedPage>} />
+              <Route path="/profile" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
+              <Route path="/profile/:id" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
+              <Route path="/events" element={<AnimatedPage direction={direction}><Events /></AnimatedPage>} />
+              <Route path="/events/:id" element={<AnimatedPage direction={direction}><EventDetails /></AnimatedPage>} />
+              <Route path="/vjudge-ranker" element={<AnimatedPage direction={direction}><VjudgeRanker /></AnimatedPage>} />
+            </Routes>
+          </AnimatePresence>
+        </main>
+        <RightSidebar />
+      </div>
     </div>
   );
 }

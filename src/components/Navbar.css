@@ -136,17 +136,39 @@
   transform: translateY(0);
 }
 
-.navbar-auth .auth-btn.btn-outline {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.auth-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
   color: #e2e8f0;
-  box-shadow: none;
 }
 
-.navbar-auth .auth-btn.btn-outline:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  color: white;
+.user-greeting {
+  font-weight: 600;
+  color: #60a5fa;
 }
+
+.divider {
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 0.5rem;
+}
+
+.auth-logout-btn {
+  background: none;
+  border: none;
+  color: #A5E8DE;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.auth-logout-btn:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+}
+
