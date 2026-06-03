@@ -5,6 +5,7 @@ import LeaderboardTable from '../components/LeaderboardTable';
 export default function VjudgeRanker() {
   const [title, setTitle] = useState('VJudge Standings');
   const [contestInputs, setContestInputs] = useState([{ value: '', title: '', loading: false }]);
+  const [mergeInputs, setMergeInputs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
@@ -13,7 +14,7 @@ export default function VjudgeRanker() {
   // Reset error when inputs change
   useEffect(() => {
     setError('');
-  }, [title, contestInputs]);
+  }, [title, contestInputs, mergeInputs]);
 
   const handleInputBlur = async (index) => {
     const input = contestInputs[index].value.trim();
@@ -88,6 +89,19 @@ export default function VjudgeRanker() {
       return;
     }
 
+    const merged_handles = mergeInputs
+      .map(m => {
+        const handles = [m.handle1.trim(), m.handle2.trim()];
+        if (m.handle3 && m.handle3.trim()) {
+          handles.push(m.handle3.trim());
+        }
+        return {
+          name: m.name.trim(),
+          handles: handles.filter(Boolean)
+        };
+      })
+      .filter(m => m.name && m.handles.length >= 2);
+
     setLoading(true);
 
     try {
@@ -106,7 +120,8 @@ export default function VjudgeRanker() {
           title: title.trim() || 'VJudge Standings',
           contest_ids,
           problem_weights: null,
-          custom_titles: custom_titles.length > 0 ? custom_titles : null
+          custom_titles: custom_titles.length > 0 ? custom_titles : null,
+          merged_handles: merged_handles.length > 0 ? merged_handles : null
         })
       });
 
@@ -126,9 +141,9 @@ export default function VjudgeRanker() {
     }
   };
 
-  const handleDownloadPdf = () => {
+  const handleDownloadPdf = (includeDetails) => {
     if (!sessionId) return;
-    window.open(`http://localhost:8080/api/ranker/pdf/${sessionId}`, '_blank');
+    window.open(`http://localhost:8080/api/ranker/pdf/${sessionId}?include_details=${includeDetails}`, '_blank');
   };
 
 
@@ -303,6 +318,134 @@ export default function VjudgeRanker() {
               </button>
             </div>
 
+            <div className="form-group" style={{ marginTop: '20px' }}>
+              <label>Merge Handles (Optional)</label>
+              <div className="merge-inputs-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {mergeInputs.map((mergeObj, index) => (
+                  <div key={index} className="merge-input-row-card">
+                    {/* Handle 1 */}
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Handle 1"
+                        value={mergeObj.handle1}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const newMerges = [...mergeInputs];
+                          newMerges[index].handle1 = e.target.value;
+                          setMergeInputs(newMerges);
+                        }}
+                        required
+                      />
+                    </div>
+                    {/* Handle 2 */}
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Handle 2"
+                        value={mergeObj.handle2}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const newMerges = [...mergeInputs];
+                          newMerges[index].handle2 = e.target.value;
+                          setMergeInputs(newMerges);
+                        }}
+                        required
+                      />
+                    </div>
+                    {/* Handle 3 */}
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Handle 3 (Optional)"
+                        value={mergeObj.handle3}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const newMerges = [...mergeInputs];
+                          newMerges[index].handle3 = e.target.value;
+                          setMergeInputs(newMerges);
+                        }}
+                      />
+                    </div>
+                    {/* Merge Name */}
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Merge Name"
+                        value={mergeObj.name}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const newMerges = [...mergeInputs];
+                          newMerges[index].name = e.target.value;
+                          setMergeInputs(newMerges);
+                        }}
+                        required
+                      />
+                    </div>
+                    {/* Delete Button */}
+                    <div>
+                      <button
+                        type="button"
+                        className="remove-contest-btn"
+                        onClick={() => {
+                          setMergeInputs(mergeInputs.filter((_, i) => i !== index));
+                        }}
+                        style={{
+                          background: 'rgba(239, 68, 68, 0.1)',
+                          color: '#ef4444',
+                          border: '1px solid rgba(239, 68, 68, 0.2)',
+                          borderRadius: '8px',
+                          padding: '0.6rem 0.8rem',
+                          cursor: 'pointer',
+                          fontWeight: 'bold',
+                          fontSize: '0.9rem',
+                          transition: 'all 0.2s',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '100%'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = '#ef4444';
+                          e.currentTarget.style.color = 'white';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                          e.currentTarget.style.color = '#ef4444';
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="add-merge-btn"
+                onClick={() => setMergeInputs([...mergeInputs, { handle1: '', handle2: '', handle3: '', name: '' }])}
+                style={{
+                  background: 'rgba(16, 185, 129, 0.1)',
+                  color: '#34d399',
+                  border: '1px dashed #10b981',
+                  borderRadius: '6px',
+                  padding: '0.6rem 1rem',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  marginTop: '15px',
+                  width: '100%',
+                  textAlign: 'center',
+                  transition: 'background 0.2s'
+                }}
+              >
+                + Merge handles
+              </button>
+            </div>
+
             {error && <div className="error-alert">{error}</div>}
 
             <button type="submit" className="analyze-btn" disabled={loading}>
@@ -331,14 +474,22 @@ export default function VjudgeRanker() {
               </div>
             </div>
             
-            <div className="action-buttons-row">
+            <div className="action-buttons-row" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {sessionId && (
-                <button className="download-pdf-btn" onClick={handleDownloadPdf}>
-                  <svg className="pdf-icon" viewBox="0 0 24 24" width="20" height="20">
-                    <path fill="currentColor" d="M12,11.5A1.5,1.5 0 0,1 10.5,10A1.5,1.5 0 0,1 12,8.5A1.5,1.5 0 0,1 13.5,10A1.5,1.5 0 0,1 12,11.5M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,17H5V7H19V17M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" />
-                  </svg>
-                  Download Leaderboard PDF
-                </button>
+                <>
+                  <button className="download-pdf-btn" onClick={() => handleDownloadPdf(true)}>
+                    <svg className="pdf-icon" viewBox="0 0 24 24" width="20" height="20">
+                      <path fill="currentColor" d="M12,11.5A1.5,1.5 0 0,1 10.5,10A1.5,1.5 0 0,1 12,8.5A1.5,1.5 0 0,1 13.5,10A1.5,1.5 0 0,1 12,11.5M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,17H5V7H19V17M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" />
+                    </svg>
+                    Download PDF (With Details)
+                  </button>
+                  <button className="download-pdf-no-details-btn" onClick={() => handleDownloadPdf(false)}>
+                    <svg className="pdf-icon" viewBox="0 0 24 24" width="20" height="20">
+                      <path fill="currentColor" d="M12,11.5A1.5,1.5 0 0,1 10.5,10A1.5,1.5 0 0,1 12,8.5A1.5,1.5 0 0,1 13.5,10A1.5,1.5 0 0,1 12,11.5M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,17H5V7H19V17M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" />
+                    </svg>
+                    Download PDF (No Details)
+                  </button>
+                </>
               )}
             </div>
           </div>
