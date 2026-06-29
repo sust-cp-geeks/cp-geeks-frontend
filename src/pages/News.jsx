@@ -71,7 +71,7 @@ export default function News() {
   }, []);
 
   return (
-    <div style={{ fontFamily: "'Syne', sans-serif", padding: '2rem', maxWidth: 1000, margin: '0 auto' }}>
+    <div style={{ fontFamily: "'Syne', sans-serif", padding: '2rem', maxWidth: 1400, margin: '0 auto' }}>
       <p style={{ ...mono, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-secondary, #888)', marginBottom: 6 }}>
       </p>
       <h1 style={{ fontSize: 36, fontWeight: 800, margin: '0 0 2rem', color: '#60a5fa' }}>News & Announcements</h1>

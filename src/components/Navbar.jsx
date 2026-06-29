@@ -8,6 +8,7 @@ const Navbar = () => {
   const [role, setRole] = useState('');
   const [token, setToken] = useState('');
   const [profileName, setProfileName] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const currentToken = localStorage.getItem('token') || '';
@@ -30,6 +31,11 @@ const Navbar = () => {
     }
   }, [location.pathname]);
 
+  // Close menu when navigating
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
@@ -49,7 +55,7 @@ const Navbar = () => {
           </Link>
         </div>
         
-        <ul className="navbar-links">
+        <ul className={`navbar-links${menuOpen ? ' open' : ''}`}>
           <li className={location.pathname === '/news' ? 'active' : ''}>
             <Link to="/news">News</Link>
           </li>
@@ -92,6 +98,16 @@ const Navbar = () => {
             <Link to="/auth" className="auth-btn">Login/Register</Link>
           )}
         </div>
+
+        <button
+          className={`navbar-toggle${menuOpen ? ' open' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </nav>
   );
