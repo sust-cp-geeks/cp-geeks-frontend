@@ -72,6 +72,10 @@
   position: relative;
 }
 
+.login-card.manual-verification-card {
+  max-width: 480px;
+}
+
 .login-card::before {
   content: "";
   position: absolute;
@@ -176,6 +180,11 @@
   overflow: hidden;
 }
 
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .submit-btn::after {
   content: '';
   position: absolute;
@@ -271,4 +280,197 @@
   color: #ffffff;
   text-decoration: underline;
   text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+}
+
+/* --- Links below the Sign In button --- */
+.auth-links-below-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.auth-link-line {
+  font-size: 0.875rem;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+.auth-link-line a {
+  color: #A5E8DE;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.auth-link-line a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+}
+
+/* --- Drag & Drop Upload Zone --- */
+.upload-dropzone {
+  border: 2px dashed rgba(165, 232, 222, 0.3);
+  border-radius: 0.75rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.5);
+  position: relative;
+}
+
+.upload-dropzone:hover {
+  border-color: rgba(165, 232, 222, 0.6);
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 20px rgba(165, 232, 222, 0.1);
+}
+
+.upload-dropzone.dropzone-active {
+  border-color: #A5E8DE;
+  background: rgba(165, 232, 222, 0.08);
+  box-shadow: 0 0 25px rgba(165, 232, 222, 0.2);
+}
+
+.upload-dropzone.has-file {
+  cursor: default;
+  padding: 0;
+  overflow: hidden;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.upload-icon {
+  color: #A5E8DE;
+  opacity: 0.7;
+  margin-bottom: 0.25rem;
+}
+
+.upload-text {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.upload-subtext {
+  color: #94a3b8;
+  font-size: 0.825rem;
+  margin: 0;
+}
+
+.upload-formats {
+  color: #64748b;
+  font-size: 0.75rem;
+  margin: 0.25rem 0 0;
+}
+
+/* Upload Preview */
+.upload-preview {
+  position: relative;
+  width: 100%;
+}
+
+.upload-preview img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0.6rem;
+}
+
+.preview-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0 0 0.6rem 0.6rem;
+}
+
+.preview-filename {
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+
+.remove-file-btn {
+  background: rgba(239, 68, 68, 0.8);
+  border: none;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.remove-file-btn:hover {
+  background: rgba(239, 68, 68, 1);
+  transform: translateY(-1px);
+}
+
+/* --- Discord Notice Section --- */
+.discord-notice {
+  margin-top: 1.75rem;
+  padding: 1.25rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+.discord-notice-title {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+}
+
+.discord-notice-desc {
+  color: #94a3b8;
+  font-size: 0.825rem;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.discord-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  background: #5865F2;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.6rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.35);
+}
+
+.discord-btn:hover {
+  background: #4752c4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(88, 101, 242, 0.5);
+}
+
+.discord-btn:active {
+  transform: translateY(0);
 }
