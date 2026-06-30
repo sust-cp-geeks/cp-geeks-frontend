@@ -1,19 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
-import Auth from './pages/Auth';
-import News from './pages/News';
-import Announcements from './pages/Announcements';
-import Contest from './pages/Contest';
-import Discussion from './pages/Discussion';
-import Codeforces from './pages/Codeforces';
-import Profile from './pages/Profile';
-import Events from './pages/Events';
-import EventDetails from './pages/EventDetails';
-import Problems from './pages/Problems';
-import VjudgeRanker from './pages/VjudgeRanker';
 import RightSidebar from './components/RightSidebar';
+
+const Auth = lazy(() => import('./pages/Auth'));
+const ManualVerification = lazy(() => import('./pages/ManualVerification'));
+const News = lazy(() => import('./pages/News'));
+const Announcements = lazy(() => import('./pages/Announcements'));
+const Contest = lazy(() => import('./pages/Contest'));
+const Discussion = lazy(() => import('./pages/Discussion'));
+const Codeforces = lazy(() => import('./pages/Codeforces'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Events = lazy(() => import('./pages/Events'));
+const EventDetails = lazy(() => import('./pages/EventDetails'));
+const Problems = lazy(() => import('./pages/Problems'));
+const VjudgeRanker = lazy(() => import('./pages/VjudgeRanker'));
 
 const pageVariants = {
   initial: (direction) => ({
@@ -55,6 +57,7 @@ const routeOrder = {
   '/vjudge-ranker': 8,
   '/profile': 9,
   '/auth': 10,
+  '/auth/manual-verification': 11,
 };
 
 function AppContent() {
@@ -82,21 +85,24 @@ function AppContent() {
       <div className="layout-container">
         <main className="main-content" style={{ overflowX: 'hidden' }}>
           <AnimatePresence mode="wait" custom={direction}>
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Navigate to="/news" replace />} />
-              <Route path="/auth" element={<AnimatedPage direction={direction}><Auth /></AnimatedPage>} />
-              <Route path="/news" element={<AnimatedPage direction={direction}><News /></AnimatedPage>} />
-              <Route path="/announcements" element={<AnimatedPage direction={direction}><Announcements /></AnimatedPage>} />
-              <Route path="/contest" element={<AnimatedPage direction={direction}><Contest /></AnimatedPage>} />
-              <Route path="/discussion" element={<AnimatedPage direction={direction}><Discussion /></AnimatedPage>} />
-              <Route path="/problems" element={<AnimatedPage direction={direction}><Problems /></AnimatedPage>} />
-              <Route path="/codeforces" element={<AnimatedPage direction={direction}><Codeforces /></AnimatedPage>} />
-              <Route path="/profile" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
-              <Route path="/profile/:id" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
-              <Route path="/events" element={<AnimatedPage direction={direction}><Events /></AnimatedPage>} />
-              <Route path="/events/:id" element={<AnimatedPage direction={direction}><EventDetails /></AnimatedPage>} />
-              <Route path="/vjudge-ranker" element={<AnimatedPage direction={direction}><VjudgeRanker /></AnimatedPage>} />
-            </Routes>
+            <Suspense fallback={<div className="page-loader"><div className="spinner"></div></div>}>
+              <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<Navigate to="/news" replace />} />
+                <Route path="/auth" element={<AnimatedPage direction={direction}><Auth /></AnimatedPage>} />
+                <Route path="/auth/manual-verification" element={<AnimatedPage direction={direction}><ManualVerification /></AnimatedPage>} />
+                <Route path="/news" element={<AnimatedPage direction={direction}><News /></AnimatedPage>} />
+                <Route path="/announcements" element={<AnimatedPage direction={direction}><Announcements /></AnimatedPage>} />
+                <Route path="/contest" element={<AnimatedPage direction={direction}><Contest /></AnimatedPage>} />
+                <Route path="/discussion" element={<AnimatedPage direction={direction}><Discussion /></AnimatedPage>} />
+                <Route path="/problems" element={<AnimatedPage direction={direction}><Problems /></AnimatedPage>} />
+                <Route path="/codeforces" element={<AnimatedPage direction={direction}><Codeforces /></AnimatedPage>} />
+                <Route path="/profile" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
+                <Route path="/profile/:id" element={<AnimatedPage direction={direction}><Profile /></AnimatedPage>} />
+                <Route path="/events" element={<AnimatedPage direction={direction}><Events /></AnimatedPage>} />
+                <Route path="/events/:id" element={<AnimatedPage direction={direction}><EventDetails /></AnimatedPage>} />
+                <Route path="/vjudge-ranker" element={<AnimatedPage direction={direction}><VjudgeRanker /></AnimatedPage>} />
+              </Routes>
+            </Suspense>
           </AnimatePresence>
         </main>
         <RightSidebar />
