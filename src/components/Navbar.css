@@ -30,6 +30,7 @@
   text-decoration: none;
   transition: transform 0.2s ease;
   white-space: nowrap;
+  will-change: transform;
 }
 
 .navbar-logo a span {
@@ -159,6 +160,7 @@
   cursor: pointer;
   letter-spacing: 0.3px;
   white-space: nowrap;
+  will-change: transform;
 }
 
 .navbar-auth .auth-btn:hover {

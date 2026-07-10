@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
@@ -9,13 +9,17 @@ const Navbar = () => {
   const [token, setToken] = useState('');
   const [profileName, setProfileName] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const lastFetchedTokenRef = useRef(null);
 
   useEffect(() => {
     const currentToken = localStorage.getItem('token') || '';
-    setRole(localStorage.getItem('role') || '');
+    const currentRole = localStorage.getItem('role') || '';
+    setRole(currentRole);
     setToken(currentToken);
 
-    if (currentToken) {
+    // Only refetch profile when the token actually changes (login/logout)
+    if (currentToken && currentToken !== lastFetchedTokenRef.current) {
+      lastFetchedTokenRef.current = currentToken;
       fetch('http://localhost:8080/api/users/me', {
         headers: { 'Authorization': `Bearer ${currentToken}` }
       })
@@ -26,7 +30,8 @@ const Navbar = () => {
         }
       })
       .catch(console.error);
-    } else {
+    } else if (!currentToken) {
+      lastFetchedTokenRef.current = null;
       setProfileName('');
     }
   }, [location.pathname]);
@@ -42,6 +47,7 @@ const Navbar = () => {
     setRole('');
     setToken('');
     setProfileName('');
+    lastFetchedTokenRef.current = null;
     navigate('/');
   };
 

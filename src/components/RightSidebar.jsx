@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './RightSidebar.css';
 
@@ -6,28 +6,45 @@ const RightSidebar = () => {
   const [profile, setProfile] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const lastFetchedTokenRef = useRef(null);
+  const debounceTimerRef = useRef(null);
   
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchChange = async (e) => {
+  // Debounced search — waits 300ms after user stops typing
+  const handleSearchChange = (e) => {
     const val = e.target.value;
     setSearchQuery(val);
+
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
     if (val.trim() === '') {
       setSearchResults([]);
       return;
     }
 
-    try {
-      const res = await fetch(`http://localhost:8080/api/users/search?name=${encodeURIComponent(val)}`);
-      const data = await res.json().catch(()=>({}));
-      if (data.success && data.data) {
-        setSearchResults(data.data);
+    debounceTimerRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/api/users/search?name=${encodeURIComponent(val)}`);
+        const data = await res.json().catch(()=>({}));
+        if (data.success && data.data) {
+          setSearchResults(data.data);
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
-    }
+    }, 300);
   };
+
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    };
+  }, []);
 
   const handleUserSelect = (id) => {
     setSearchQuery('');
@@ -37,7 +54,10 @@ const RightSidebar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+
+    // Only refetch when the token actually changes (login/logout)
+    if (token && token !== lastFetchedTokenRef.current) {
+      lastFetchedTokenRef.current = token;
       fetch('http://localhost:8080/api/users/me', {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -50,7 +70,8 @@ const RightSidebar = () => {
         }
       })
       .catch(console.error);
-    } else {
+    } else if (!token) {
+      lastFetchedTokenRef.current = null;
       setProfile(null);
     }
   }, [location.pathname]);

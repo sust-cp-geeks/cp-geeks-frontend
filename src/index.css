@@ -87,3 +87,26 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* ── Page transition animations (replaces framer-motion) ── */
+.animated-page {
+  will-change: opacity, transform;
+}
+
+.animated-page[data-direction="1"] {
+  animation: fadeSlideFromRight 0.25s ease-out both;
+}
+
+.animated-page[data-direction="-1"] {
+  animation: fadeSlideFromLeft 0.25s ease-out both;
+}
+
+@keyframes fadeSlideFromRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeSlideFromLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
