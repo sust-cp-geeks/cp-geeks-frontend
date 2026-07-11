@@ -178,17 +178,7 @@ export default function VjudgeRanker() {
               <label>Add your selected contests URLs/Contest IDs</label>
               <div className="contest-inputs-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {contestInputs.map((inputObj, index) => (
-                  <div key={index} className="contest-input-row-card" style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'auto 1.5fr 2fr auto',
-                    gap: '12px',
-                    alignItems: 'center',
-                    background: 'rgba(30, 41, 59, 0.4)',
-                    border: '1px solid rgba(255, 255, 255, 0.05)',
-                    borderRadius: '10px',
-                    padding: '10px 14px',
-                    transition: 'all 0.2s ease'
-                  }}>
+                  <div key={index} className="contest-input-row-card">
                     {/* Column 1: Serial Number */}
                     <div style={{
                       fontWeight: '700',

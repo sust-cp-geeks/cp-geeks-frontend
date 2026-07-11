@@ -284,6 +284,10 @@
     gap: 8px;
   }
 
+  .navbar-logo a span {
+    display: none;
+  }
+
   .navbar-logo-img {
     height: 30px;
   }

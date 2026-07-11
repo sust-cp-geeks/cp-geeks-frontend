@@ -556,9 +556,28 @@
   transition: all 0.2s ease;
 }
 
+.contest-input-row-card {
+  display: grid;
+  grid-template-columns: auto 1.5fr 2fr auto;
+  gap: 12px;
+  align-items: center;
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+}
+
 @media (max-width: 768px) {
   .merge-input-row-card {
     grid-template-columns: 1fr;
     gap: 8px;
   }
+  
+  .contest-input-row-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
 }
+
