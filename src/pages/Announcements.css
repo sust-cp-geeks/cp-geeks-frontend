@@ -1,8 +1,3 @@
-/* 
-green : #15805d
-light blue : #60a5fa
-*/
-
 .announcements-page {
   font-family: 'Syne', sans-serif;
   padding: 2rem;
@@ -21,35 +16,36 @@ light blue : #60a5fa
   font-size: 36px;
   font-weight: 800;
   margin: 0;
-  color: #60a5fa;
+  color: var(--primary-hover);
 }
 
 .create-btn {
-  background-color: #1D9E75;
-  color: black;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
   border: none;
   padding: 10px 20px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
   font-family: 'Syne', sans-serif;
 }
 
 .create-btn:hover {
-  background-color: #15805d;
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
 }
 
 .create-form-modal {
-  background: var(--card-bg, rgba(30, 41, 59, 0.7));
+  background: var(--card-bg);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  color: #f8fafc;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
 }
 
 .create-form-modal h3 {
@@ -57,7 +53,7 @@ light blue : #60a5fa
   margin-bottom: 1rem;
   font-size: 20px;
   font-weight: 700;
-  color: #60a5fa;
+  color: var(--primary-hover);
 }
 
 .form-group {
@@ -69,20 +65,19 @@ light blue : #60a5fa
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: #60a5fa;
+  color: var(--primary-hover);
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   font-family: inherit;
   font-size: 14px;
-  background-color: var(--input-bg, rgba(15, 23, 42, 0.6));
-  color: #f8fafc;
-  color-scheme: dark;
+  background-color: var(--input-bg);
+  color: var(--text-color);
   box-sizing: border-box;
   font-variant-numeric: lining-nums;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -91,10 +86,9 @@ light blue : #60a5fa
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #60a5fa;
+  border-color: var(--input-focus);
   box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
-
 
 .form-textarea {
   resize: vertical;
@@ -109,8 +103,8 @@ light blue : #60a5fa
 
 .cancel-btn {
   background-color: transparent;
-  color: #cbd5e1;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-normal);
+  border: 1px solid var(--card-border);
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 600;
@@ -120,12 +114,12 @@ light blue : #60a5fa
 }
 
 .cancel-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
+  background-color: var(--nav-link-bg-hover);
+  color: var(--text-color);
 }
 
 .save-btn {
-  background-color: #60a5fa;
+  background-color: var(--primary-hover);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -137,7 +131,7 @@ light blue : #60a5fa
 }
 
 .save-btn:hover {
-  background-color: #3b82f6;
+  background-color: var(--primary-color);
   transform: translateY(-2px);
 }
 
@@ -149,8 +143,8 @@ light blue : #60a5fa
 
 .announcement-card {
   display: flex;
-  background: white;
-  border: 1px solid var(--color-border-tertiary, #e0e0e0);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -166,25 +160,26 @@ light blue : #60a5fa
   padding: 1.5rem;
   font-size: 16px;
   line-height: 1.6;
-  color: #020202;
-  border-right: 1px dashed var(--color-border-tertiary, #e0e0e0);
+  color: var(--text-color);
+  border-right: 1px dashed var(--card-border);
   font-variant-numeric: lining-nums;
 }
 
 .announcement-date-box {
   width: 150px;
-  background: #ffffff;
+  background: var(--card-bg-nested);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  color: #60a5fa;
+  color: var(--primary-hover);
   flex-shrink: 0;
 }
 
 .announcement-date-box.no-date {
-  background: #f4f4f4;
+  background: var(--card-bg-nested);
+  opacity: 0.7;
 }
 
 .date-day {
@@ -205,9 +200,9 @@ light blue : #60a5fa
 .empty-state {
   text-align: center;
   padding: 3rem;
-  color: #888;
+  color: var(--text-muted);
   font-style: italic;
-  background: #f9f9f9;
+  background: var(--card-bg-nested);
   border-radius: 12px;
-  border: 1px dashed #ccc;
+  border: 1px dashed var(--card-border);
 }

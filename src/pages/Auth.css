@@ -20,7 +20,6 @@
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.5;
-  animation: floatOrb 10s infinite alternate ease-in-out;
 }
 
 .orb-1 {
@@ -59,15 +58,15 @@
 }
 
 .login-card {
-  background: rgba(8, 15, 30, 0.95);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--card-border);
   border-radius: 1.5rem;
   padding: 3rem 2.5rem;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(165, 232, 222, 0.05);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   position: relative;
   will-change: transform;
@@ -108,13 +107,13 @@
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
-  color: #60a5fa;
+  color: var(--primary-hover);
   animation: shine 4s linear infinite;
   transition: text-shadow 0.3s ease;
 }
 
 .login-header p {
-  color: #e2e8f0;
+  color: var(--text-normal);
   font-size: 0.95rem;
   transition: text-shadow 0.3s ease;
 }
@@ -129,37 +128,37 @@
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #ffffff;
+  color: var(--text-color);
   transition: text-shadow 0.3s ease;
 }
 
 .form-input {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
   border-radius: 0.75rem;
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 1rem;
   transition: all 0.2s ease;
   outline: none;
 }
 
 .form-input::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .form-input:hover {
-  border-color: rgba(165, 232, 222, 0.6);
+  border-color: var(--primary-color);
   box-shadow: 0 0 12px rgba(165, 232, 222, 0.15);
-  background: rgba(15, 23, 42, 0.95);
+  background: var(--input-bg);
   transform: translateY(-1px);
 }
 
 .form-input:focus {
-  border-color: #A5E8DE;
+  border-color: var(--primary-hover);
   box-shadow: 0 0 0 3px rgba(165, 232, 222, 0.2), 0 0 15px rgba(165, 232, 222, 0.4);
-  background: rgba(15, 23, 42, 1);
+  background: var(--input-bg);
   transform: translateY(-1px);
 }
 
@@ -167,8 +166,8 @@
   width: 100%;
   padding: 0.875rem;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  color: white;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  color: var(--btn-primary-text);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   border: none;
   border-radius: 0.75rem;
   font-size: 1rem;
@@ -176,7 +175,7 @@
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 1rem;
-  box-shadow: 0 4px 15px rgba(165, 232, 222, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
   will-change: transform;
@@ -215,30 +214,30 @@
   margin-top: 2rem;
   text-align: center;
   font-size: 0.875rem;
-  color: #e2e8f0;
+  color: var(--text-normal);
 }
 
 .login-footer a {
-  color: #A5E8DE;
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 600;
   transition: all 0.2s;
 }
 
 .login-footer a:hover {
-  color: #ffffff;
+  color: var(--title-color);
   text-decoration: underline;
-  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+  text-shadow: 0 0 10px rgba(165, 232, 222, 0.2);
 }
 
 /* Hover effects for texts inside card */
 .login-card:hover .login-header h1 {
-  text-shadow: 0 0 15px rgba(165, 232, 222, 0.6);
+  text-shadow: 0 0 15px rgba(165, 232, 222, 0.2);
 }
 
 .login-card:hover .login-header p,
 .login-card:hover .form-group label {
-  text-shadow: 0 0 8px rgba(165, 232, 222, 0.5);
+  text-shadow: 0 0 8px rgba(165, 232, 222, 0.1);
 }
 
 .password-input-wrapper {
@@ -256,7 +255,7 @@
   right: 0.75rem;
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -267,11 +266,11 @@
 
 .password-toggle-btn:hover,
 .password-toggle-btn:focus {
-  color: #A5E8DE;
+  color: var(--primary-color);
 }
 
 .forgot-password-link {
-  color: #A5E8DE;
+  color: var(--primary-color);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
@@ -279,9 +278,9 @@
 }
 
 .forgot-password-link:hover {
-  color: #ffffff;
+  color: var(--title-color);
   text-decoration: underline;
-  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+  text-shadow: 0 0 10px rgba(165, 232, 222, 0.2);
 }
 
 /* --- Links below the Sign In button --- */
@@ -295,45 +294,45 @@
 
 .auth-link-line {
   font-size: 0.875rem;
-  color: #e2e8f0;
+  color: var(--text-normal);
   margin: 0;
 }
 
 .auth-link-line a {
-  color: #A5E8DE;
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 600;
   transition: all 0.2s;
 }
 
 .auth-link-line a:hover {
-  color: #ffffff;
+  color: var(--title-color);
   text-decoration: underline;
-  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+  text-shadow: 0 0 10px rgba(165, 232, 222, 0.2);
 }
 
 /* --- Drag & Drop Upload Zone --- */
 .upload-dropzone {
-  border: 2px dashed rgba(165, 232, 222, 0.3);
+  border: 2px dashed var(--input-border);
   border-radius: 0.75rem;
   padding: 2rem 1.5rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--input-bg);
   position: relative;
 }
 
 .upload-dropzone:hover {
-  border-color: rgba(165, 232, 222, 0.6);
-  background: rgba(15, 23, 42, 0.7);
-  box-shadow: 0 0 20px rgba(165, 232, 222, 0.1);
+  border-color: var(--primary-color);
+  background: var(--input-bg);
+  box-shadow: 0 0 20px rgba(165, 232, 222, 0.05);
 }
 
 .upload-dropzone.dropzone-active {
-  border-color: #A5E8DE;
-  background: rgba(165, 232, 222, 0.08);
-  box-shadow: 0 0 25px rgba(165, 232, 222, 0.2);
+  border-color: var(--primary-hover);
+  background: var(--card-bg-nested);
+  box-shadow: 0 0 25px rgba(165, 232, 222, 0.1);
 }
 
 .upload-dropzone.has-file {
@@ -431,21 +430,21 @@
 .discord-notice {
   margin-top: 1.75rem;
   padding: 1.25rem;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
   border-radius: 0.75rem;
   text-align: center;
 }
 
 .discord-notice-title {
-  color: #e2e8f0;
+  color: var(--title-color);
   font-size: 0.9rem;
   font-weight: 600;
   margin: 0 0 0.35rem;
 }
 
 .discord-notice-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.825rem;
   margin: 0 0 1rem;
   line-height: 1.5;

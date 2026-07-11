@@ -15,13 +15,13 @@
 .ranker-header h1 {
   font-size: 2.8rem;
   font-weight: 800;
-  color: #60a5fa;
+  color: var(--primary-hover);
   margin-bottom: 0.5rem;
 }
 
 .subtitle {
   font-size: 1.1rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -31,6 +31,16 @@
   grid-template-columns: 1.5fr 1fr;
   gap: 2rem;
   margin-bottom: 3rem;
+}
+
+.ranker-grid.centered {
+  display: flex;
+  justify-content: center;
+}
+
+.ranker-grid.centered .ranker-form-card {
+  max-width: 800px;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -56,7 +66,7 @@
 .ranker-form-card h2, .ranker-results-summary h2 {
   font-size: 1.4rem;
   margin-bottom: 1.5rem;
-  color: #f1f5f9;
+  color: var(--title-color);
   border-left: 4px solid var(--primary-color);
   padding-left: 10px;
 }
@@ -69,7 +79,7 @@
   display: block;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #cbd5e1;
+  color: var(--text-normal);
   font-size: 0.9rem;
   letter-spacing: 0.5px;
 }
@@ -80,7 +90,7 @@
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: 8px;
-  color: #f8fafc;
+  color: var(--text-color);
   font-family: inherit;
   font-size: 0.95rem;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -312,19 +322,19 @@
 .leaderboard-table th {
   padding: 1rem 1.25rem;
   font-weight: 700;
-  color: #60a5fa;
+  color: var(--primary-hover);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 2px solid var(--card-border);
 }
 
 .leaderboard-table td {
   padding: 1.1rem 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--card-border);
   font-size: 0.95rem;
   vertical-align: middle;
-  color: #60a5fa;
+  color: var(--text-color);
 }
 
 .leaderboard-row {
@@ -333,7 +343,7 @@
 }
 
 .leaderboard-row:hover {
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--nav-link-bg-hover);
 }
 
 .leaderboard-row.expanded {
@@ -387,18 +397,18 @@
 }
 
 .regular-rank {
-  color: #60a5fa;
+  color: var(--text-normal);
   font-weight: 700;
   padding-left: 10px;
 }
 
 .user-handle {
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--primary-hover);
 }
 
 .top-tier .user-handle {
-  color: #60a5fa;
+  color: var(--primary-hover);
   font-weight: 700;
 }
 

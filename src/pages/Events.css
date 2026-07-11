@@ -16,13 +16,13 @@
 .events-header h1 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #60a5fa;
+  color: var(--primary-hover);
   margin: 0;
 }
 
 .create-btn {
-  background: var(--primary-color, #6366f1);
-  color: black;
+  background: var(--primary-color);
+  color: var(--btn-primary-text);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -34,25 +34,26 @@
 
 .create-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--primary-hover);
 }
 
 .create-form-modal {
-  background: var(--card-bg, rgba(30, 41, 59, 0.7));
+  background: var(--card-bg);
   backdrop-filter: blur(12px);
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--card-border);
   animation: slideDown 0.3s ease-out;
-  color: #f8fafc;
+  color: var(--text-color);
 }
 
 .create-form-modal h3 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  color: #60a5fa;
+  color: var(--primary-hover);
 }
 
 .form-group {
@@ -63,7 +64,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--primary-hover);
   font-size: 0.9rem;
 }
 
@@ -71,10 +72,9 @@
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
-  background-color: var(--input-bg, rgba(15, 23, 42, 0.6));
-  color: #f8fafc;
-  color-scheme: dark;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--text-color);
   font-family: inherit;
   font-size: 14px;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -83,7 +83,7 @@
 
 .form-input:focus, .form-textarea:focus {
   outline: none;
-  border-color: #60a5fa;
+  border-color: var(--input-focus);
   box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
 
@@ -105,23 +105,23 @@
 
 .cancel-btn {
   background: transparent;
-  color: #cbd5e1;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-normal);
+  border: 1px solid var(--card-border);
 }
 
 .cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: var(--nav-link-bg-hover);
+  color: var(--text-color);
 }
 
 .save-btn {
-  background: #60a5fa;
+  background: var(--primary-hover);
   color: white;
   border: none;
 }
 
 .save-btn:hover {
-  background: #3b82f6;
+  background: var(--primary-color);
   transform: translateY(-2px);
 }
 
@@ -138,27 +138,27 @@
 }
 
 .event-card {
-  background: var(--surface-color, #ffffff);
+  background: var(--card-bg);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-  border: 1px solid var(--border-color, #e5e7eb);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--card-border);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .event-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
 .event-description {
   flex: 1;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--text-color);
   line-height: 1.6;
   display: flex;
   align-items: center;
@@ -189,36 +189,38 @@
 }
 
 .add-team-btn {
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--primary-color, #6366f1);
+  background: var(--badge-blue-bg);
+  color: var(--badge-blue-text);
+  border: 1px solid var(--badge-blue-border);
 }
 
 .add-team-btn:hover {
-  background: rgba(99, 102, 241, 0.2);
+  opacity: 0.8;
 }
 
 .delete-btn {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  background: var(--badge-red-bg);
+  color: var(--badge-red-text);
+  border: 1px solid var(--badge-red-border);
 }
 
 .delete-btn:hover {
-  background: rgba(68, 85, 239, 0.2);
+  opacity: 0.8;
 }
 
 .expand-btn {
-  background: #f3f4f6;
-  color: #333;
-  border: 1px solid #e5e7eb;
+  background: var(--card-bg-nested);
+  color: var(--text-color);
+  border: 1px solid var(--card-border-nested);
 }
 
 .expand-btn:hover {
-  background: var(--border-color, #e5e7eb);
+  background: var(--nav-link-bg-hover);
 }
 
 .event-date-box {
-  background: #021549;
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
   border-radius: 12px;
   padding: 1rem;
   min-width: 100px;
@@ -227,7 +229,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: var(--primary-color, #6366f1);
+  color: var(--primary-hover);
 }
 
 .event-date-box.no-date {
@@ -266,10 +268,10 @@
 }
 
 .team-card {
-  background: var(--background-color, #f9fafb);
+  background: var(--card-bg-nested);
   border-radius: 12px;
   padding: 1.25rem;
-  border: 1px solid var(--border-color, #e5e7eb);
+  border: 1px solid var(--card-border-nested);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -279,13 +281,13 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  border-bottom: 1px solid var(--card-border-nested);
   padding-bottom: 0.75rem;
 }
 
 .team-id-badge {
-  background: #333;
-  color: #ffffff;
+  background: var(--primary-color);
+  color: var(--btn-primary-text);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -294,7 +296,7 @@
 
 .team-coach {
   font-size: 0.95rem;
-  color: #333;
+  color: var(--text-color);
   opacity: 0.8;
   font-weight: 600;
 }
@@ -306,10 +308,10 @@
 }
 
 .team-member {
-  background: var(--surface-color, #ffffff);
+  background: var(--card-bg);
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  border: 1px solid var(--border-color, #e5e7eb);
+  border: 1px solid var(--card-border);
   display: flex;
   align-items: center;
 }
@@ -319,7 +321,7 @@
   flex-direction: column;
   gap: 0.25rem;
   text-decoration: none;
-  color: var(--primary-color, #6366f1);
+  color: var(--primary-hover);
   transition: opacity 0.2s;
 }
 
@@ -341,7 +343,7 @@
 .member-unlinked {
   display: flex;
   flex-direction: column;
-  color: #333;
+  color: var(--text-color);
 }
 
 .team-admin-actions {
@@ -352,33 +354,31 @@
 }
 
 .edit-team-btn {
-  background: #60a5fa;
-  color: #ffffff;
+  background: var(--primary-hover);
+  color: white;
 }
 
 .edit-team-btn:hover {
-  background: #085be0;
+  background: var(--primary-color);
 }
 
 .no-teams {
   padding: 1rem;
-  color: #333;
-  opacity: 0.6;
+  color: var(--text-muted);
   font-style: italic;
-  background: var(--background-color, #f9fafb);
+  background: var(--card-bg-nested);
   border-radius: 8px;
-  border: 1px dashed var(--border-color, #e5e7eb);
+  border: 1px dashed var(--card-border);
   text-align: center;
 }
 
 .empty-state {
   text-align: center;
   padding: 4rem 2rem;
-  color: #333;
-  opacity: 0.6;
-  background: var(--surface-color, #ffffff);
+  color: var(--text-muted);
+  background: var(--card-bg);
   border-radius: 16px;
-  border: 1px solid var(--border-color, #e5e7eb);
+  border: 1px solid var(--card-border);
 }
 
 @keyframes slideDown {

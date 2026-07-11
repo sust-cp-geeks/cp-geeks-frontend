@@ -1,10 +1,10 @@
 .navbar {
   width: 100%;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  background: var(--nav-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -102,7 +102,7 @@
 
 .navbar-links li a {
   text-decoration: none;
-  color: #A5E8DE;
+  color: var(--nav-link);
   font-weight: 600;
   font-size: 0.9rem;
   padding: 0.5rem 0.85rem;
@@ -115,14 +115,14 @@
 }
 
 .navbar-links li a:hover {
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--nav-link-hover);
+  background: var(--nav-link-bg-hover);
 }
 
 .navbar-links li.active a {
   color: var(--primary-color);
-  background: rgba(165, 232, 222, 0.15);
-  box-shadow: 0 0 15px rgba(165, 232, 222, 0.15);
+  background: var(--nav-link-active-bg);
+  box-shadow: 0 0 15px var(--nav-link-active-bg);
 }
 
 .navbar-links li.active a::after {
@@ -135,7 +135,7 @@
   height: 3px;
   background: var(--primary-color);
   border-radius: 3px 3px 0 0;
-  box-shadow: 0 -2px 10px rgba(165, 232, 222, 0.5);
+  box-shadow: 0 -2px 10px var(--nav-link-active-bg);
 }
 
 /* ─── Auth Section ─── */
@@ -149,13 +149,13 @@
 .navbar-auth .auth-btn {
   text-decoration: none;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  color: #0f172a;
+  color: var(--btn-primary-text);
   padding: 0.6rem 1.5rem;
   border-radius: 9999px;
   font-weight: 700;
   font-size: 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(165, 232, 222, 0.3);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   letter-spacing: 0.3px;
@@ -165,8 +165,8 @@
 
 .navbar-auth .auth-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(165, 232, 222, 0.5);
-  background: linear-gradient(135deg, #bcf0e8, var(--primary-color));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
 }
 
 .navbar-auth .auth-btn:active {
@@ -229,8 +229,8 @@
     right: 0;
     flex-direction: column;
     background: rgba(15, 23, 42, 0.97);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     padding: 0.5rem 0;
@@ -296,4 +296,27 @@
   .auth-user-info {
     font-size: 0.85rem;
   }
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.2s, transform 0.2s;
+  margin-right: 0.5rem;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--nav-link-bg-hover);
+  transform: rotate(15deg) scale(1.1);
+}
+
+.theme-toggle-btn svg {
+  stroke: var(--primary-color);
 }

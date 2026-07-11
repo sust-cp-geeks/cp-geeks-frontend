@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { API_URL } from '../api';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useToast } from '../components/ToastContext';
 import './Announcements.css';
 
 export default function Announcements() {
   const [announcements, setAnnouncements] = useState([]);
-  const [role, setRole] = useState('');
-  const [token, setToken] = useState('');
+  const role = localStorage.getItem('role') || '';
+  const token = localStorage.getItem('token') || '';
+  const showToast = useToast();
   
   // Form states
   const [showForm, setShowForm] = useState(false);
@@ -12,15 +15,8 @@ export default function Announcements() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
-  useEffect(() => {
-    setRole(localStorage.getItem('role') || '');
-    const currentToken = localStorage.getItem('token') || '';
-    setToken(currentToken);
-    fetchAnnouncements(currentToken);
-  }, []);
-
-  const fetchAnnouncements = (authToken = token) => {
-    fetch('http://localhost:8080/api/announcements', {
+  const fetchAnnouncements = useCallback((authToken = token) => {
+    fetch(`${API_URL}/api/announcements`, {
       headers: authToken ? {
         'Authorization': `Bearer ${authToken}`
       } : {}
@@ -32,7 +28,11 @@ export default function Announcements() {
         }
       })
       .catch(err => console.error("Failed to fetch announcements:", err));
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchAnnouncements(token);
+  }, [fetchAnnouncements, token]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ export default function Announcements() {
     };
 
     try {
-      const res = await fetch('http://localhost:8080/api/announcements', {
+      const res = await fetch(`${API_URL}/api/announcements`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,11 +75,11 @@ export default function Announcements() {
         setShowForm(false);
         fetchAnnouncements(token);
       } else {
-        alert(data.message || 'Failed to create announcement');
+        showToast(data.message || 'Failed to create announcement', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred while creating the announcement.');
+      showToast('An error occurred while creating the announcement.', 'error');
     }
   };
 

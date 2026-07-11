@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { API_URL } from '../api';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useToast } from '../components/ToastContext';
 import './Profile.css';
+import '../components/Skeleton.css';
 
 function Profile() {
   const [profile, setProfile] = useState(null);
@@ -14,13 +17,10 @@ function Profile() {
   const [cfHandle, setCfHandle] = useState('');
 
   const navigate = useNavigate();
+  const showToast = useToast();
   const { id } = useParams();
 
-  useEffect(() => {
-    fetchProfile();
-  }, [id]);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     const token = localStorage.getItem('token');
     if (!token && !id) {
       navigate('/auth');
@@ -29,8 +29,8 @@ function Profile() {
 
     try {
       const url = id 
-        ? `http://localhost:8080/api/users/${id}` 
-        : 'http://localhost:8080/api/users/me';
+        ? `${API_URL}/api/users/${id}` 
+        : `${API_URL}/api/users/me`;
         
       const response = await fetch(url, {
         headers: token ? {
@@ -59,7 +59,12 @@ function Profile() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, navigate]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [id, fetchProfile]);
+
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -67,7 +72,7 @@ function Profile() {
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/me', {
+      const response = await fetch(`${API_URL}/api/users/me`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -85,25 +90,36 @@ function Profile() {
         setProfile(result.data);
         setIsEditing(false);
         // show success alert or toast
-        alert('Profile updated successfully!');
+        showToast('Profile updated successfully!', 'success');
       } else {
         const errData = await response.json().catch(() => ({}));
-        alert(`Failed to update profile: ${errData.message || 'Unknown error'}`);
+        showToast(`Failed to update profile: ${errData.message || 'Unknown error'}`, 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('Could not connect to the server.');
+      showToast('Could not connect to the server.', 'error');
     }
   };
 
-  if (loading) return <div className="profile-loading">Loading profile...</div>;
   if (error) return <div className="profile-error">{error}</div>;
 
   return (
     <div className="profile-page-wrapper">
       <div className="profile-container">
         <div className="profile-card">
-          <div className="profile-header">
+          {loading ? (
+            <div className="skeleton-container">
+              <div className="skeleton skeleton-title"></div>
+              <div className="skeleton skeleton-text medium"></div>
+              <div style={{ marginTop: '2rem' }}>
+                <div className="skeleton skeleton-row"></div>
+                <div className="skeleton skeleton-row"></div>
+                <div className="skeleton skeleton-row"></div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="profile-header">
             <h1>{id ? `${profile?.name}'s Profile` : 'My Profile'}</h1>
             <p>{id ? 'Viewing competitive programming handles and info' : 'Manage your account settings and competitive programming handles'}</p>
             {!id && (
@@ -219,7 +235,9 @@ function Profile() {
               </div>
             )}
           </div>
-        </div>
+        </>
+      )}
+    </div>
       </div>
     </div>
   );

@@ -1,9 +1,13 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '../components/ToastContext';
 import './Auth.css';
+
+const ACCEPTED_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 function ManualVerification() {
   const navigate = useNavigate();
+  const showToast = useToast();
 
   const [name, setName] = useState('');
   const [regNumber, setRegNumber] = useState('');
@@ -14,19 +18,17 @@ function ManualVerification() {
   const [submitting, setSubmitting] = useState(false);
   const fileInputRef = useRef(null);
 
-  const ACCEPTED_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
-
   const handleFile = useCallback((file) => {
     if (!file) return;
     if (!ACCEPTED_TYPES.includes(file.type)) {
-      alert('Please upload a JPG, JPEG, or PNG image.');
+      showToast('Please upload a JPG, JPEG, or PNG image.', 'error');
       return;
     }
     setIdCardFile(file);
     const reader = new FileReader();
     reader.onloadend = () => setIdCardPreview(reader.result);
     reader.readAsDataURL(file);
-  }, []);
+  }, [showToast]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -62,7 +64,7 @@ function ManualVerification() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!idCardFile) {
-      alert('Please upload your Student ID card photo.');
+      showToast('Please upload your Student ID card photo.', 'error');
       return;
     }
     setSubmitting(true);
@@ -71,10 +73,11 @@ function ManualVerification() {
     // For now, simulate a submission
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      alert('Your manual verification request has been submitted. An administrator will review your credentials.');
+      showToast('Your manual verification request has been submitted. An administrator will review your credentials.', 'success');
       navigate('/auth');
     } catch (err) {
-      alert('Submission failed. Please try again.');
+      console.error(err);
+      showToast('Submission failed. Please try again.', 'error');
     } finally {
       setSubmitting(false);
     }

@@ -2,7 +2,7 @@
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
-  color: #fff;
+  color: var(--text-color);
 }
 
 .cf-header {
@@ -12,18 +12,18 @@
 
 .cf-header h1 {
   font-size: 2.5rem;
-  color: #60a5fa;
+  color: var(--primary-hover);
   margin-bottom: 0.5rem;
 }
 
 .cf-header p {
-  color: #a0aab2;
+  color: var(--text-muted);
 }
 
 .cf-error {
-  background: rgba(255, 50, 50, 0.1);
-  border: 1px solid red;
-  color: #ff5e5e;
+  background: var(--badge-red-bg);
+  border: 1px solid var(--badge-red-border);
+  color: var(--badge-red-text);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -38,15 +38,16 @@
 
 /* Leaderboard Section */
 .cf-leaderboard-section {
-  background: #1a1e23;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
 }
 
 .cf-leaderboard-section h2 {
   margin-bottom: 1rem;
-  color: #e2e8f0;
+  color: var(--title-color);
 }
 
 .table-responsive {
@@ -62,32 +63,33 @@
 .cf-table th,
 .cf-table td {
   padding: 1rem;
-  border-bottom: 1px solid #2d3748;
+  border-bottom: 1px solid var(--card-border-nested);
 }
 
 .cf-table th {
-  color: #a0aec0;
+  color: var(--text-muted);
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.85rem;
 }
 
 .cf-table tbody tr:hover {
-  background: #232931;
+  background: var(--nav-link-bg-hover);
 }
 
 .view-btn {
-  background: linear-gradient(45deg, #3182ce, #2b6cb0);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: var(--btn-primary-text);
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.1s;
+  font-weight: 600;
+  transition: all 0.2s, transform 0.1s;
 }
 
 .view-btn:hover {
-  opacity: 0.9;
+  opacity: 0.95;
   transform: translateY(-1px);
 }
 
@@ -98,10 +100,11 @@
 /* Profile Section */
 .cf-profile-section {
   position: relative;
-  background: #1e2530;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   animation: slideUp 0.4s ease-out;
 }
 
@@ -116,14 +119,14 @@
   right: 20px;
   background: none;
   border: none;
-  color: #a0aec0;
+  color: var(--text-muted);
   font-size: 1.5rem;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .close-profile-btn:hover {
-  color: #fff;
+  color: var(--title-color);
 }
 
 .profile-stats-card {
@@ -133,13 +136,14 @@
 }
 
 .profile-stats-header {
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--card-border-nested);
   padding-bottom: 1rem;
 }
 
 .profile-stats-header h2 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  color: var(--title-color);
 }
 
 .rank-badges {
@@ -155,15 +159,15 @@
 }
 
 .current-badge {
-  background: rgba(49, 130, 206, 0.2);
-  color: #63b3ed;
-  border: 1px solid #3182ce;
+  background: var(--badge-blue-bg);
+  color: var(--badge-blue-text);
+  border: 1px solid var(--badge-blue-border);
 }
 
 .max-badge {
-  background: rgba(237, 137, 54, 0.2);
-  color: #fbd38d;
-  border: 1px solid #ed8936;
+  background: var(--badge-yellow-bg);
+  color: var(--badge-yellow-text);
+  border: 1px solid var(--badge-yellow-border);
 }
 
 .stats-grid {
@@ -173,24 +177,24 @@
 }
 
 .stats-box {
-  background: #11151c;
+  background: var(--card-bg-nested);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 1px solid #2d3748;
+  border: 1px solid var(--card-border-nested);
 }
 
 .stats-box h3 {
-  color: #e2e8f0;
+  color: var(--title-color);
   margin-bottom: 1rem;
   font-size: 1.1rem;
   text-align: center;
-  border-bottom: 1px solid #2d3748;
+  border-bottom: 1px solid var(--card-border-nested);
   padding-bottom: 0.5rem;
 }
 
 /* Custom CSS Bar Chart */
 .solve-bars-container h4 {
-  color: #a0aec0;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 1rem;
   text-align: right;
@@ -211,13 +215,13 @@
 .bucket-label {
   width: 75px;
   font-size: 0.8rem;
-  color: #cbd5e0;
+  color: var(--text-normal);
   text-align: right;
 }
 
 .bar-track {
   flex-grow: 1;
-  background: #2d3748;
+  background: var(--card-border-nested);
   height: 20px;
   border-radius: 4px;
   overflow: hidden;
@@ -225,7 +229,7 @@
 }
 
 .bar-fill {
-  background: linear-gradient(90deg, #4fd1c5, #319795);
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
   height: 100%;
   border-radius: 4px;
   transition: width 0.5s ease-out;
@@ -237,21 +241,21 @@
 
 .bar-count {
   font-size: 0.75rem;
-  color: #fff;
+  color: var(--btn-primary-text);
   font-weight: bold;
 }
 
 /* Recent Contests */
 .recent-contests-section {
-  background: #11151c;
+  background: var(--card-bg-nested);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 1px solid #2d3748;
+  border: 1px solid var(--card-border-nested);
 }
 
 .recent-contests-section h3 {
   margin-bottom: 1rem;
-  color: #e2e8f0;
+  color: var(--title-color);
 }
 
 .contests-list {
@@ -261,15 +265,18 @@
 }
 
 .contest-item {
-  background: #1a202c;
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: 6px;
-  border-left: 4px solid #4a5568;
+  border-left: 4px solid var(--primary-color);
+  border-top: 1px solid var(--card-border);
+  border-right: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
 }
 
 .contest-name {
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--title-color);
   margin-bottom: 0.5rem;
   white-space: nowrap;
   overflow: hidden;
@@ -280,22 +287,22 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #a0aec0;
+  color: var(--text-muted);
 }
 
 .positive-change {
-  color: #48bb78;
+  color: var(--badge-green-text);
   font-weight: bold;
 }
 
 .negative-change {
-  color: #f56565;
+  color: var(--badge-red-text);
   font-weight: bold;
 }
 
 .loading-spinner {
   text-align: center;
   padding: 2rem;
-  color: #a0aec0;
+  color: var(--text-muted);
   font-style: italic;
 }

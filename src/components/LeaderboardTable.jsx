@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function LeaderboardTable({ result, sessionId }) {
+export default function LeaderboardTable({ result }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedUser, setExpandedUser] = useState({});
 

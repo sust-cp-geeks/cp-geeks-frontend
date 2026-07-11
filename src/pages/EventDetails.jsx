@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { API_URL } from '../api';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useToast } from '../components/ToastContext';
 import EventStandings from '../components/EventStandings';
 import './Events.css';
 
 export default function EventDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const showToast = useToast();
   const [event, setEvent] = useState(null);
   const [role, setRole] = useState('');
   const [token, setToken] = useState('');
@@ -22,16 +25,9 @@ export default function EventDetails() {
   // Add Contest State
   const [newContestId, setNewContestId] = useState('');
 
-  useEffect(() => {
-    setRole(localStorage.getItem('role') || '');
-    const currentToken = localStorage.getItem('token') || '';
-    setToken(currentToken);
-    fetchEvent(currentToken);
-  }, [id]);
-
-  const fetchEvent = async (authToken = token) => {
+  const fetchEvent = useCallback(async (authToken = token) => {
     try {
-      const res = await fetch(`http://localhost:8080/api/events/${id}`, {
+      const res = await fetch(`${API_URL}/api/events/${id}`, {
         headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {}
       });
       const data = await res.json();
@@ -44,7 +40,7 @@ export default function EventDetails() {
           setTime(t ? t.substring(0, 5) : '');
         }
       } else {
-        alert("Event not found");
+        showToast('Event not found', 'error');
         navigate('/events');
       }
     } catch (err) {
@@ -52,7 +48,16 @@ export default function EventDetails() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, token, navigate, showToast]);
+
+  useEffect(() => {
+    setRole(localStorage.getItem('role') || '');
+    const currentToken = localStorage.getItem('token') || '';
+    setToken(currentToken);
+    fetchEvent(currentToken);
+  }, [id, fetchEvent]);
+
+
 
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
@@ -66,14 +71,14 @@ export default function EventDetails() {
     };
 
     try {
-      const res = await fetch(`http://localhost:8080/api/events/${id}`, {
+      const res = await fetch(`${API_URL}/api/events/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
       if (data.success) {
-        alert('Event updated successfully');
+        showToast('Event updated successfully', 'success');
         fetchEvent();
       }
     } catch (err) {
@@ -95,13 +100,13 @@ export default function EventDetails() {
     }
     
     if (!parsedId) {
-      alert("Could not extract a valid contest ID from the input.");
+      showToast('Could not extract a valid contest ID from the input.', 'error');
       return;
     }
 
     const existingIds = event.vjudge_contest_ids || [];
     if (existingIds.includes(parsedId)) {
-      alert("Already added"); return;
+      showToast('Already added', 'info'); return;
     }
     const updatedIds = [...existingIds, parsedId];
     
@@ -113,7 +118,7 @@ export default function EventDetails() {
   const handleRemoveContest = async (contestId) => {
     if(!window.confirm("Remove this contest?")) return;
     const existingIds = event.vjudge_contest_ids || [];
-    const updatedIds = existingIds.filter(id => id !== contestId);
+    const updatedIds = existingIds.filter(cid => cid !== contestId);
     await updateContestIds(updatedIds);
   };
 
@@ -124,7 +129,7 @@ export default function EventDetails() {
       vjudge_contest_ids: updatedIds.length > 0 ? updatedIds : null // handle empty array properly
     };
     try {
-      const res = await fetch(`http://localhost:8080/api/events/${id}`, {
+      const res = await fetch(`${API_URL}/api/events/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(payload)

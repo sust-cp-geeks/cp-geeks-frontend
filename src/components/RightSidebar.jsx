@@ -1,3 +1,4 @@
+import { API_URL } from '../api';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './RightSidebar.css';
@@ -28,7 +29,7 @@ const RightSidebar = () => {
 
     debounceTimerRef.current = setTimeout(async () => {
       try {
-        const res = await fetch(`http://localhost:8080/api/users/search?name=${encodeURIComponent(val)}`);
+        const res = await fetch(`${API_URL}/api/users/search?name=${encodeURIComponent(val)}`);
         const data = await res.json().catch(()=>({}));
         if (data.success && data.data) {
           setSearchResults(data.data);
@@ -58,7 +59,7 @@ const RightSidebar = () => {
     // Only refetch when the token actually changes (login/logout)
     if (token && token !== lastFetchedTokenRef.current) {
       lastFetchedTokenRef.current = token;
-      fetch('http://localhost:8080/api/users/me', {
+      fetch(`${API_URL}/api/users/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -70,11 +71,12 @@ const RightSidebar = () => {
         }
       })
       .catch(console.error);
-    } else if (!token) {
+    } else if (!token && profile !== null) {
       lastFetchedTokenRef.current = null;
-      setProfile(null);
+      const id = setTimeout(() => setProfile(null), 0);
+      return () => clearTimeout(id);
     }
-  }, [location.pathname]);
+  }, [location.pathname, profile]);
 
   if (!localStorage.getItem('token')) return null;
   // If on auth page, don't show sidebar

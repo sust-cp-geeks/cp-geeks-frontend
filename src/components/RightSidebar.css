@@ -18,15 +18,15 @@
   border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .widget-header {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--widget-header-bg);
   padding: 0.8rem 1rem;
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--primary-hover);
   border-bottom: 1px solid var(--card-border);
   margin: 0;
   letter-spacing: 0.5px;
@@ -42,26 +42,25 @@
   text-align: center;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px dashed rgba(255,255,255,0.1);
+  border-bottom: 1px dashed var(--card-border-nested);
 }
 
 .profile-name-link {
   font-size: 1.2rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--title-color);
   text-decoration: none;
   transition: color 0.2s;
   display: block;
 }
 
 .profile-name-link:hover {
-  color: var(--primary-color);
-  text-shadow: 0 0 10px rgba(165, 232, 222, 0.5);
+  color: var(--primary-hover);
 }
 
 .profile-role {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-top: 0.3rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -81,11 +80,11 @@
 }
 
 .profile-details .label {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .cf-handle, .vj-handle {
-  color: #60a5fa;
+  color: var(--primary-hover);
   text-decoration: none;
   font-weight: 600;
 }
@@ -95,7 +94,7 @@
 }
 
 .na-text {
-  color: #64748b;
+  color: var(--text-muted-more);
   font-style: italic;
 }
 
@@ -109,16 +108,16 @@
   display: block;
   text-align: center;
   padding: 0.5rem;
-  background: rgba(255,255,255,0.05);
+  background: var(--card-bg-nested);
   border-radius: 0.5rem;
-  color: #e2e8f0;
+  color: var(--text-normal);
   text-decoration: none;
   font-size: 0.85rem;
   transition: all 0.2s;
 }
 
 .widget-link:hover {
-  background: rgba(165, 232, 222, 0.15);
+  background: var(--nav-link-bg-hover);
   color: var(--primary-color);
 }
 
@@ -142,19 +141,19 @@
 }
 
 .attention-list a {
-  color: #e2e8f0;
+  color: var(--text-normal);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s;
 }
 
 .attention-list a:hover {
-  color: #fff;
+  color: var(--title-color);
   text-decoration: underline;
 }
 
 .loading-text {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-style: italic;
   text-align: center;
 }
@@ -171,9 +170,9 @@
   width: 100%;
   padding: 0.6rem 1rem;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color);
   font-size: 0.85rem;
   outline: none;
   transition: all 0.2s;
@@ -182,7 +181,7 @@
 .sidebar-search-input:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 10px rgba(165, 232, 222, 0.2);
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--input-bg);
 }
 
 .sidebar-search-results {
@@ -199,18 +198,18 @@
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 .sidebar-search-results li {
   padding: 0.5rem 1rem;
   cursor: pointer;
-  color: #e2e8f0;
+  color: var(--text-normal);
   font-size: 0.9rem;
   transition: background 0.2s, color 0.2s;
 }
 
 .sidebar-search-results li:hover {
-  background: rgba(165, 232, 222, 0.15);
+  background: var(--nav-link-bg-hover);
   color: var(--primary-color);
 }

@@ -9,7 +9,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  color: #60a5fa;
+  color: var(--primary-hover);
   display: inline-block;
 }
 
@@ -20,7 +20,7 @@
   border: 1px solid var(--card-border);
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
 }
 
 .custom-table {
@@ -30,8 +30,8 @@
 }
 
 .custom-table th {
-  background: rgba(15, 23, 42, 0.8);
-  color: #94a3b8;
+  background: var(--widget-header-bg);
+  color: var(--text-muted);
   font-weight: 600;
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
@@ -42,8 +42,8 @@
 
 .custom-table td {
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: #e2e8f0;
+  border-bottom: 1px solid var(--card-border-nested);
+  color: var(--text-normal);
   font-size: 0.95rem;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .custom-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--nav-link-bg-hover);
 }
 
 .custom-table tbody tr:last-child td {

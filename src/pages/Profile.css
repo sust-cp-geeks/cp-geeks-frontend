@@ -18,7 +18,7 @@
   border: 1px solid var(--card-border);
   border-radius: 1.5rem;
   padding: 3rem 2.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
   animation: slideUp 0.4s ease-out forwards;
 }
 
@@ -31,11 +31,11 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #60a5fa;
+  color: var(--primary-hover);
 }
 
 .profile-header p {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.95rem;
 }
 
@@ -45,7 +45,7 @@
   gap: 1.25rem;
   margin-bottom: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  border-bottom: 1px solid var(--card-border-nested);
 }
 
 .info-group {
@@ -57,18 +57,19 @@
 .info-label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #cbd5e1;
+  color: var(--text-normal);
 }
 
 .info-value {
   font-size: 1rem;
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--text-color);
 }
 
 .role-badge {
-  background-color: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
+  background-color: var(--badge-blue-bg);
+  color: var(--badge-blue-text);
+  border: 1px solid var(--badge-blue-border);
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
   font-size: 0.85rem;
@@ -83,15 +84,15 @@
 }
 
 .handle-badge.codeforces {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background-color: var(--badge-red-bg);
+  color: var(--badge-red-text);
+  border: 1px solid var(--badge-red-border);
 }
 
 .handle-badge.vjudge {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #6ee7b7;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background-color: var(--badge-green-bg);
+  color: var(--badge-green-text);
+  border: 1px solid var(--badge-green-border);
 }
 
 .handle-link {
@@ -100,11 +101,11 @@
 
 .handle-link:hover .handle-badge {
   opacity: 0.8;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .no-handle {
-  color: #64748b;
+  color: var(--text-muted-more);
   font-style: italic;
   font-size: 0.9rem;
   font-weight: 400;
@@ -125,8 +126,8 @@
 .edit-profile-btn {
   padding: 0.875rem 2rem;
   background: transparent;
-  color: #60a5fa;
-  border: 1px solid #60a5fa;
+  color: var(--primary-hover);
+  border: 1px solid var(--primary-hover);
   border-radius: 0.75rem;
   font-size: 1rem;
   font-weight: 600;
@@ -135,7 +136,7 @@
 }
 
 .edit-profile-btn:hover {
-  background: rgba(96, 165, 250, 0.1);
+  background: var(--nav-link-bg-hover);
   transform: translateY(-2px);
 }
 
@@ -157,24 +158,24 @@
 
 .cancel-btn {
   background: transparent;
-  color: #94a3b8;
-  border: 1px solid #94a3b8;
+  color: var(--text-normal);
+  border: 1px solid var(--card-border);
 }
 
 .cancel-btn:hover {
-  background: rgba(148, 163, 184, 0.1);
+  background: var(--nav-link-bg-hover);
 }
 
 .save-btn {
   background: var(--primary-color);
-  color: white;
+  color: var(--btn-primary-text);
   border: none;
 }
 
 .save-btn:hover {
   background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .profile-loading, .profile-error {
@@ -183,11 +184,11 @@
   justify-content: center;
   align-items: center;
   font-size: 1.25rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .profile-error {
-  color: #ef4444;
+  color: var(--badge-red-text);
 }
 
 @media (max-width: 640px) {

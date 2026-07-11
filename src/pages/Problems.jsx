@@ -1,6 +1,10 @@
+import { API_URL } from '../api';
 import React, { useState, useEffect } from 'react';
+import { useToast } from '../components/ToastContext';
 import './Tables.css';
 import './Problems.css';
+
+import '../components/Skeleton.css';
 
 const Problems = () => {
   const [sections, setSections] = useState([]);
@@ -15,6 +19,7 @@ const Problems = () => {
   const [itemTitle, setItemTitle] = useState('');
   const [itemUrl, setItemUrl] = useState('');
   const [itemPlatform, setItemPlatform] = useState('');
+  const showToast = useToast();
 
   useEffect(() => {
     checkAdmin();
@@ -25,7 +30,7 @@ const Problems = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
     try {
-      const res = await fetch('http://localhost:8080/api/users/me', {
+      const res = await fetch(`${API_URL}/api/users/me`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -41,7 +46,7 @@ const Problems = () => {
 
   const fetchProblems = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/problems');
+      const res = await fetch(`${API_URL}/api/problems`);
       if (res.ok) {
         const data = await res.json();
         setSections(data.data);
@@ -61,7 +66,7 @@ const Problems = () => {
     const desc = window.prompt("Enter description (optional):") || "";
     
     try {
-      const res = await fetch('http://localhost:8080/api/problems/sections', {
+      const res = await fetch(`${API_URL}/api/problems/sections`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +75,7 @@ const Problems = () => {
         body: JSON.stringify({ name, description: desc })
       });
       if (res.ok) fetchProblems();
-      else alert('Failed to create section.');
+      else showToast('Failed to create section.', 'error');
     } catch (e) {
       console.error(e);
     }
@@ -82,7 +87,7 @@ const Problems = () => {
     const desc = window.prompt("Enter description (optional):") || "";
     
     try {
-      const res = await fetch('http://localhost:8080/api/problems/subsections', {
+      const res = await fetch(`${API_URL}/api/problems/subsections`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +96,7 @@ const Problems = () => {
         body: JSON.stringify({ section_id: sectionId, name, description: desc })
       });
       if (res.ok) fetchProblems();
-      else alert('Failed to create subsection.');
+      else showToast('Failed to create subsection.', 'error');
     } catch (e) {
       console.error(e);
     }
@@ -109,7 +114,7 @@ const Problems = () => {
   const submitItem = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8080/api/problems/items', {
+      const res = await fetch(`${API_URL}/api/problems/items`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,14 +132,12 @@ const Problems = () => {
         setShowItemModal(false);
         fetchProblems();
       } else {
-        alert('Failed to add item.');
+        showToast('Failed to add item.', 'error');
       }
     } catch (e) {
       console.error(e);
     }
   };
-
-  if (loading) return <div className="page-container"><p>Loading Practice Archive...</p></div>;
 
   return (
     <div className="page-container problems-page">
@@ -148,7 +151,16 @@ const Problems = () => {
       </div>
 
       <div className="sections-container">
-        {sections.length === 0 && <p className="empty-state">No sections constructed yet.</p>}
+        {loading ? (
+          <div className="skeleton-container">
+            <div className="skeleton skeleton-title"></div>
+            <div className="skeleton skeleton-card" style={{ height: '200px' }}></div>
+            <div className="skeleton skeleton-title" style={{ marginTop: '2rem' }}></div>
+            <div className="skeleton skeleton-card" style={{ height: '200px' }}></div>
+          </div>
+        ) : (
+          <>
+            {sections.length === 0 && <p className="empty-state">No sections constructed yet.</p>}
         {sections.map(sec => (
           <div key={sec.id} className="problem-section">
             <div className="section-header">
@@ -197,6 +209,8 @@ const Problems = () => {
             </div>
           </div>
         ))}
+          </>
+        )}
       </div>
 
       {showItemModal && (

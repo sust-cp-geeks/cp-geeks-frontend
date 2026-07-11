@@ -1,5 +1,8 @@
+import { API_URL } from '../api';
 import React, { useState, useEffect } from 'react';
 import './Codeforces.css';
+
+import '../components/Skeleton.css';
 
 const Codeforces = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -16,7 +19,7 @@ const Codeforces = () => {
   const fetchLeaderboard = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8080/api/cf/leaderboard', {
+      const response = await fetch(`${API_URL}/api/cf/leaderboard`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -27,6 +30,7 @@ const Codeforces = () => {
         setError(errorData.error || errorData.message || 'Failed to fetch leaderboard');
       }
     } catch (err) {
+      console.error(err);
       setError('Could not connect to the server');
     } finally {
       setLoadingLeaderboard(false);
@@ -39,7 +43,7 @@ const Codeforces = () => {
     setProfileStats(null);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8080/api/cf/profile/${userId}`, {
+      const response = await fetch(`${API_URL}/api/cf/profile/${userId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -49,6 +53,7 @@ const Codeforces = () => {
         setError('Failed to fetch profile stats');
       }
     } catch (err) {
+      console.error(err);
       setError('Could not connect to the server');
     } finally {
       setLoadingProfile(false);
@@ -107,7 +112,13 @@ const Codeforces = () => {
         <div className="cf-leaderboard-section">
           <h2>Leaderboard</h2>
           {loadingLeaderboard ? (
-            <div className="loading-spinner">Loading...</div>
+            <div className="skeleton-container">
+              <div className="skeleton skeleton-row"></div>
+              <div className="skeleton skeleton-row"></div>
+              <div className="skeleton skeleton-row"></div>
+              <div className="skeleton skeleton-row"></div>
+              <div className="skeleton skeleton-row"></div>
+            </div>
           ) : (
             <div className="table-responsive">
               <table className="cf-table">
@@ -156,7 +167,11 @@ const Codeforces = () => {
               &times;
             </button>
             {loadingProfile ? (
-              <div className="loading-spinner">Fetching detailed stats from Codeforces...</div>
+              <div className="skeleton-container">
+                <div className="skeleton skeleton-title"></div>
+                <div className="skeleton skeleton-card"></div>
+                <div className="skeleton skeleton-card"></div>
+              </div>
             ) : profileStats ? (
               <div className="profile-stats-card">
                 <div className="profile-stats-header">

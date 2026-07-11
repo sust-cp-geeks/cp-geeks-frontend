@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { API_URL } from '../api';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useToast } from '../components/ToastContext';
 import './Events.css';
 
 export default function Events() {
   const [events, setEvents] = useState([]);
-  const [role, setRole] = useState('');
-  const [token, setToken] = useState('');
+  const role = localStorage.getItem('role') || '';
+  const token = localStorage.getItem('token') || '';
   const navigate = useNavigate();
+  const showToast = useToast();
 
   // Create Event Form States
   const [showEventForm, setShowEventForm] = useState(false);
@@ -14,15 +17,8 @@ export default function Events() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
-  useEffect(() => {
-    setRole(localStorage.getItem('role') || '');
-    const currentToken = localStorage.getItem('token') || '';
-    setToken(currentToken);
-    fetchEvents(currentToken);
-  }, []);
-
-  const fetchEvents = (authToken = token) => {
-    fetch('http://localhost:8080/api/events', {
+  const fetchEvents = useCallback((authToken = token) => {
+    fetch(`${API_URL}/api/events`, {
       headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {}
     })
       .then(res => res.json())
@@ -32,7 +28,11 @@ export default function Events() {
         }
       })
       .catch(err => console.error("Failed to fetch events:", err));
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchEvents(token);
+  }, [fetchEvents, token]);
 
   const handleSaveEvent = async (e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ export default function Events() {
     const payload = { description, event_date };
 
     try {
-      const res = await fetch('http://localhost:8080/api/events', {
+      const res = await fetch(`${API_URL}/api/events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(payload)
@@ -55,18 +55,18 @@ export default function Events() {
         setShowEventForm(false);
         fetchEvents(token);
       } else {
-        alert(data.message || 'Failed to create event');
+        showToast(data.message || 'Failed to create event', 'error');
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred while creating the event.');
+      showToast('An error occurred while creating the event.', 'error');
     }
   };
 
   const handleDeleteEvent = async (eventId) => {
     if (!window.confirm("Are you sure you want to delete this event?")) return;
     try {
-      const res = await fetch(`http://localhost:8080/api/events/${eventId}`, {
+      const res = await fetch(`${API_URL}/api/events/${eventId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

@@ -1,14 +1,98 @@
 :root {
   --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --bg-color: #021549; /*#021549 */
+  --bg-color: #021549;
   --text-color: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-muted-more: rgba(255, 255, 255, 0.4);
+  --text-normal: #e2e8f0;
+  --title-color: #ffffff;
+  
   --card-bg: rgba(30, 41, 59, 0.7);
   --card-border: rgba(255, 255, 255, 0.1);
+  --card-bg-nested: rgba(15, 23, 42, 0.4);
+  --card-border-nested: rgba(255, 255, 255, 0.06);
+
   --input-bg: rgba(15, 23, 42, 0.6);
   --input-border: rgba(148, 163, 184, 0.2);
   --input-focus: #a0b2cf;
   --primary-color: #A5E8DE;
   --primary-hover: #60a5fa;
+  
+  --nav-bg: rgba(15, 23, 42, 0.75);
+  --nav-border: rgba(255, 255, 255, 0.05);
+  --nav-link: #A5E8DE;
+  --nav-link-hover: #f8fafc;
+  --nav-link-bg-hover: rgba(255, 255, 255, 0.08);
+  --nav-link-active-bg: rgba(165, 232, 222, 0.15);
+  
+  --widget-header-bg: rgba(15, 23, 42, 0.8);
+
+  --btn-primary-text: #021549;
+
+  /* Status Badges */
+  --badge-green-text: #34d399;
+  --badge-green-bg: rgba(16, 185, 129, 0.15);
+  --badge-green-border: rgba(16, 185, 129, 0.25);
+
+  --badge-blue-text: #60a5fa;
+  --badge-blue-bg: rgba(96, 165, 250, 0.15);
+  --badge-blue-border: rgba(96, 165, 250, 0.25);
+
+  --badge-yellow-text: #fbbf24;
+  --badge-yellow-bg: rgba(250, 190, 50, 0.15);
+  --badge-yellow-border: rgba(250, 190, 50, 0.25);
+
+  --badge-red-text: #f87171;
+  --badge-red-bg: rgba(239, 68, 68, 0.15);
+  --badge-red-border: rgba(239, 68, 68, 0.25);
+}
+
+:root[data-theme="light"] {
+  --bg-color: #f1f5f9;
+  --text-color: #0f172a;
+  --text-muted: #475569;
+  --text-muted-more: rgba(15, 23, 42, 0.6);
+  --text-normal: #334155;
+  --title-color: #0f172a;
+  
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(15, 23, 42, 0.08);
+  --card-bg-nested: rgba(0, 0, 0, 0.03);
+  --card-border-nested: rgba(0, 0, 0, 0.06);
+
+  --input-bg: #ffffff;
+  --input-border: rgba(15, 23, 42, 0.15);
+  --input-focus: #3b82f6;
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --nav-border: rgba(15, 23, 42, 0.08);
+  --nav-link: #2563eb;
+  --nav-link-hover: #0f172a;
+  --nav-link-bg-hover: rgba(37, 99, 235, 0.06);
+  --nav-link-active-bg: rgba(37, 99, 235, 0.1);
+  
+  --widget-header-bg: rgba(241, 245, 249, 0.9);
+
+  --btn-primary-text: #ffffff;
+
+  /* Status Badges */
+  --badge-green-text: #047857;
+  --badge-green-bg: rgba(4, 120, 87, 0.08);
+  --badge-green-border: rgba(4, 120, 87, 0.15);
+
+  --badge-blue-text: #1d4ed8;
+  --badge-blue-bg: rgba(29, 78, 216, 0.08);
+  --badge-blue-border: rgba(29, 78, 216, 0.15);
+
+  --badge-yellow-text: #b45309;
+  --badge-yellow-bg: rgba(180, 83, 9, 0.08);
+  --badge-yellow-border: rgba(180, 83, 9, 0.15);
+
+  --badge-red-text: #b91c1c;
+  --badge-red-bg: rgba(185, 28, 28, 0.08);
+  --badge-red-border: rgba(185, 28, 28, 0.15);
 }
 
 * {
@@ -29,6 +113,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -110,3 +195,42 @@ body {
   from { opacity: 0; transform: translateX(-30px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+
+/* ── Performance & Butter-Smooth Scrolling Optimizations ── */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Force hardware accelerated layers for scrolling & transitions */
+.navbar,
+.sidebar-widget,
+.login-card,
+.event-card,
+.announcement-card,
+.announcement-row,
+.news-contest-card,
+.news-member-card,
+.problem-card,
+.cf-leaderboard-section,
+.cf-profile-section,
+.table-wrapper,
+.ranker-form-card,
+.ranker-results-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Content Visibility Optimization for Off-Screen Rendering */
+.event-card,
+.announcement-row,
+.news-contest-card,
+.news-member-card,
+.problem-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 150px;
+}
+

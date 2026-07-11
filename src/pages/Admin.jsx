@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useToast } from '../components/ToastContext';
 import './Admin.css';
 
 const Admin = () => {
-  const [role, setRole] = useState('');
-  useEffect(() => {
-    const stored = localStorage.getItem('role') || '';
-    setRole(stored);
-  }, []);
+  const showToast = useToast();
+  const role = localStorage.getItem('role') || '';
 
   // Event creation (simple title)
   const [eventTitle, setEventTitle] = useState('');
@@ -16,7 +14,7 @@ const Admin = () => {
     events.push({ title: eventTitle, createdAt: new Date().toISOString() });
     localStorage.setItem('events', JSON.stringify(events));
     setEventTitle('');
-    alert('Event created');
+    showToast('Event created successfully', 'success');
   };
 
   // News post creation
@@ -47,7 +45,7 @@ const Admin = () => {
     localStorage.setItem('newsPosts', JSON.stringify(posts));
     // reset fields
     setTitle(''); setDate(''); setTime(''); setPlace(''); setTotalTeams(''); setTeamMembers([{ m1: '', m2: '', m3: '', coach: '' }]); setDescription('');
-    alert('Post added');
+    showToast('Post added successfully', 'success');
   };
 
   const updateTeamMember = (idx, field, value) => {

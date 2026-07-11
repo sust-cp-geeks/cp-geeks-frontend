@@ -1,3 +1,4 @@
+import { API_URL } from '../api';
 import React, { useState, useEffect } from 'react';
 import './VjudgeRanker.css';
 import LeaderboardTable from '../components/LeaderboardTable';
@@ -36,7 +37,7 @@ export default function VjudgeRanker() {
     setContestInputs(newInputs);
 
     try {
-      const response = await fetch(`http://localhost:8080/api/ranker/contest-title/${num}`);
+      const response = await fetch(`${API_URL}/api/ranker/contest-title/${num}`);
       const data = await response.json();
       if (response.ok && data.success) {
         const updatedInputs = [...contestInputs];
@@ -113,7 +114,7 @@ export default function VjudgeRanker() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch('http://localhost:8080/api/ranker/analyze', {
+      const response = await fetch(`${API_URL}/api/ranker/analyze`, {
         method: 'POST',
         headers,
         body: JSON.stringify({
@@ -143,7 +144,7 @@ export default function VjudgeRanker() {
 
   const handleDownloadPdf = (includeDetails) => {
     if (!sessionId) return;
-    window.open(`http://localhost:8080/api/ranker/pdf/${sessionId}?include_details=${includeDetails}`, '_blank');
+    window.open(`${API_URL}/api/ranker/pdf/${sessionId}?include_details=${includeDetails}`, '_blank');
   };
 
 
@@ -151,13 +152,13 @@ export default function VjudgeRanker() {
   return (
     <div className="vjudge-ranker-page">
       <div className="ranker-header">
-        <h1>VJudge Contest Sorter</h1>
+        <h1>Mesh your Vjudge Contests</h1>
         <p className="subtitle">
           Combine and sort results from multiple VJudge contests based on solved problems and penalty.
         </p>
       </div>
 
-      <div className="ranker-grid">
+      <div className={`ranker-grid ${!result ? 'centered' : ''}`}>
         <div className="ranker-form-card">
           <form onSubmit={handleAnalyze}>
             <div className="form-group">

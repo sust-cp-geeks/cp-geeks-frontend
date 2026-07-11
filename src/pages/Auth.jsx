@@ -1,5 +1,7 @@
+import { API_URL } from '../api';
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useToast } from '../components/ToastContext';
 import './Auth.css';
 
 function Auth() {
@@ -24,6 +26,7 @@ function Auth() {
   const [vjudgeHandle, setVjudgeHandle] = useState('');
 
   const navigate = useNavigate();
+  const showToast = useToast();
 
   const clearFields = () => {
     setEmail('');
@@ -38,7 +41,7 @@ function Auth() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -48,43 +51,44 @@ function Auth() {
         if (data.token) localStorage.setItem('token', data.token);
         const userRole = data.user?.is_admin ? 'admin' : (data.user?.is_manager ? 'manager' : 'student');
         localStorage.setItem('role', userRole);
+        showToast('Login successful!', 'success');
         navigate('/news');
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Login failed: ${errorData.error || errorData.message || 'Invalid credentials'}`);
+        showToast(`Login failed: ${errorData.error || errorData.message || 'Invalid credentials'}`, 'error');
       }
     } catch (err) {
       console.error("Network error:", err);
-      alert("Could not connect to the server.");
+      showToast("Could not connect to the server.", 'error');
     }
   };
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register', {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reg_number: regNumber, name, email, password, codeforces_handle: codeforcesHandle }),
       });
       if (response.ok) {
-        alert('Registration successful! Please log in.');
+        showToast('Registration successful! Please log in.', 'success');
         clearFields();
         setSearchParams({}, { replace: true });
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Registration failed: ${errorData.error || errorData.message || 'Something went wrong'}`);
+        showToast(`Registration failed: ${errorData.error || errorData.message || 'Something went wrong'}`, 'error');
       }
     } catch (err) {
       console.error("Network error:", err);
-      alert("Could not connect to the server.");
+      showToast("Could not connect to the server.", 'error');
     }
   };
 
   const handleForgotPasswordSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/auth/forgot-password', {
+      const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -92,41 +96,41 @@ function Auth() {
       if (response.ok) {
         const data = await response.json().catch(() => ({}));
         setResetName(data.name || 'User');
-        alert(data.message || 'Password reset code sent!');
+        showToast(data.message || 'Password reset code sent!', 'success');
         // Push reset mode so back goes to forgot
         setSearchParams({ mode: 'reset' });
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Forgot password failed: ${errorData.error || errorData.message || 'Error'}`);
+        showToast(`Forgot password failed: ${errorData.error || errorData.message || 'Error'}`, 'error');
       }
     } catch (err) {
       console.error(err);
-      alert("Could not connect to the server.");
+      showToast("Could not connect to the server.", 'error');
     }
   };
 
   const handleResetPasswordSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/auth/reset-password', {
+      const response = await fetch(`${API_URL}/api/auth/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, code: resetCode, new_password: password }),
       });
       if (response.ok) {
         const data = await response.json().catch(() => ({}));
-        alert(data.message || 'Password reset successfully!');
+        showToast(data.message || 'Password reset successfully!', 'success');
         setPassword('');
         setResetCode('');
         // Go back to login, replacing so they don't land on reset again
         setSearchParams({}, { replace: true });
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Reset password failed: ${errorData.error || errorData.message || 'Error'}`);
+        showToast(`Reset password failed: ${errorData.error || errorData.message || 'Error'}`, 'error');
       }
     } catch (err) {
       console.error(err);
-      alert("Could not connect to the server.");
+      showToast("Could not connect to the server.", 'error');
     }
   };
 

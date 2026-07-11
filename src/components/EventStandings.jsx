@@ -1,3 +1,4 @@
+import { API_URL } from '../api';
 import React, { useState, useEffect } from 'react';
 import LeaderboardTable from './LeaderboardTable';
 
@@ -15,7 +16,7 @@ export default function EventStandings({ contestIds, title = "TFC Standings" }) 
         const headers = { 'Content-Type': 'application/json' };
         if (token) headers['Authorization'] = `Bearer ${token}`;
 
-        const response = await fetch('http://localhost:8080/api/ranker/analyze', {
+        const response = await fetch(`${API_URL}/api/ranker/analyze`, {
           method: 'POST',
           headers,
           body: JSON.stringify({
