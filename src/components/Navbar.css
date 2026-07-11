@@ -228,11 +228,9 @@
     left: 0;
     right: 0;
     flex-direction: column;
-    background: var(--nav-bg);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: var(--bg-color);
     border-bottom: 1px solid var(--nav-border);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     padding: 0.5rem 0;
     gap: 0;
     z-index: 105;
