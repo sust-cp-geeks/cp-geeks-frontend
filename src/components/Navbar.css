@@ -228,11 +228,11 @@
     left: 0;
     right: 0;
     flex-direction: column;
-    background: rgba(15, 23, 42, 0.97);
+    background: var(--nav-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid var(--nav-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     padding: 0.5rem 0;
     gap: 0;
     z-index: 105;
@@ -247,7 +247,7 @@
     padding: 0.9rem 2rem;
     border-radius: 0;
     font-size: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid var(--card-border-nested);
   }
 
   .navbar-links li a:hover {

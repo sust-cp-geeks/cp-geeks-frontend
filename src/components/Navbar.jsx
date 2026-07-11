@@ -43,11 +43,8 @@ const Navbar = () => {
 
   // Close menu when navigating
   useEffect(() => {
-    if (menuOpen) {
-      const id = setTimeout(() => setMenuOpen(false), 0);
-      return () => clearTimeout(id);
-    }
-  }, [location.pathname, menuOpen]);
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
