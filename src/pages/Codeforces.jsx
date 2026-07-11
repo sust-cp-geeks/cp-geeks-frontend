@@ -1,5 +1,5 @@
 import { API_URL } from '../api';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Codeforces.css';
 
 import '../components/Skeleton.css';
@@ -11,6 +11,8 @@ const Codeforces = () => {
   const [profileStats, setProfileStats] = useState(null);
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [error, setError] = useState(null);
+
+  const profileCache = useRef({});
 
   useEffect(() => {
     fetchLeaderboard();
@@ -38,8 +40,12 @@ const Codeforces = () => {
   };
 
   const fetchProfile = async (userId) => {
-    setLoadingProfile(true);
     setSelectedUserId(userId);
+    if (profileCache.current[userId]) {
+      setProfileStats(profileCache.current[userId]);
+      return;
+    }
+    setLoadingProfile(true);
     setProfileStats(null);
     try {
       const token = localStorage.getItem('token');
@@ -48,6 +54,7 @@ const Codeforces = () => {
       });
       if (response.ok) {
         const result = await response.json();
+        profileCache.current[userId] = result.data;
         setProfileStats(result.data);
       } else {
         setError('Failed to fetch profile stats');

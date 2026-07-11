@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 export default function LeaderboardTable({ result }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,9 +17,11 @@ export default function LeaderboardTable({ result }) {
     return <span className="regular-rank">#{rank}</span>;
   };
 
-  const filteredRankings = result.rankings.filter(p =>
-    p.handle.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredRankings = useMemo(() => {
+    return result.rankings.filter(p =>
+      p.handle.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
+  }, [result.rankings, searchQuery]);
 
   return (
     <div className="leaderboard-section">

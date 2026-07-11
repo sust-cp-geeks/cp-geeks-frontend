@@ -170,42 +170,46 @@ const Problems = () => {
             {sec.description && <p className="section-desc">{sec.description}</p>}
 
             <div className="subsections-grid">
-              {sec.subsections.map(sub => (
-                <div key={sub.id} className="problem-subsection">
-                  <div className="subsection-header">
-                    <h3>{sub.name}</h3>
-                    {isAdmin && <button onClick={() => openItemModal(sub.id)} className="admin-btn-text small">+ Add Link</button>}
-                  </div>
-                  
-                  <div className="links-group">
-                    <h4 className="group-label">Contests</h4>
-                    <ul className="item-list">
-                      {sub.items.filter(i => i.item_type === 'contest').map(item => (
-                        <li key={item.id}>
-                          <a href={item.url} target="_blank" rel="noreferrer" className="item-link">
-                            <span className="item-title">{item.title}</span>
-                            {item.platform && <span className="item-platform">{item.platform}</span>}
-                          </a>
-                        </li>
-                      ))}
-                      {sub.items.filter(i => i.item_type === 'contest').length === 0 && <li className="empty-li">None yet</li>}
-                    </ul>
+              {sec.subsections.map(sub => {
+                const contests = sub.items.filter(i => i.item_type === 'contest');
+                const problems = sub.items.filter(i => i.item_type === 'problem');
+                return (
+                  <div key={sub.id} className="problem-subsection">
+                    <div className="subsection-header">
+                      <h3>{sub.name}</h3>
+                      {isAdmin && <button onClick={() => openItemModal(sub.id)} className="admin-btn-text small">+ Add Link</button>}
+                    </div>
+                    
+                    <div className="links-group">
+                      <h4 className="group-label">Contests</h4>
+                      <ul className="item-list">
+                        {contests.map(item => (
+                          <li key={item.id}>
+                            <a href={item.url} target="_blank" rel="noreferrer" className="item-link">
+                              <span className="item-title">{item.title}</span>
+                              {item.platform && <span className="item-platform">{item.platform}</span>}
+                            </a>
+                          </li>
+                        ))}
+                        {contests.length === 0 && <li className="empty-li">None yet</li>}
+                      </ul>
 
-                    <h4 className="group-label" style={{ marginTop: '1rem' }}>Practice Problems</h4>
-                    <ul className="item-list">
-                      {sub.items.filter(i => i.item_type === 'problem').map(item => (
-                        <li key={item.id}>
-                          <a href={item.url} target="_blank" rel="noreferrer" className="item-link">
-                            <span className="item-title">{item.title}</span>
-                            {item.platform && <span className="item-platform">{item.platform}</span>}
-                          </a>
-                        </li>
-                      ))}
-                      {sub.items.filter(i => i.item_type === 'problem').length === 0 && <li className="empty-li">None yet</li>}
-                    </ul>
+                      <h4 className="group-label" style={{ marginTop: '1rem' }}>Practice Problems</h4>
+                      <ul className="item-list">
+                        {problems.map(item => (
+                          <li key={item.id}>
+                            <a href={item.url} target="_blank" rel="noreferrer" className="item-link">
+                              <span className="item-title">{item.title}</span>
+                              {item.platform && <span className="item-platform">{item.platform}</span>}
+                            </a>
+                          </li>
+                        ))}
+                        {problems.length === 0 && <li className="empty-li">None yet</li>}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}
