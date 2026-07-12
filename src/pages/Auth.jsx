@@ -143,16 +143,37 @@ function Auth() {
       </div>
       <div className="login-container">
         <div className="login-card">
+          {!isForgotPassword && !isResetPassword && (
+            <div className="auth-toggle-wrapper">
+              <div className="auth-toggle-container">
+                <button
+                  type="button"
+                  className={`auth-toggle-btn ${isLogin ? 'active' : ''}`}
+                  onClick={() => { clearFields(); setSearchParams({ mode: 'login' }); }}
+                >
+                  Login
+                </button>
+                <button
+                  type="button"
+                  className={`auth-toggle-btn ${isSignup ? 'active' : ''}`}
+                  onClick={() => { clearFields(); setSearchParams({ mode: 'signup' }); }}
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="login-header">
             <h1>
               {isForgotPassword ? 'Forgot Password' :
                isResetPassword ? 'Reset Password' :
-               isSignup ? 'Create Account' : 'Welcome Back'}
+               isSignup ? 'Create your new profile' : 'Log in to your existing profile'}
             </h1>
             <p>
               {isForgotPassword ? 'Enter your email to receive a reset code.' :
                isResetPassword ? `Hello ${resetName}, enter your new password and the code sent to your email.` :
-               isSignup ? 'Join us for the CPGeeks contests.' : 'Please enter your details to sign in.'}
+               isSignup ? 'Join us for the CPGeeks contests.' : 'Please enter your credentials to get started.'}
             </p>
           </div>
 
@@ -244,10 +265,6 @@ function Auth() {
 
               <div className="auth-links-below-btn">
                 <p className="auth-link-line">
-                  Don't have an account?{' '}
-                  <a href="#" onClick={(e) => { e.preventDefault(); clearFields(); setSearchParams({ mode: 'signup' }); }}>Sign up</a>
-                </p>
-                <p className="auth-link-line">
                   Don't have a student Gmail?{' '}
                   <a href="#" onClick={(e) => { e.preventDefault(); navigate('/auth/manual-verification'); }}>Click Here</a>
                 </p>
@@ -306,10 +323,10 @@ function Auth() {
                 Sign Up
               </button>
 
-              <div className="login-footer">
-                <p>
-                  Already have an account?{' '}
-                  <a href="#" onClick={(e) => { e.preventDefault(); clearFields(); setSearchParams({}, { replace: false }); }}>Sign in</a>
+              <div className="auth-links-below-btn">
+                <p className="auth-link-line">
+                  Don't have a student Gmail?{' '}
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/auth/manual-verification'); }}>Click Here</a>
                 </p>
               </div>
             </form>

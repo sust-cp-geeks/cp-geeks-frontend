@@ -58,33 +58,55 @@
 }
 
 .login-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--card-border);
-  border-radius: 1.5rem;
-  padding: 3rem 2.5rem;
+  background: transparent;
+  border: none;
+  padding: 1.5rem 0.5rem;
   width: 100%;
-  max-width: 420px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  max-width: 440px;
   animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   position: relative;
   will-change: transform;
 }
 
 .login-card.manual-verification-card {
-  max-width: 480px;
+  max-width: 500px;
 }
 
-.login-card::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 1.5rem;
-  background: linear-gradient(135deg, #A5E8DE, #60a5fa, #A5E8DE);
-  z-index: -1;
-  opacity: 0.15;
-  filter: blur(12px);
+.auth-toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.auth-toggle-container {
+  display: inline-flex;
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
+  border-radius: 2rem;
+  padding: 4px;
+}
+
+.auth-toggle-btn {
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.6rem 2.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-toggle-btn:hover {
+  color: var(--text-color);
+}
+
+.auth-toggle-btn.active {
+  background: var(--primary-hover);
+  color: var(--btn-primary-text);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.2);
 }
 
 @keyframes slideUp {
@@ -107,8 +129,7 @@
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
-  color: var(--primary-hover);
-  animation: shine 4s linear infinite;
+  color: var(--title-color);
   transition: text-shadow 0.3s ease;
 }
 
@@ -150,33 +171,27 @@
 
 .form-input:hover {
   border-color: var(--primary-color);
-  box-shadow: 0 0 12px rgba(165, 232, 222, 0.15);
   background: var(--input-bg);
 }
 
 .form-input:focus {
   border-color: var(--primary-hover);
-  box-shadow: 0 0 0 3px rgba(165, 232, 222, 0.2), 0 0 15px rgba(165, 232, 222, 0.4);
+  box-shadow: 0 0 0 1px var(--primary-hover);
   background: var(--input-bg);
 }
 
 .submit-btn {
   width: 100%;
   padding: 0.875rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  background: var(--primary-color);
   color: var(--btn-primary-text);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   border: none;
   border-radius: 0.75rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-  will-change: transform;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 1.25rem;
 }
 
 .submit-btn:disabled {
@@ -184,27 +199,13 @@
   cursor: not-allowed;
 }
 
-.submit-btn::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 50%; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-  transform: skewX(-20deg);
-  transition: 0.5s;
+.submit-btn:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.2);
 }
 
-.submit-btn:hover::after {
-  left: 150%;
-}
-
-.submit-btn:hover {
-  background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px -3px rgba(165, 232, 222, 0.5);
-}
-
-.submit-btn:active {
+.submit-btn:active:not(:disabled) {
   transform: translateY(0);
 }
 
@@ -226,16 +227,6 @@
   color: var(--title-color);
   text-decoration: underline;
   text-shadow: 0 0 10px rgba(165, 232, 222, 0.2);
-}
-
-/* Hover effects for texts inside card */
-.login-card:hover .login-header h1 {
-  text-shadow: 0 0 15px rgba(165, 232, 222, 0.2);
-}
-
-.login-card:hover .login-header p,
-.login-card:hover .form-group label {
-  text-shadow: 0 0 8px rgba(165, 232, 222, 0.1);
 }
 
 .password-input-wrapper {
@@ -477,72 +468,73 @@
 /* --- Mobile / Touchscreen and Desktop-Mode Scaling --- */
 @media (pointer: coarse), (max-width: 1024px) {
   .login-container {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .login-card {
-    max-width: 800px;
-    width: 95%;
-    padding: 5rem 4rem;
+    max-width: 560px;
+    width: 92%;
+    padding: 1.5rem 0.5rem;
   }
 
   .login-card.manual-verification-card {
-    max-width: 850px;
-    width: 95%;
+    max-width: 620px;
+    width: 92%;
   }
 
   .login-header {
-    margin-bottom: 3rem;
+    margin-bottom: 2.2rem;
   }
 
   .login-header h1 {
-    font-size: 3rem;
+    font-size: 2.4rem;
   }
 
   .login-header p {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   .form-group {
-    margin-bottom: 2.25rem;
+    margin-bottom: 1.75rem;
   }
 
   .form-group label {
-    font-size: 1.3rem;
-    margin-bottom: 0.85rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
   }
 
   .form-input {
-    padding: 1.3rem 1.5rem;
-    font-size: 1.5rem;
-    border-radius: 1rem;
+    padding: 1.05rem 1.25rem;
+    font-size: 1.2rem;
+    border-radius: 0.85rem;
   }
 
   .password-input-wrapper .form-input {
-    padding-right: 6.5rem;
+    padding-right: 5.5rem;
   }
 
   .password-toggle-btn {
-    font-size: 1.25rem;
-    right: 1.5rem;
+    font-size: 1.1rem;
+    right: 1.25rem;
   }
 
   .submit-btn {
-    padding: 1.3rem;
-    font-size: 1.5rem;
-    border-radius: 1rem;
-    margin-top: 2rem;
+    padding: 1.05rem;
+    font-size: 1.2rem;
+    border-radius: 0.85rem;
+    margin-top: 1.5rem;
   }
 
   .auth-links-below-btn {
-    margin-top: 2.5rem;
-    gap: 1rem;
+    margin-top: 2rem;
+    gap: 0.8rem;
   }
 
   .auth-link-line {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
   }
 }
+
 
 
 
