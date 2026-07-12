@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family: 'Plus Jakarta Sans', 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
   --bg-color: #021549;
   --text-color: #f8fafc;
   --text-muted: #94a3b8;
@@ -95,6 +98,10 @@
   --badge-red-border: rgba(185, 28, 28, 0.15);
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -114,6 +121,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+  letter-spacing: -0.011em;
 }
 
 #root {
