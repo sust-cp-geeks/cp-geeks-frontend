@@ -50,17 +50,11 @@
 }
 
 .ranker-form-card, .ranker-results-summary {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  padding: 2rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.ranker-form-card:hover, .ranker-results-summary:hover {
-  box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.1);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 1.5rem 0.5rem;
+  transition: transform 0.2s;
 }
 
 .ranker-form-card h2, .ranker-results-summary h2 {
@@ -99,8 +93,8 @@
 
 .form-input:focus, .form-textarea:focus {
   outline: none;
-  border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  border-color: var(--primary-hover);
+  box-shadow: 0 0 0 1px var(--primary-hover);
 }
 
 .form-textarea {
