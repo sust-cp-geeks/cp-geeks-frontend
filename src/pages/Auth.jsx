@@ -136,11 +136,6 @@ function Auth() {
 
   return (
     <div className="auth-page-wrapper">
-      <div className="auth-background-effects">
-        <div className="glow-orb orb-1"></div>
-        <div className="glow-orb orb-2"></div>
-        <div className="glow-orb orb-3"></div>
-      </div>
       <div className="login-container">
         <div className="login-card">
           {!isForgotPassword && !isResetPassword && (
