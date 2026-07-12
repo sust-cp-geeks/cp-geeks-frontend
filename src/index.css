@@ -203,24 +203,9 @@ html {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Force hardware accelerated layers for scrolling & transitions */
-.navbar,
-.sidebar-widget,
-.login-card,
-.event-card,
-.announcement-card,
-.announcement-row,
-.news-contest-card,
-.news-member-card,
-.problem-card,
-.cf-leaderboard-section,
-.cf-profile-section,
-.table-wrapper,
-.ranker-form-card,
-.ranker-results-card {
+/* Force hardware acceleration only for animated elements */
+.navbar {
   transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
   will-change: transform;
 }
 

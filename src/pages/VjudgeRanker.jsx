@@ -255,28 +255,6 @@ export default function VjudgeRanker() {
                           onClick={() => {
                             setContestInputs(contestInputs.filter((_, i) => i !== index));
                           }}
-                          style={{
-                            background: 'rgba(239, 68, 68, 0.1)',
-                            color: '#ef4444',
-                            border: '1px solid rgba(239, 68, 68, 0.2)',
-                            borderRadius: '8px',
-                            padding: '0.6rem 0.8rem',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            fontSize: '0.9rem',
-                            transition: 'all 0.2s',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.background = '#ef4444';
-                            e.currentTarget.style.color = 'white';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
-                            e.currentTarget.style.color = '#ef4444';
-                          }}
                         >
                           Delete
                         </button>
@@ -384,29 +362,6 @@ export default function VjudgeRanker() {
                         className="remove-contest-btn"
                         onClick={() => {
                           setMergeInputs(mergeInputs.filter((_, i) => i !== index));
-                        }}
-                        style={{
-                          background: 'rgba(239, 68, 68, 0.1)',
-                          color: '#ef4444',
-                          border: '1px solid rgba(239, 68, 68, 0.2)',
-                          borderRadius: '8px',
-                          padding: '0.6rem 0.8rem',
-                          cursor: 'pointer',
-                          fontWeight: 'bold',
-                          fontSize: '0.9rem',
-                          transition: 'all 0.2s',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: '100%'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = '#ef4444';
-                          e.currentTarget.style.color = 'white';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
-                          e.currentTarget.style.color = '#ef4444';
                         }}
                       >
                         Delete

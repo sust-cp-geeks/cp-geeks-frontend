@@ -76,7 +76,7 @@ const RightSidebar = () => {
       const id = setTimeout(() => setProfile(null), 0);
       return () => clearTimeout(id);
     }
-  }, [location.pathname, profile]);
+  }, [profile]);
 
   if (!localStorage.getItem('token')) return null;
   // If on auth page, don't show sidebar

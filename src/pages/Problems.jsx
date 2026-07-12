@@ -26,21 +26,10 @@ const Problems = () => {
     fetchProblems();
   }, []);
 
-  const checkAdmin = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-    try {
-      const res = await fetch(`${API_URL}/api/users/me`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.data && data.data.is_admin) {
-          setIsAdmin(true);
-        }
-      }
-    } catch (e) {
-      console.error(e);
+  const checkAdmin = () => {
+    const role = localStorage.getItem('role');
+    if (role === 'admin') {
+      setIsAdmin(true);
     }
   };
 

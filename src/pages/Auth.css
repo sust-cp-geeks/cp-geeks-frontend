@@ -140,7 +140,7 @@
   border-radius: 0.75rem;
   color: var(--text-color);
   font-size: 1rem;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   outline: none;
 }
 
@@ -152,14 +152,12 @@
   border-color: var(--primary-color);
   box-shadow: 0 0 12px rgba(165, 232, 222, 0.15);
   background: var(--input-bg);
-  transform: translateY(-1px);
 }
 
 .form-input:focus {
   border-color: var(--primary-hover);
   box-shadow: 0 0 0 3px rgba(165, 232, 222, 0.2), 0 0 15px rgba(165, 232, 222, 0.4);
   background: var(--input-bg);
-  transform: translateY(-1px);
 }
 
 .submit-btn {

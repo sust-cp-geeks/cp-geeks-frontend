@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { API_URL } from '../api';
 import './Navbar.css';
@@ -39,20 +39,20 @@ const Navbar = () => {
       const id = setTimeout(() => setProfileName(''), 0);
       return () => clearTimeout(id);
     }
-  }, [location.pathname, token, profileName]);
+  }, [token, profileName]);
 
   // Close menu when navigating
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     setProfileName('');
     lastFetchedTokenRef.current = null;
     navigate('/');
-  };
+  }, [navigate]);
 
   return (
     <nav className="navbar">

@@ -3,6 +3,28 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useToast } from '../components/ToastContext';
 import './Announcements.css';
 
+const formatDateBox = (isoString) => {
+  if (!isoString) return null;
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) return null;
+  
+  const day = d.getDate();
+  const monthYear = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }); // e.g., Apr 2026
+  
+  let timeStr = null;
+  if (d.getHours() !== 0 || d.getMinutes() !== 0) {
+    let hours = d.getHours();
+    let minutes = d.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const minsStr = minutes.toString().padStart(2, '0');
+    timeStr = `${hours}:${minsStr} ${ampm}`;
+  }
+
+  return { day, monthYear, timeStr };
+};
+
 export default function Announcements() {
   const [announcements, setAnnouncements] = useState([]);
   const role = localStorage.getItem('role') || '';
@@ -83,27 +105,6 @@ export default function Announcements() {
     }
   };
 
-  const formatDateBox = (isoString) => {
-    if (!isoString) return null;
-    const d = new Date(isoString);
-    if (isNaN(d.getTime())) return null;
-    
-    const day = d.getDate();
-    const monthYear = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }); // e.g., Apr 2026
-    
-    let timeStr = null;
-    if (d.getHours() !== 0 || d.getMinutes() !== 0) {
-      let hours = d.getHours();
-      let minutes = d.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      const minsStr = minutes.toString().padStart(2, '0');
-      timeStr = `${hours}:${minsStr} ${ampm}`;
-    }
-
-    return { day, monthYear, timeStr };
-  };
 
   const canCreate = role === 'admin' || role === 'manager';
 

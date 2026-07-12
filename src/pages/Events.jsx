@@ -4,6 +4,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastContext';
 import './Events.css';
 
+const formatDateBox = (isoString) => {
+  if (!isoString) return null;
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) return null;
+  
+  const day = d.getDate();
+  const monthYear = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  let timeStr = null;
+  if (d.getHours() !== 0 || d.getMinutes() !== 0) {
+    timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  }
+  return { day, monthYear, timeStr };
+};
+
 export default function Events() {
   const [events, setEvents] = useState([]);
   const role = localStorage.getItem('role') || '';
@@ -77,19 +91,6 @@ export default function Events() {
     }
   };
 
-  const formatDateBox = (isoString) => {
-    if (!isoString) return null;
-    const d = new Date(isoString);
-    if (isNaN(d.getTime())) return null;
-    
-    const day = d.getDate();
-    const monthYear = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    let timeStr = null;
-    if (d.getHours() !== 0 || d.getMinutes() !== 0) {
-      timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    }
-    return { day, monthYear, timeStr };
-  };
 
   const canEdit = role === 'admin' || role === 'manager';
 
