@@ -498,6 +498,35 @@
   }
 }
 
+/* Manual Signup Callout Banner above Student Email */
+.manual-signup-banner {
+  background: rgba(96, 165, 250, 0.08);
+  border: 1px dashed #60a5fa;
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0 1rem 0;
+  font-size: 0.85rem;
+  color: var(--text-normal);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.manual-signup-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #60a5fa;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  transition: color 0.2s;
+}
+
+.manual-signup-link-btn:hover {
+  color: #93c5fd;
+}
+
 
 
 

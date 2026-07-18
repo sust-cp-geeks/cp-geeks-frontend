@@ -147,10 +147,24 @@ const Problems = () => {
             <div className="skeleton skeleton-title" style={{ marginTop: '2rem' }}></div>
             <div className="skeleton skeleton-card" style={{ height: '200px' }}></div>
           </div>
+        ) : !isAdmin ? (
+          <div className="coming-soon-card">
+            <div className="coming-soon-icon">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <h2>Problems Section Coming Soon</h2>
+            <p>We are currently indexing our curated collection of competitive programming problems, topic-wise practice sets, and editorial resources. Check back shortly!</p>
+          </div>
         ) : (
           <>
+            <div className="admin-preview-banner" style={{ background: 'rgba(96, 165, 250, 0.1)', border: '1px dashed #60a5fa', padding: '0.8rem 1.2rem', borderRadius: '0.5rem', marginBottom: '1.5rem', color: '#60a5fa', fontSize: '0.9rem', textAlign: 'center' }}>
+              <strong>Admin Notice:</strong> Students currently see the "Coming Soon" card. As an admin, you can view and build problem sections right here.
+            </div>
             {sections.length === 0 && <p className="empty-state">No sections constructed yet.</p>}
-        {sections.map(sec => (
+            {sections.map(sec => (
           <div key={sec.id} className="problem-section">
             <div className="section-header">
               <h2>{sec.name}</h2>

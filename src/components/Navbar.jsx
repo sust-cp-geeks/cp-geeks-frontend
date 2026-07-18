@@ -65,17 +65,11 @@ const Navbar = () => {
         </div>
         
         <ul className={`navbar-links${menuOpen ? ' open' : ''}`}>
-          <li className={location.pathname === '/news' ? 'active' : ''}>
-            <Link to="/news">News</Link>
-          </li>
           <li className={location.pathname === '/announcements' ? 'active' : ''}>
             <Link to="/announcements">Announcements</Link>
           </li>
           <li className={location.pathname === '/contest' ? 'active' : ''}>
             <Link to="/contest">Contest</Link>
-          </li>
-          <li className={location.pathname === '/discussion' ? 'active' : ''}>
-            <Link to="/discussion">Discussion</Link>
           </li>
           <li className={location.pathname === '/problems' ? 'active' : ''}>
             <Link to="/problems">Problems</Link>

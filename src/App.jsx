@@ -7,6 +7,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 const Auth = lazy(() => import('./pages/Auth'));
 const ManualVerification = lazy(() => import('./pages/ManualVerification'));
+const ManualSignup = lazy(() => import('./pages/ManualSignup'));
 const News = lazy(() => import('./pages/News'));
 const Announcements = lazy(() => import('./pages/Announcements'));
 const Contest = lazy(() => import('./pages/Contest'));
@@ -68,10 +69,11 @@ function AppContent() {
           <ErrorBoundary>
             <Suspense fallback={<div className="page-loader"><div className="spinner"></div></div>}>
               <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<Navigate to="/news" replace />} />
+                <Route path="/" element={<Navigate to="/announcements" replace />} />
                 <Route path="/auth" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Auth /></AnimatedPage>} />
                 <Route path="/auth/manual-verification" element={<AnimatedPage direction={direction} locationKey={location.pathname}><ManualVerification /></AnimatedPage>} />
-                <Route path="/news" element={<AnimatedPage direction={direction} locationKey={location.pathname}><News /></AnimatedPage>} />
+                <Route path="/auth/manual-signup" element={<AnimatedPage direction={direction} locationKey={location.pathname}><ManualSignup /></AnimatedPage>} />
+                <Route path="/news" element={<Navigate to="/announcements" replace />} />
                 <Route path="/announcements" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Announcements /></AnimatedPage>} />
                 <Route path="/contest" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Contest /></AnimatedPage>} />
                 <Route path="/discussion" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Discussion /></AnimatedPage>} />

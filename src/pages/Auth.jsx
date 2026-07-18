@@ -285,6 +285,18 @@ function Auth() {
                   value={regNumber} onChange={(e) => setRegNumber(e.target.value)}
                   placeholder="2019331000" required />
               </div>
+
+              <div className="manual-signup-banner">
+                <span>If you don't have active student email please </span>
+                <button
+                  type="button"
+                  className="manual-signup-link-btn"
+                  onClick={() => navigate('/auth/manual-signup')}
+                >
+                  sign up here manually
+                </button>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="signup-email">Student Email</label>
                 <input type="email" id="signup-email" className="form-input"
