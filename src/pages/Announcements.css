@@ -1,5 +1,5 @@
 .announcements-page {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-family);
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
@@ -10,12 +10,17 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  width: 890px;
+  max-width: 100%;
 }
 
 .announcements-header h1 {
   font-size: 36px;
   font-weight: 800;
   margin: 0;
+  border-style: none;
+  margin-left: 250px;
+  margin-top: -40px;
   color: var(--primary-hover);
 }
 
@@ -29,7 +34,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-family);
 }
 
 .create-btn:hover {

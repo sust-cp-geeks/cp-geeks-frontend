@@ -4,6 +4,13 @@ export default function LeaderboardTable({ result }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedUser, setExpandedUser] = useState({});
 
+  const filteredRankings = useMemo(() => {
+    if (!result?.rankings) return [];
+    return result.rankings.filter(p =>
+      p.handle.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [result, searchQuery]);
+
   if (!result) return null;
 
   const toggleExpandUser = (handle) => {
@@ -16,12 +23,6 @@ export default function LeaderboardTable({ result }) {
   const getPodiumBadge = (rank) => {
     return <span className="regular-rank">#{rank}</span>;
   };
-
-  const filteredRankings = useMemo(() => {
-    return result.rankings.filter(p =>
-      p.handle.toLowerCase().includes(searchQuery.toLowerCase())
-    ) || [];
-  }, [result.rankings, searchQuery]);
 
   return (
     <div className="leaderboard-section">

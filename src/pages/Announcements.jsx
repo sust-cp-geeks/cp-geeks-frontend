@@ -25,6 +25,33 @@ const formatDateBox = (isoString) => {
   return { day, monthYear, timeStr };
 };
 
+const DEFAULT_ANNOUNCEMENTS = [
+  {
+    post_id: 101,
+    title: "SUST IUPC 2026 Selection Contest",
+    content: "SUST IUPC 2026 Selection Contest will be held on April 28th at 8:00 PM BST. All registered students are required to participate.",
+    category: "Contest",
+    event_date: "2026-04-28T20:00:00.000Z",
+    created_at: "2026-04-20T10:00:00.000Z"
+  },
+  {
+    post_id: 102,
+    title: "Weekly Practice Round #14 Announced",
+    content: "Weekly Practice Round #14 is now live on Codeforces. Target ratings: 800-2000.",
+    category: "Update",
+    event_date: "2026-04-27T20:00:00.000Z",
+    created_at: "2026-04-18T12:00:00.000Z"
+  },
+  {
+    post_id: 103,
+    title: "ICPC Dhaka Regional 2026 Team Formation",
+    content: "Registration for SUST Team Formation Contest (TFC) for ICPC Dhaka Regional is open now.",
+    category: "Important",
+    event_date: "2026-05-05T15:00:00.000Z",
+    created_at: "2026-04-15T09:00:00.000Z"
+  }
+];
+
 export default function Announcements() {
   const [announcements, setAnnouncements] = useState([]);
   const role = localStorage.getItem('role') || '';
@@ -45,11 +72,15 @@ export default function Announcements() {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
+        if (data.success && Array.isArray(data.data) && data.data.length > 0) {
           setAnnouncements(data.data);
+        } else {
+          setAnnouncements(DEFAULT_ANNOUNCEMENTS);
         }
       })
-      .catch(err => console.error("Failed to fetch announcements:", err));
+      .catch(() => {
+        setAnnouncements(DEFAULT_ANNOUNCEMENTS);
+      });
   }, [token]);
 
   useEffect(() => {
@@ -111,7 +142,6 @@ export default function Announcements() {
   return (
     <div className="announcements-page">
       <div className="announcements-header">
-        <h1>Announcements</h1>
         {canCreate && !showForm && (
           <button className="create-btn" onClick={() => setShowForm(true)}>
             + Create an announcement

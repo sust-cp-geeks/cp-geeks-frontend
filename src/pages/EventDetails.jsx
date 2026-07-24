@@ -10,8 +10,8 @@ export default function EventDetails() {
   const navigate = useNavigate();
   const showToast = useToast();
   const [event, setEvent] = useState(null);
-  const [role, setRole] = useState('');
-  const [token, setToken] = useState('');
+  const [role] = useState(() => localStorage.getItem('role') || '');
+  const [token] = useState(() => localStorage.getItem('token') || '');
   const [loading, setLoading] = useState(true);
   
   // Tabs: 'rank', 'contests', 'edit'
@@ -51,11 +51,11 @@ export default function EventDetails() {
   }, [id, token, navigate, showToast]);
 
   useEffect(() => {
-    setRole(localStorage.getItem('role') || '');
-    const currentToken = localStorage.getItem('token') || '';
-    setToken(currentToken);
-    fetchEvent(currentToken);
-  }, [id, fetchEvent]);
+    const timer = setTimeout(() => {
+      fetchEvent(token);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [id, fetchEvent, token]);
 
 
 

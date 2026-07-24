@@ -4,7 +4,6 @@ import './Tables.css';
 const Contest = () => {
   return (
     <div className="page-container">
-      <h1 className="page-title">Contests</h1>
       <div className="table-wrapper">
         <table className="custom-table">
           <thead>

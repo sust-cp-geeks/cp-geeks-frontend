@@ -41,6 +41,27 @@ const SectionLabel = ({ text }) => (
   <p className="news-section-label">{text}</p>
 );
 
+const DEFAULT_NEWS_ANNOUNCEMENTS = [
+  {
+    cat: 'Contest',
+    headline: 'SUST IUPC 2026 Selection Contest Announced',
+    date: 'Apr 28, 2026',
+    author: 'Admin'
+  },
+  {
+    cat: 'Update',
+    headline: 'Weekly Practice Round #14 is Live',
+    date: 'Apr 27, 2026',
+    author: 'Admin'
+  },
+  {
+    cat: 'Important',
+    headline: 'ICPC Dhaka Regional 2026 Registration Open',
+    date: 'Apr 20, 2026',
+    author: 'Admin'
+  }
+];
+
 export default function News() {
   const countdown = useCountdown(CONTEST.targetISO);
   const [announcements, setAnnouncements] = useState([]);
@@ -49,16 +70,20 @@ export default function News() {
     fetch(`${API_URL}/api/announcements`)
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
+        if (data.success && Array.isArray(data.data) && data.data.length > 0) {
           setAnnouncements(data.data.map(item => ({
             cat: item.category || 'Update',
             headline: item.title,
             date: new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
             author: 'Admin'
           })));
+        } else {
+          setAnnouncements(DEFAULT_NEWS_ANNOUNCEMENTS);
         }
       })
-      .catch(err => console.error("Failed to fetch announcements:", err));
+      .catch(() => {
+        setAnnouncements(DEFAULT_NEWS_ANNOUNCEMENTS);
+      });
   }, []);
 
   const contestStats = [

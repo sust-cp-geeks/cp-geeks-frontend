@@ -136,41 +136,50 @@ function Auth() {
 
   return (
     <div className="auth-page-wrapper">
-      <div className="login-container">
-        <div className="login-card">
-          {!isForgotPassword && !isResetPassword && (
-            <div className="auth-toggle-wrapper">
-              <div className="auth-toggle-container">
-                <button
-                  type="button"
-                  className={`auth-toggle-btn ${isLogin ? 'active' : ''}`}
-                  onClick={() => { clearFields(); setSearchParams({ mode: 'login' }); }}
-                >
-                  Login
-                </button>
-                <button
-                  type="button"
-                  className={`auth-toggle-btn ${isSignup ? 'active' : ''}`}
-                  onClick={() => { clearFields(); setSearchParams({ mode: 'signup' }); }}
-                >
-                  Sign Up
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div className="login-header">
-            <h1>
-              {isForgotPassword ? 'Forgot Password' :
-               isResetPassword ? 'Reset Password' :
-               isSignup ? 'Create your new profile' : 'Log in to your existing profile'}
-            </h1>
+      <div className="auth-layout-container">
+        <div className="hero-side">
+          <h1>
+            {isForgotPassword ? 'Password Recovery.' :
+             isResetPassword ? 'Reset Phrase.' :
+             isSignup ? 'Begin Journey.' : 'Welcome Back.'}
+          </h1>
+          {(isForgotPassword || isResetPassword) && (
             <p>
-              {isForgotPassword ? 'Enter your email to receive a reset code.' :
-               isResetPassword ? `Hello ${resetName}, enter your new password and the code sent to your email.` :
-               isSignup ? 'Join us for the CPGeeks contests.' : 'Please enter your credentials to get started.'}
+              {isForgotPassword ? 'Enter your registered email identification to receive reset instructions.' :
+               `Hello ${resetName}, specify your new secret phrase and verification code.`}
             </p>
-          </div>
+          )}
+        </div>
+        <div className="form-side">
+          <div className="login-card">
+            {!isForgotPassword && !isResetPassword && (
+              <div className="auth-toggle-wrapper">
+                <div className="auth-toggle-container">
+                  <button
+                    type="button"
+                    className={`auth-toggle-btn ${isLogin ? 'active' : ''}`}
+                    onClick={() => { clearFields(); setSearchParams({ mode: 'login' }); }}
+                  >
+                    Log In
+                  </button>
+                  <button
+                    type="button"
+                    className={`auth-toggle-btn ${isSignup ? 'active' : ''}`}
+                    onClick={() => { clearFields(); setSearchParams({ mode: 'signup' }); }}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="login-header">
+              <h2>
+                {isForgotPassword ? 'Forgot Password' :
+                 isResetPassword ? 'Reset Password' :
+                 isSignup ? 'Create Profile' : 'Member Credentials'}
+              </h2>
+            </div>
 
           {/* ── Forgot Password ── */}
           {isForgotPassword && (
@@ -285,6 +294,18 @@ function Auth() {
                   value={regNumber} onChange={(e) => setRegNumber(e.target.value)}
                   placeholder="2019331000" required />
               </div>
+
+              <div className="manual-signup-banner">
+                <span>If you don't have active student email please </span>
+                <button
+                  type="button"
+                  className="manual-signup-link-btn"
+                  onClick={() => navigate('/auth/manual-signup')}
+                >
+                  sign up here manually
+                </button>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="signup-email">Student Email</label>
                 <input type="email" id="signup-email" className="form-input"
@@ -331,7 +352,8 @@ function Auth() {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default Auth;

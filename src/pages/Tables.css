@@ -31,12 +31,12 @@
 
 .custom-table th {
   background: var(--widget-header-bg);
-  color: var(--text-muted);
-  font-weight: 600;
+  color: var(--text-color);
+  font-weight: 700;
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   border-bottom: 1px solid var(--card-border);
 }
 

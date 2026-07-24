@@ -1,0 +1,163 @@
+.offline-banner {
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid transparent;
+}
+
+.offline-banner.is-offline {
+  background: var(--badge-red-bg, rgba(239, 68, 68, 0.18));
+  color: var(--badge-red-text, #f87171);
+  border-bottom-color: var(--badge-red-border, rgba(239, 68, 68, 0.35));
+}
+
+.offline-banner.is-restored {
+  background: var(--badge-green-bg, rgba(52, 211, 153, 0.18));
+  color: var(--badge-green-text, #34d399);
+  border-bottom-color: var(--badge-green-border, rgba(52, 211, 153, 0.35));
+}
+
+.offline-banner-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.offline-banner-message {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  line-height: 1.4;
+}
+
+.offline-icon {
+  flex-shrink: 0;
+  color: var(--badge-red-text);
+}
+
+.online-icon {
+  flex-shrink: 0;
+  color: var(--badge-green-text);
+}
+
+.offline-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.offline-retry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.offline-retry-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.offline-retry-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.offline-close-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  opacity: 0.75;
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.offline-close-btn:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Floating minimized pill when user dismisses the full banner */
+.offline-indicator-badge {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--badge-red-bg);
+  color: var(--badge-red-text);
+  border: 1px solid var(--badge-red-border);
+  border-radius: 20px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-family);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  animation: pulse-border 2s infinite;
+  transition: transform 0.2s ease;
+}
+
+.offline-indicator-badge:hover {
+  transform: scale(1.05);
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+  }
+}
+
+.spin {
+  animation: spin-icon 0.8s linear infinite;
+}
+
+@keyframes spin-icon {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .offline-banner {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .offline-retry-btn span {
+    display: none;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "SUST CPGeeks",
+  "description": "Competitive programming community platform for SUST students featuring practice, contests, and leaderboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

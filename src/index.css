@@ -1,101 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
 
 :root {
-  --font-family: 'Plus Jakarta Sans', 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --font-display: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
-  --bg-color: #021549;
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
+  
+  --bg-color: #0d131f;
   --text-color: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-muted-more: rgba(255, 255, 255, 0.4);
-  --text-normal: #e2e8f0;
+  --text-normal: #f1f5f9;
+  --text-muted: #cbd5e1;
+  --text-muted-more: #94a3b8;
   --title-color: #ffffff;
+  --accent: #d4a359;
   
-  --card-bg: rgba(30, 41, 59, 0.7);
-  --card-border: rgba(255, 255, 255, 0.1);
-  --card-bg-nested: rgba(15, 23, 42, 0.4);
-  --card-border-nested: rgba(255, 255, 255, 0.06);
+  --card-bg: #162032;
+  --card-border: rgba(212, 163, 89, 0.22);
+  --card-border-glow: rgba(212, 163, 89, 0.5);
+  --card-bg-nested: #111a28;
+  --card-border-nested: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  --card-shadow-hover: 0 12px 30px -4px rgba(0, 0, 0, 0.55), 0 0 20px 2px rgba(212, 163, 89, 0.18);
 
-  --input-bg: rgba(15, 23, 42, 0.6);
-  --input-border: rgba(148, 163, 184, 0.2);
-  --input-focus: #a0b2cf;
-  --primary-color: #A5E8DE;
-  --primary-hover: #60a5fa;
+  --input-bg: #162032;
+  --input-border: rgba(255, 255, 255, 0.22);
+  --input-focus: #d4a359;
+  --primary-color: #d4a359;
+  --primary-hover: #e5b974;
   
-  --nav-bg: rgba(15, 23, 42, 0.75);
-  --nav-border: rgba(255, 255, 255, 0.05);
-  --nav-link: #A5E8DE;
-  --nav-link-hover: #f8fafc;
+  --nav-bg: rgba(13, 19, 31, 0.96);
+  --nav-border: rgba(255, 255, 255, 0.12);
+  --nav-link: #f8fafc;
+  --nav-link-hover: #d4a359;
   --nav-link-bg-hover: rgba(255, 255, 255, 0.08);
-  --nav-link-active-bg: rgba(165, 232, 222, 0.15);
+  --nav-link-active-bg: rgba(212, 163, 89, 0.18);
   
-  --widget-header-bg: rgba(15, 23, 42, 0.8);
+  --widget-header-bg: #111a28;
 
-  --btn-primary-text: #021549;
+  --btn-primary-text: #0d131f;
 
-  /* Status Badges */
+  /* Status Badges - High contrast on dark */
   --badge-green-text: #34d399;
-  --badge-green-bg: rgba(16, 185, 129, 0.15);
-  --badge-green-border: rgba(16, 185, 129, 0.25);
+  --badge-green-bg: rgba(52, 211, 153, 0.18);
+  --badge-green-border: rgba(52, 211, 153, 0.35);
 
   --badge-blue-text: #60a5fa;
-  --badge-blue-bg: rgba(96, 165, 250, 0.15);
-  --badge-blue-border: rgba(96, 165, 250, 0.25);
+  --badge-blue-bg: rgba(96, 165, 250, 0.18);
+  --badge-blue-border: rgba(96, 165, 250, 0.35);
 
   --badge-yellow-text: #fbbf24;
-  --badge-yellow-bg: rgba(250, 190, 50, 0.15);
-  --badge-yellow-border: rgba(250, 190, 50, 0.25);
+  --badge-yellow-bg: rgba(251, 191, 36, 0.18);
+  --badge-yellow-border: rgba(251, 191, 36, 0.35);
 
   --badge-red-text: #f87171;
-  --badge-red-bg: rgba(239, 68, 68, 0.15);
-  --badge-red-border: rgba(239, 68, 68, 0.25);
+  --badge-red-bg: rgba(248, 113, 113, 0.18);
+  --badge-red-border: rgba(248, 113, 113, 0.35);
 }
 
 :root[data-theme="light"] {
-  --bg-color: #f1f5f9;
-  --text-color: #0f172a;
-  --text-muted: #475569;
-  --text-muted-more: rgba(15, 23, 42, 0.6);
-  --text-normal: #334155;
-  --title-color: #0f172a;
+  --bg-color: #f8fafc;
+  --text-color: #020617;
+  --text-normal: #0f172a;
+  --text-muted: #1e293b;
+  --text-muted-more: #334155;
+  --title-color: #000000;
+  --accent: #b45309;
   
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --card-border: rgba(15, 23, 42, 0.08);
-  --card-bg-nested: rgba(0, 0, 0, 0.03);
-  --card-border-nested: rgba(0, 0, 0, 0.06);
+  --card-bg: #ffffff;
+  --card-border: rgba(15, 23, 42, 0.16);
+  --card-border-glow: rgba(180, 83, 9, 0.45);
+  --card-bg-nested: #f1f5f9;
+  --card-border-nested: #cbd5e1;
+  --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 12px 28px -5px rgba(15, 23, 42, 0.15), 0 4px 12px -2px rgba(180, 83, 9, 0.12);
 
   --input-bg: #ffffff;
-  --input-border: rgba(15, 23, 42, 0.15);
-  --input-focus: #3b82f6;
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
+  --input-border: #64748b;
+  --input-focus: #b45309;
+  --primary-color: #020617;
+  --primary-hover: #0f172a;
   
-  --nav-bg: rgba(255, 255, 255, 0.8);
-  --nav-border: rgba(15, 23, 42, 0.08);
-  --nav-link: #2563eb;
-  --nav-link-hover: #0f172a;
-  --nav-link-bg-hover: rgba(37, 99, 235, 0.06);
-  --nav-link-active-bg: rgba(37, 99, 235, 0.1);
+  --nav-bg: rgba(255, 255, 255, 0.98);
+  --nav-border: #cbd5e1;
+  --nav-link: #0f172a;
+  --nav-link-hover: #b45309;
+  --nav-link-bg-hover: rgba(15, 23, 42, 0.06);
+  --nav-link-active-bg: rgba(180, 83, 9, 0.12);
   
-  --widget-header-bg: rgba(241, 245, 249, 0.9);
+  --widget-header-bg: #e2e8f0;
 
   --btn-primary-text: #ffffff;
 
-  /* Status Badges */
-  --badge-green-text: #047857;
-  --badge-green-bg: rgba(4, 120, 87, 0.08);
-  --badge-green-border: rgba(4, 120, 87, 0.15);
+  /* Status Badges - High contrast on light */
+  --badge-green-text: #065f46;
+  --badge-green-bg: #d1fae5;
+  --badge-green-border: #34d399;
 
-  --badge-blue-text: #1d4ed8;
-  --badge-blue-bg: rgba(29, 78, 216, 0.08);
-  --badge-blue-border: rgba(29, 78, 216, 0.15);
+  --badge-blue-text: #1e40af;
+  --badge-blue-bg: #dbeafe;
+  --badge-blue-border: #60a5fa;
 
-  --badge-yellow-text: #b45309;
-  --badge-yellow-bg: rgba(180, 83, 9, 0.08);
-  --badge-yellow-border: rgba(180, 83, 9, 0.15);
+  --badge-yellow-text: #854d0e;
+  --badge-yellow-bg: #fef08a;
+  --badge-yellow-border: #facc15;
 
-  --badge-red-text: #b91c1c;
-  --badge-red-bg: rgba(185, 28, 28, 0.08);
-  --badge-red-border: rgba(185, 28, 28, 0.15);
+  --badge-red-text: #991b1b;
+  --badge-red-bg: #fee2e2;
+  --badge-red-border: #f87171;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -112,6 +122,54 @@ html {
   overflow-x: hidden;
 }
 
+body,
+header,
+nav,
+footer,
+main,
+section,
+article,
+aside,
+a,
+button,
+input,
+select,
+textarea,
+table,
+th,
+td,
+tr,
+li,
+.card,
+.announcement-card,
+.event-card,
+.news-contest-card,
+.news-member-card,
+.problem-card,
+.login-card,
+.sidebar-widget,
+.contest-card,
+.profile-card,
+.ranker-card,
+.stat-card,
+.leaderboard-card,
+.content-section,
+.table-wrapper,
+.auth-layout-container,
+.hero-side,
+.form-side,
+.auth-toggle-container,
+.auth-toggle-btn,
+.theme-toggle-btn,
+.badge,
+.status-badge,
+.navbar,
+.footer {
+  transition-property: background-color, color, border-color, box-shadow, stroke, fill;
+  transition-duration: 0.45s;
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 body {
   font-family: var(--font-family);
   background: var(--bg-color);
@@ -120,7 +178,6 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
   line-height: 1.6;
   letter-spacing: -0.011em;
 }
@@ -147,10 +204,12 @@ body {
   padding: 0 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .layout-container {
     padding: 0 1rem;
     width: 100%;
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 
@@ -205,6 +264,129 @@ body {
   to   { opacity: 1; transform: translateX(0); }
 }
 
+/* ── Viewport Scroll Fade-In Animations ── */
+.fade-in-on-scroll,
+.reveal-on-scroll,
+.card,
+.announcement-card,
+.event-card,
+.news-contest-card,
+.news-member-card,
+.problem-card,
+.login-card,
+.sidebar-widget,
+.contest-card,
+.profile-card,
+.ranker-card,
+.stat-card,
+.leaderboard-card,
+.content-section,
+.table-wrapper {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.fade-in-on-scroll.visible,
+.reveal-on-scroll.visible,
+.card.visible,
+.announcement-card.visible,
+.event-card.visible,
+.news-contest-card.visible,
+.news-member-card.visible,
+.problem-card.visible,
+.login-card.visible,
+.sidebar-widget.visible,
+.contest-card.visible,
+.profile-card.visible,
+.ranker-card.visible,
+.stat-card.visible,
+.leaderboard-card.visible,
+.content-section.visible,
+.table-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0.05s; }
+.stagger-2 { transition-delay: 0.1s; }
+.stagger-3 { transition-delay: 0.15s; }
+.stagger-4 { transition-delay: 0.2s; }
+.stagger-5 { transition-delay: 0.25s; }
+
+/* ── Global Card Design Enhancements (Glowing Border & Hover Drop Shadow) ── */
+.card,
+.announcement-card,
+.event-card,
+.news-contest-card,
+.news-member-card,
+.problem-card,
+.login-card,
+.sidebar-widget,
+.contest-card,
+.profile-card,
+.ranker-card,
+.stat-card,
+.leaderboard-card,
+.content-section,
+.table-wrapper,
+.news-squad-card,
+.discussion-card,
+.widget-card {
+  box-shadow: var(--card-shadow);
+  border-color: var(--card-border);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease,
+              background-color 0.28s ease,
+              opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover,
+.announcement-card:hover,
+.event-card:hover,
+.news-contest-card:hover,
+.news-member-card:hover,
+.problem-card:hover,
+.sidebar-widget:hover,
+.contest-card:hover,
+.ranker-card:hover,
+.stat-card:hover,
+.leaderboard-card:hover,
+.news-squad-card:hover,
+.discussion-card:hover,
+.widget-card:hover {
+  border-color: var(--card-border-glow);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-on-scroll,
+  .reveal-on-scroll,
+  .card,
+  .announcement-card,
+  .event-card,
+  .news-contest-card,
+  .news-member-card,
+  .problem-card,
+  .login-card,
+  .sidebar-widget,
+  .contest-card,
+  .profile-card,
+  .ranker-card,
+  .stat-card,
+  .leaderboard-card,
+  .content-section,
+  .table-wrapper {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* ── Performance & Butter-Smooth Scrolling Optimizations ── */
 
 html {
@@ -229,7 +411,11 @@ html {
 }
 
 /* ─── Global Mobile Responsive & Scaling Overrides ─── */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .app-container {
+    padding-bottom: 70px !important;
+  }
+
   /* Prevent layout container squeezing */
   .layout-container {
     width: 100% !important;

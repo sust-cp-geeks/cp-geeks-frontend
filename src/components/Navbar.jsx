@@ -34,16 +34,16 @@ const Navbar = () => {
         }
       })
       .catch(console.error);
-    } else if (!token && profileName !== '') {
+    } else if (!token && lastFetchedTokenRef.current !== null) {
       lastFetchedTokenRef.current = null;
-      const id = setTimeout(() => setProfileName(''), 0);
-      return () => clearTimeout(id);
+      setProfileName('');
     }
-  }, [token, profileName]);
+  }, [token]);
 
   // Close menu when navigating
   useEffect(() => {
-    setMenuOpen(false);
+    const timer = setTimeout(() => setMenuOpen(false), 0);
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 
   const handleLogout = useCallback(() => {
@@ -55,94 +55,121 @@ const Navbar = () => {
   }, [navigate]);
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
-          <Link to="/">
-            <img src="/logo.png" alt="Logo" className="navbar-logo-img" />
-            <span>SUST CPGEEKS</span>
-          </Link>
-        </div>
-        
-        <ul className={`navbar-links${menuOpen ? ' open' : ''}`}>
-          <li className={location.pathname === '/news' ? 'active' : ''}>
-            <Link to="/news">News</Link>
-          </li>
-          <li className={location.pathname === '/announcements' ? 'active' : ''}>
-            <Link to="/announcements">Announcements</Link>
-          </li>
-          <li className={location.pathname === '/contest' ? 'active' : ''}>
-            <Link to="/contest">Contest</Link>
-          </li>
-          <li className={location.pathname === '/discussion' ? 'active' : ''}>
-            <Link to="/discussion">Discussion</Link>
-          </li>
-          <li className={location.pathname === '/problems' ? 'active' : ''}>
-            <Link to="/problems">Problems</Link>
-          </li>
-          <li className={location.pathname === '/codeforces' ? 'active' : ''}>
-            <Link to="/codeforces">Codeforces</Link>
-          </li>
-          <li className={location.pathname === '/events' ? 'active' : ''}>
-            <Link to="/events">Events</Link>
-          </li>
-          <li className={location.pathname === '/vjudge-ranker' ? 'active' : ''}>
-            <Link to="/vjudge-ranker">Vjudge Mesh</Link>
-          </li>
-        </ul>
+    <>
+      {menuOpen && (
+        <div 
+          className="navbar-overlay" 
+          onClick={() => setMenuOpen(false)} 
+          aria-hidden="true"
+        />
+      )}
+      <nav className="navbar">
+        <div className="navbar-container">
+          <div className="navbar-logo">
+            <Link to="/">
+              <img src="/logo.png" alt="Logo" className="navbar-logo-img" />
+              <span>SUST CPGEEKS</span>
+            </Link>
+          </div>
+          
+          <ul className={`navbar-links${menuOpen ? ' open' : ''}`}>
+            <li className={location.pathname === '/announcements' ? 'active' : ''}>
+              <Link to="/announcements" onClick={() => setMenuOpen(false)}>Announcements</Link>
+            </li>
+            <li className={location.pathname === '/contest' ? 'active' : ''}>
+              <Link to="/contest" onClick={() => setMenuOpen(false)}>Contest</Link>
+            </li>
+            <li className={location.pathname === '/problems' ? 'active' : ''}>
+              <Link to="/problems" onClick={() => setMenuOpen(false)}>Problems</Link>
+            </li>
+            <li className={location.pathname === '/codeforces' ? 'active' : ''}>
+              <Link to="/codeforces" onClick={() => setMenuOpen(false)}>Codeforces</Link>
+            </li>
+            <li className={location.pathname === '/events' ? 'active' : ''}>
+              <Link to="/events" onClick={() => setMenuOpen(false)}>Events</Link>
+            </li>
+            <li className={location.pathname === '/vjudge-ranker' ? 'active' : ''}>
+              <Link to="/vjudge-ranker" onClick={() => setMenuOpen(false)}>Vjudge Mesh</Link>
+            </li>
 
-        <div className="navbar-auth">
-          <button 
-            className="theme-toggle-btn" 
-            onClick={() => setTheme(prev => prev === 'dark' ? 'light' : 'dark')}
-            aria-label="Toggle light/dark theme"
-          >
-            {theme === 'dark' ? (
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-              </svg>
+            <li className="mobile-drawer-auth">
+              {token ? (
+                <div className="mobile-auth-wrapper">
+                  <div className="mobile-user-info">
+                    <span className="user-greeting">Welcome, {profileName || 'Member'}</span>
+                  </div>
+                  <div className="mobile-auth-actions">
+                    <Link to="/profile" className="mobile-profile-link" onClick={() => setMenuOpen(false)}>
+                      My Profile
+                    </Link>
+                    <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="auth-logout-btn">
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link to="/auth" className="auth-btn mobile-login-btn" onClick={() => setMenuOpen(false)}>
+                  Login / Register
+                </Link>
+              )}
+            </li>
+          </ul>
+
+          <div className="navbar-auth">
+            <button 
+              className="theme-toggle-btn" 
+              onClick={() => setTheme(prev => prev === 'dark' ? 'light' : 'dark')}
+              aria-label="Toggle light/dark theme"
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {theme === 'dark' ? (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+              )}
+              <span className="theme-toggle-label">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+            </button>
+            {token ? (
+              <div className="auth-user-info desktop-auth">
+                <span className="user-greeting">Welcome, {profileName}</span>
+                <span className="divider">|</span>
+                <button 
+                  onClick={handleLogout} 
+                  className="auth-logout-btn"
+                >
+                  Logout
+                </button>
+              </div>
             ) : (
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
+              <Link to="/auth" className="auth-btn desktop-auth">Login/Register</Link>
             )}
-          </button>
-          {token ? (
-            <div className="auth-user-info">
-              <span className="user-greeting">Welcome, {profileName}</span>
-              <span className="divider">|</span>
-              <button 
-                onClick={handleLogout} 
-                className="auth-logout-btn"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <Link to="/auth" className="auth-btn">Login/Register</Link>
-          )}
-        </div>
+          </div>
 
-        <button
-          className={`navbar-toggle${menuOpen ? ' open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </nav>
+          <button
+            className={`navbar-toggle${menuOpen ? ' open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </>
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

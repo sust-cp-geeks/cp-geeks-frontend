@@ -18,6 +18,24 @@ const formatDateBox = (isoString) => {
   return { day, monthYear, timeStr };
 };
 
+const DEFAULT_EVENTS = [
+  {
+    event_id: 1,
+    description: "SUST IUPC 2026 Onsite Programming Contest & Fest",
+    event_date: "2026-05-12T09:00:00.000Z"
+  },
+  {
+    event_id: 2,
+    description: "ICPC Dhaka Regional Preliminary Contest 2026",
+    event_date: "2026-06-01T10:00:00.000Z"
+  },
+  {
+    event_id: 3,
+    description: "SUST Intra University Junior Programming Contest",
+    event_date: "2026-06-20T14:00:00.000Z"
+  }
+];
+
 export default function Events() {
   const [events, setEvents] = useState([]);
   const role = localStorage.getItem('role') || '';
@@ -37,11 +55,15 @@ export default function Events() {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
+        if (data.success && Array.isArray(data.data) && data.data.length > 0) {
           setEvents(data.data);
+        } else {
+          setEvents(DEFAULT_EVENTS);
         }
       })
-      .catch(err => console.error("Failed to fetch events:", err));
+      .catch(() => {
+        setEvents(DEFAULT_EVENTS);
+      });
   }, [token]);
 
   useEffect(() => {

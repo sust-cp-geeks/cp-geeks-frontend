@@ -562,7 +562,7 @@
   transition: all 0.2s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .merge-input-row-card {
     grid-template-columns: 1fr;
     gap: 8px;

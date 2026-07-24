@@ -62,7 +62,10 @@ function Profile() {
   }, [id, navigate]);
 
   useEffect(() => {
-    fetchProfile();
+    const timer = setTimeout(() => {
+      fetchProfile();
+    }, 0);
+    return () => clearTimeout(timer);
   }, [id, fetchProfile]);
 
 

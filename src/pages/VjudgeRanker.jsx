@@ -14,8 +14,13 @@ export default function VjudgeRanker() {
 
   // Reset error when inputs change
   useEffect(() => {
-    setError('');
-  }, [title, contestInputs, mergeInputs]);
+    if (error) {
+      const timer = setTimeout(() => {
+        setError('');
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [title, contestInputs, mergeInputs, error]);
 
   const handleInputBlur = async (index) => {
     const input = contestInputs[index].value.trim();

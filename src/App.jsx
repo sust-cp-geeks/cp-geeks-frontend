@@ -1,12 +1,19 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import MobileBottomNav from './components/MobileBottomNav';
 import RightSidebar from './components/RightSidebar';
+import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
+import ScrollRevealObserver from './components/ScrollRevealObserver';
+import ScrollProgressBar from './components/ScrollProgressBar';
+import OfflineBanner from './components/OfflineBanner';
 import { ToastProvider } from './components/ToastContext';
 import ErrorBoundary from './components/ErrorBoundary';
 
 const Auth = lazy(() => import('./pages/Auth'));
 const ManualVerification = lazy(() => import('./pages/ManualVerification'));
+const ManualSignup = lazy(() => import('./pages/ManualSignup'));
 const News = lazy(() => import('./pages/News'));
 const Announcements = lazy(() => import('./pages/Announcements'));
 const Contest = lazy(() => import('./pages/Contest'));
@@ -50,28 +57,33 @@ function AppContent() {
   };
 
   const currentPath = getBaseRoute(location.pathname);
-  const [prevPath, setPrevPath] = useState(currentPath);
-  const [direction, setDirection] = useState(1);
+  const prevPathRef = React.useRef(currentPath);
+  const directionRef = React.useRef(1);
 
-  if (currentPath !== prevPath) {
-    const prevOrder = routeOrder[prevPath] || 0;
+  if (currentPath !== prevPathRef.current) {
+    const prevOrder = routeOrder[prevPathRef.current] || 0;
     const currentOrder = routeOrder[currentPath] || 0;
-    setDirection(currentOrder >= prevOrder ? 1 : -1);
-    setPrevPath(currentPath);
+    directionRef.current = currentOrder >= prevOrder ? 1 : -1;
+    prevPathRef.current = currentPath;
   }
+
+  const direction = directionRef.current;
 
   return (
     <div className="app-container">
+      <ScrollProgressBar />
+      <OfflineBanner />
       <Navbar />
       <div className="layout-container">
         <main className="main-content" style={{ overflowX: 'hidden' }}>
           <ErrorBoundary>
             <Suspense fallback={<div className="page-loader"><div className="spinner"></div></div>}>
               <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<Navigate to="/news" replace />} />
+                <Route path="/" element={<Navigate to="/announcements" replace />} />
                 <Route path="/auth" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Auth /></AnimatedPage>} />
                 <Route path="/auth/manual-verification" element={<AnimatedPage direction={direction} locationKey={location.pathname}><ManualVerification /></AnimatedPage>} />
-                <Route path="/news" element={<AnimatedPage direction={direction} locationKey={location.pathname}><News /></AnimatedPage>} />
+                <Route path="/auth/manual-signup" element={<AnimatedPage direction={direction} locationKey={location.pathname}><ManualSignup /></AnimatedPage>} />
+                <Route path="/news" element={<Navigate to="/announcements" replace />} />
                 <Route path="/announcements" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Announcements /></AnimatedPage>} />
                 <Route path="/contest" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Contest /></AnimatedPage>} />
                 <Route path="/discussion" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Discussion /></AnimatedPage>} />
@@ -89,6 +101,10 @@ function AppContent() {
         </main>
         <RightSidebar />
       </div>
+      <Footer />
+      <MobileBottomNav />
+      <ScrollToTop />
+      <ScrollRevealObserver />
     </div>
   );
 }

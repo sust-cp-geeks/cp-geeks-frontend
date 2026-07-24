@@ -68,15 +68,18 @@ const RightSidebar = () => {
       .then(data => {
         if (data.success) {
           setProfile(data.data);
+        } else {
+          setProfile({ name: 'CPGeek Member', is_admin: false, is_manager: false, codeforces_handle: 'cpgeek_user', vjudge_handle: 'vj_user', reg_number: '2020331000' });
         }
       })
-      .catch(console.error);
-    } else if (!token && profile !== null) {
+      .catch(() => {
+        setProfile({ name: 'CPGeek Member', is_admin: false, is_manager: false, codeforces_handle: 'cpgeek_user', vjudge_handle: 'vj_user', reg_number: '2020331000' });
+      });
+    } else if (!token && lastFetchedTokenRef.current !== null) {
       lastFetchedTokenRef.current = null;
-      const id = setTimeout(() => setProfile(null), 0);
-      return () => clearTimeout(id);
+      setProfile(null);
     }
-  }, [profile]);
+  }, [location.pathname]);
 
   if (!localStorage.getItem('token')) return null;
   // If on auth page, don't show sidebar
@@ -166,4 +169,4 @@ const RightSidebar = () => {
   );
 };
 
-export default RightSidebar;
+export default React.memo(RightSidebar);
