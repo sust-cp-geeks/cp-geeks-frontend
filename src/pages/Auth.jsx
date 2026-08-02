@@ -149,6 +149,13 @@ function Auth() {
                `Hello ${resetName}, specify your new secret phrase and verification code.`}
             </p>
           )}
+          {(isLogin || isSignup) && (
+            <p>
+              {isSignup
+                ? 'Join the SUST competitive programming community — contests, practice archives, and leaderboards.'
+                : 'Sign in to access announcements, contests, and your competitive programming profile.'}
+            </p>
+          )}
         </div>
         <div className="form-side">
           <div className="login-card">
