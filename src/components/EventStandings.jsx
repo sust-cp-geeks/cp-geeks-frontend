@@ -42,8 +42,8 @@ export default function EventStandings({ contestIds, title = "TFC Standings" }) 
     fetchStandings();
   }, [contestIds, title]);
 
-  if (loading) return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--primary-color)' }}>Loading TFC Standings...</div>;
-  if (error) return <div style={{ padding: '2rem', textAlign: 'center', color: '#ef4444' }}>{error}</div>;
+  if (loading) return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>Loading TFC Standings...</div>;
+  if (error) return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--badge-red-text)' }}>{error}</div>;
   if (!result) return null;
 
   return (

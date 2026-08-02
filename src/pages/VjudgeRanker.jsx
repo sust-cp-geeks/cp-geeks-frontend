@@ -37,31 +37,23 @@ export default function VjudgeRanker() {
 
     if (contestInputs[index].loading) return;
 
-    const newInputs = [...contestInputs];
-    newInputs[index].loading = true;
-    setContestInputs(newInputs);
+    const patchInput = (i, patch) => {
+      setContestInputs(prev => prev.map((item, idx) => idx === i ? { ...item, ...patch } : item));
+    };
+
+    patchInput(index, { loading: true });
 
     try {
       const response = await fetch(`${API_URL}/api/ranker/contest-title/${num}`);
       const data = await response.json();
       if (response.ok && data.success) {
-        const updatedInputs = [...contestInputs];
-        updatedInputs[index] = {
-          ...updatedInputs[index],
-          title: data.title || '',
-          loading: false
-        };
-        setContestInputs(updatedInputs);
+        patchInput(index, { title: data.title || '', loading: false });
       } else {
-        const updatedInputs = [...contestInputs];
-        updatedInputs[index].loading = false;
-        setContestInputs(updatedInputs);
+        patchInput(index, { loading: false });
       }
     } catch (err) {
       console.error(err);
-      const updatedInputs = [...contestInputs];
-      updatedInputs[index].loading = false;
-      setContestInputs(updatedInputs);
+      patchInput(index, { loading: false });
     }
   };
 
@@ -194,8 +186,8 @@ export default function VjudgeRanker() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: 'rgba(59, 130, 246, 0.1)',
-                      border: '1px solid rgba(59, 130, 246, 0.2)',
+                      background: 'var(--badge-blue-bg)',
+                      border: '1px solid var(--badge-blue-border)',
                       borderRadius: '50%',
                     }}>
                       {index + 1}
@@ -210,9 +202,8 @@ export default function VjudgeRanker() {
                         value={inputObj.value}
                         style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
                         onChange={(e) => {
-                          const newInputs = [...contestInputs];
-                          newInputs[index].value = e.target.value;
-                          setContestInputs(newInputs);
+                          const val = e.target.value;
+                          setContestInputs(prev => prev.map((item, i) => i === index ? { ...item, value: val } : item));
                         }}
                         onBlur={() => handleInputBlur(index)}
                         required
@@ -231,12 +222,11 @@ export default function VjudgeRanker() {
                           margin: 0,
                           padding: '0.6rem 0.8rem',
                           fontSize: '0.9rem',
-                          borderColor: inputObj.title ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255,255,255,0.1)'
+                          borderColor: inputObj.title ? 'var(--badge-green-border)' : undefined
                         }}
                         onChange={(e) => {
-                          const newInputs = [...contestInputs];
-                          newInputs[index].title = e.target.value;
-                          setContestInputs(newInputs);
+                          const val = e.target.value;
+                          setContestInputs(prev => prev.map((item, i) => i === index ? { ...item, title: val } : item));
                         }}
                       />
                       {inputObj.loading && (
@@ -275,9 +265,9 @@ export default function VjudgeRanker() {
                 className="add-contest-btn"
                 onClick={() => setContestInputs([...contestInputs, { value: '', title: '', loading: false }])}
                 style={{
-                  background: 'rgba(59, 130, 246, 0.1)',
-                  color: '#60a5fa',
-                  border: '1px dashed #3b82f6',
+                  background: 'var(--badge-blue-bg)',
+                  color: 'var(--badge-blue-text)',
+                  border: '1px dashed var(--badge-blue-border)',
                   borderRadius: '6px',
                   padding: '0.6rem 1rem',
                   cursor: 'pointer',
@@ -306,9 +296,8 @@ export default function VjudgeRanker() {
                         value={mergeObj.handle1}
                         style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
                         onChange={(e) => {
-                          const newMerges = [...mergeInputs];
-                          newMerges[index].handle1 = e.target.value;
-                          setMergeInputs(newMerges);
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, handle1: val } : m));
                         }}
                         required
                       />
@@ -322,9 +311,8 @@ export default function VjudgeRanker() {
                         value={mergeObj.handle2}
                         style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
                         onChange={(e) => {
-                          const newMerges = [...mergeInputs];
-                          newMerges[index].handle2 = e.target.value;
-                          setMergeInputs(newMerges);
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, handle2: val } : m));
                         }}
                         required
                       />
@@ -338,9 +326,8 @@ export default function VjudgeRanker() {
                         value={mergeObj.handle3}
                         style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
                         onChange={(e) => {
-                          const newMerges = [...mergeInputs];
-                          newMerges[index].handle3 = e.target.value;
-                          setMergeInputs(newMerges);
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, handle3: val } : m));
                         }}
                       />
                     </div>
@@ -353,9 +340,8 @@ export default function VjudgeRanker() {
                         value={mergeObj.name}
                         style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
                         onChange={(e) => {
-                          const newMerges = [...mergeInputs];
-                          newMerges[index].name = e.target.value;
-                          setMergeInputs(newMerges);
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, name: val } : m));
                         }}
                         required
                       />
@@ -380,9 +366,9 @@ export default function VjudgeRanker() {
                 className="add-merge-btn"
                 onClick={() => setMergeInputs([...mergeInputs, { handle1: '', handle2: '', handle3: '', name: '' }])}
                 style={{
-                  background: 'rgba(16, 185, 129, 0.1)',
-                  color: '#34d399',
-                  border: '1px dashed #10b981',
+                  background: 'var(--badge-green-bg)',
+                  color: 'var(--badge-green-text)',
+                  border: '1px dashed var(--badge-green-border)',
                   borderRadius: '6px',
                   padding: '0.6rem 1rem',
                   cursor: 'pointer',

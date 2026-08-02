@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+/* Fonts are loaded via <link> in index.html (preconnect + non-blocking). */
 
 :root {
   --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -122,6 +122,9 @@ html {
   overflow-x: hidden;
 }
 
+/* Theme-switch smoothing — kept short so hover/focus states stay snappy.
+   Deliberately excludes table cells and list items: transitioning hundreds
+   of td/tr nodes on theme change causes long style/paint frames. */
 body,
 header,
 nav,
@@ -135,11 +138,6 @@ button,
 input,
 select,
 textarea,
-table,
-th,
-td,
-tr,
-li,
 .card,
 .announcement-card,
 .event-card,
@@ -166,8 +164,14 @@ li,
 .navbar,
 .footer {
   transition-property: background-color, color, border-color, box-shadow, stroke, fill;
-  transition-duration: 0.45s;
-  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+
+/* Visible keyboard focus everywhere, in both themes */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 body {
@@ -242,26 +246,29 @@ body {
 }
 
 /* ── Page transition animations (replaces framer-motion) ── */
-.animated-page {
-  will-change: opacity, transform;
-}
-
 .animated-page[data-direction="1"] {
-  animation: fadeSlideFromRight 0.25s ease-out both;
+  animation: fadeSlideFromRight 0.22s ease-out both;
 }
 
 .animated-page[data-direction="-1"] {
-  animation: fadeSlideFromLeft 0.25s ease-out both;
+  animation: fadeSlideFromLeft 0.22s ease-out both;
 }
 
 @keyframes fadeSlideFromRight {
-  from { opacity: 0; transform: translateX(30px); }
+  from { opacity: 0; transform: translateX(22px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeSlideFromLeft {
-  from { opacity: 0; transform: translateX(-30px); }
+  from { opacity: 0; transform: translateX(-22px); }
   to   { opacity: 1; transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-page[data-direction="1"],
+  .animated-page[data-direction="-1"] {
+    animation: none;
+  }
 }
 
 /* ── Viewport Scroll Fade-In Animations ── */
@@ -283,10 +290,9 @@ body {
 .content-section,
 .table-wrapper {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateY(14px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-in-on-scroll.visible,

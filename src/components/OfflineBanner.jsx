@@ -9,7 +9,10 @@ function OfflineBanner() {
   const [isChecking, setIsChecking] = useState(false);
 
   useEffect(() => {
+    let restoredTimer = null;
+
     const handleOffline = () => {
+      clearTimeout(restoredTimer);
       setIsOffline(true);
       setShowRestored(false);
       setDismissed(false);
@@ -20,17 +23,17 @@ function OfflineBanner() {
       setShowRestored(true);
       setDismissed(false);
 
-      const timer = setTimeout(() => {
+      clearTimeout(restoredTimer);
+      restoredTimer = setTimeout(() => {
         setShowRestored(false);
       }, 3500);
-
-      return () => clearTimeout(timer);
     };
 
     window.addEventListener('offline', handleOffline);
     window.addEventListener('online', handleOnline);
 
     return () => {
+      clearTimeout(restoredTimer);
       window.removeEventListener('offline', handleOffline);
       window.removeEventListener('online', handleOnline);
     };

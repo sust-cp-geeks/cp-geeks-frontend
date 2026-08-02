@@ -142,6 +142,7 @@ export default function Announcements() {
   return (
     <div className="announcements-page">
       <div className="announcements-header">
+        <h1>Announcements</h1>
         {canCreate && !showForm && (
           <button className="create-btn" onClick={() => setShowForm(true)}>
             + Create an announcement
@@ -217,7 +218,7 @@ export default function Announcements() {
                       <div className="date-day">{dateData.day}</div>
                       <div className="date-month-year">{dateData.monthYear}</div>
                       {dateData.timeStr && (
-                        <div style={{ marginTop: '8px', fontSize: '15px', fontWeight: '700', fontFamily: "'JetBrains Mono', monospace", color: '#0f766e' }}>
+                        <div style={{ marginTop: '8px', fontSize: '15px', fontWeight: '700', fontFamily: 'var(--font-mono)' }}>
                           {dateData.timeStr}
                         </div>
                       )}

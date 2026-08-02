@@ -9,14 +9,14 @@ import '../components/Skeleton.css';
 const DEFAULT_SECTIONS = [
   {
     id: 1,
-    title: "Graph Theory & Trees",
+    name: "Graph Theory & Trees",
     description: "BFS, DFS, Dijkstra, Segment Trees, and LCA",
     subsections: [
       {
         id: 11,
-        title: "Shortest Paths",
+        name: "Shortest Paths",
         items: [
-          { id: 101, title: "Dijkstra Algorithm Practice", url: "https://codeforces.com", platform: "Codeforces", type: "problem" }
+          { id: 101, title: "Dijkstra Algorithm Practice", url: "https://codeforces.com", platform: "Codeforces", item_type: "problem" }
         ]
       }
     ]
@@ -153,7 +153,7 @@ const Problems = () => {
   return (
     <div className="page-container problems-page">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 className="page-title" style={{ margin: 0, color: '#60a5fa' }}>Practice Archive</h1>
+        <h1 className="page-title" style={{ margin: 0 }}>Practice Archive</h1>
         {isAdmin && (
           <button onClick={handleAddSection} className="admin-btn-primary">
             + Add New Section
@@ -182,7 +182,7 @@ const Problems = () => {
           </div>
         ) : (
           <>
-            <div className="admin-preview-banner" style={{ background: 'rgba(96, 165, 250, 0.1)', border: '1px dashed #60a5fa', padding: '0.8rem 1.2rem', borderRadius: '0.5rem', marginBottom: '1.5rem', color: '#60a5fa', fontSize: '0.9rem', textAlign: 'center' }}>
+            <div className="admin-preview-banner" style={{ background: 'var(--badge-blue-bg)', border: '1px dashed var(--badge-blue-border)', padding: '0.8rem 1.2rem', borderRadius: '0.5rem', marginBottom: '1.5rem', color: 'var(--badge-blue-text)', fontSize: '0.9rem', textAlign: 'center' }}>
               <strong>Admin Notice:</strong> Students currently see the "Coming Soon" card. As an admin, you can view and build problem sections right here.
             </div>
             {sections.length === 0 && <p className="empty-state">No sections constructed yet.</p>}

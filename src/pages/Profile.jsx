@@ -126,7 +126,7 @@ function Profile() {
             <h1>{id ? `${profile?.name}'s Profile` : 'My Profile'}</h1>
             <p>{id ? 'Viewing competitive programming handles and info' : 'Manage your account settings and competitive programming handles'}</p>
             {!id && (
-              <p style={{ fontSize: '0.85em', color: '#ff9800', marginTop: '0.5rem', fontStyle: 'italic' }}>
+              <p style={{ fontSize: '0.85em', color: 'var(--accent)', marginTop: '0.5rem', fontStyle: 'italic' }}>
                 * Note: You can only add 1 Codeforces and Vjudge account for now.
               </p>
             )}

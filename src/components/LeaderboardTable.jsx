@@ -69,7 +69,7 @@ export default function LeaderboardTable({ result }) {
                       <td className="rank-col">
                         {getPodiumBadge(row.rank)}
                       </td>
-                      <td className="name-col font-bold" style={{ color: row.real_name === 'unregistered' ? '#60a5fa' : 'var(--primary-color)' }}>
+                      <td className="name-col font-bold" style={{ color: row.real_name === 'unregistered' ? 'var(--badge-blue-text)' : 'var(--accent)' }}>
                         {row.real_name}
                       </td>
                       <td className="handle-col">
@@ -122,15 +122,15 @@ export default function LeaderboardTable({ result }) {
                                       <span
                                         className="val font-bold"
                                         style={{
-                                          color: detail.participated ? '#10b981' : '#f43f5e',
-                                          background: detail.participated ? 'rgba(16, 185, 129, 0.1)' : 'rgba(244, 63, 94, 0.1)',
+                                          color: detail.participated ? 'var(--badge-green-text)' : 'var(--badge-red-text)',
+                                          background: detail.participated ? 'var(--badge-green-bg)' : 'var(--badge-red-bg)',
                                           padding: '2px 8px',
                                           borderRadius: '4px',
                                           fontSize: '0.75rem',
                                           display: 'inline-block',
                                           textAlign: 'center',
                                           marginTop: '2px',
-                                          border: detail.participated ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid rgba(244, 63, 94, 0.2)'
+                                          border: detail.participated ? '1px solid var(--badge-green-border)' : '1px solid var(--badge-red-border)'
                                         }}
                                       >
                                         {detail.participated ? 'Yes' : 'No'}

@@ -1,42 +1,32 @@
-# SUST CPGeeks Frontend
+# SUST CPGeeks — Frontend
 
-This is the frontend application for the SUST CPGeeks platform, built with React and Vite.
+Competitive programming community platform for SUST students — announcements, contests, practice archives, Codeforces stats, and VJudge contest ranking.
 
-## Prerequisites
+**Stack:** React 19 · Vite · React Router 7
 
-- Node.js (v18 or higher recommended)
-- npm (Node Package Manager)
+## Quick Start
 
-## Getting Started
+```bash
+npm install
+cp .env.example .env   # set VITE_API_URL to your backend URL
+npm run dev            # http://localhost:3000
+```
 
-Follow these steps to run the frontend application on your local machine:
+## Scripts
 
-1. **Install Dependencies**
-   Navigate to the project directory and install the required dependencies:
-   ```bash
-   npm install
-   ```
+| Command           | Description                        |
+| ----------------- | ---------------------------------- |
+| `npm run dev`     | Start dev server with HMR          |
+| `npm run build`   | Production build → `dist/`         |
+| `npm run preview` | Preview the production build       |
+| `npm run lint`    | Run ESLint                         |
 
-2. **Start the Development Server**
-   Run the following command to start the Vite development server:
-   ```bash
-   npm run dev
-   ```
+## Configuration
 
-3. **View in Browser**
-   Once the server is running, open your browser and navigate to the URL shown in your terminal (typically [http://localhost:5173/](http://localhost:5173/)).
+| Variable       | Description                                        |
+| -------------- | -------------------------------------------------- |
+| `VITE_API_URL` | Backend API base URL (defaults to `http://localhost:8080`) |
 
-## Available Scripts
+## Deployment
 
-In the project directory, you can run the following commands:
-
-- `npm run dev`: Starts the development server with Hot Module Replacement (HMR).
-- `npm run build`: Builds the application for production to the `dist` folder.
-- `npm run preview`: Boot up a local static web server that serves the files from `dist` to preview the production build locally.
-- `npm run lint`: Runs ESLint to check for code quality and syntax issues.
-
-## Technology Stack
-
-- **React** (v19)
-- **Vite** (Build Tool)
-- **React Router DOM** (Routing)
+Any static host works. On Vercel, set `VITE_API_URL` in the project's environment variables — SPA routing is handled by `vercel.json`.

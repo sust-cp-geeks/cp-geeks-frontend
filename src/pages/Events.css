@@ -381,6 +381,93 @@
   border: 1px solid var(--card-border);
 }
 
+/* Event details tabs */
+.event-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.event-tab-btn {
+  padding: 10px 20px;
+  background: var(--card-bg-nested);
+  color: var(--badge-blue-text);
+  border: 1px solid var(--card-border-nested);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: var(--font-family);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.event-tab-btn:hover {
+  border-color: var(--badge-blue-border);
+}
+
+.event-tab-btn.active-tab {
+  background: var(--badge-blue-bg);
+  border-color: var(--badge-blue-border);
+}
+
+.event-tab-btn.tab-success {
+  color: var(--badge-green-text);
+}
+
+.event-tab-btn.tab-success:hover,
+.event-tab-btn.tab-success.active-tab {
+  border-color: var(--badge-green-border);
+}
+
+.event-tab-btn.tab-success.active-tab {
+  background: var(--badge-green-bg);
+}
+
+.tab-content {
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+}
+
+.tab-empty-text {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+.contest-id-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.contest-id-item {
+  background: var(--card-bg-nested);
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--card-border-nested);
+}
+
+.remove-contest-id-btn {
+  background: var(--badge-red-bg);
+  color: var(--badge-red-text);
+  border: 1px solid var(--badge-red-border);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: opacity 0.2s ease;
+}
+
+.remove-contest-id-btn:hover {
+  opacity: 0.8;
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;

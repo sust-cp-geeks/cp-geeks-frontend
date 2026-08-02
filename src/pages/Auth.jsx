@@ -52,7 +52,7 @@ function Auth() {
         const userRole = data.user?.is_admin ? 'admin' : (data.user?.is_manager ? 'manager' : 'student');
         localStorage.setItem('role', userRole);
         showToast('Login successful!', 'success');
-        navigate('/news');
+        navigate('/announcements');
       } else {
         const errorData = await response.json().catch(() => ({}));
         showToast(`Login failed: ${errorData.error || errorData.message || 'Invalid credentials'}`, 'error');
@@ -69,7 +69,7 @@ function Auth() {
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reg_number: regNumber, name, email, password, codeforces_handle: codeforcesHandle }),
+        body: JSON.stringify({ reg_number: regNumber, name, email, password, codeforces_handle: codeforcesHandle, vjudge_handle: vjudgeHandle }),
       });
       if (response.ok) {
         showToast('Registration successful! Please log in.', 'success');

@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import MobileBottomNav from './components/MobileBottomNav';
@@ -14,7 +14,6 @@ import ErrorBoundary from './components/ErrorBoundary';
 const Auth = lazy(() => import('./pages/Auth'));
 const ManualVerification = lazy(() => import('./pages/ManualVerification'));
 const ManualSignup = lazy(() => import('./pages/ManualSignup'));
-const News = lazy(() => import('./pages/News'));
 const Announcements = lazy(() => import('./pages/Announcements'));
 const Contest = lazy(() => import('./pages/Contest'));
 const Discussion = lazy(() => import('./pages/Discussion'));
@@ -50,6 +49,11 @@ const AnimatedPage = ({ children, direction, locationKey }) => (
 function AppContent() {
   const location = useLocation();
 
+  // Reset scroll on route change; instant so it doesn't fight smooth-scroll CSS
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
   const getBaseRoute = (path) => {
     if (path.startsWith('/profile')) return '/profile';
     if (path.startsWith('/events/')) return '/events';
@@ -57,17 +61,18 @@ function AppContent() {
   };
 
   const currentPath = getBaseRoute(location.pathname);
-  const prevPathRef = React.useRef(currentPath);
-  const directionRef = React.useRef(1);
 
-  if (currentPath !== prevPathRef.current) {
-    const prevOrder = routeOrder[prevPathRef.current] || 0;
+  // "Adjust state during render" pattern — derives slide direction from the
+  // previous route without refs, which is safe under concurrent rendering.
+  const [prevPath, setPrevPath] = useState(currentPath);
+  const [direction, setDirection] = useState(1);
+
+  if (currentPath !== prevPath) {
+    const prevOrder = routeOrder[prevPath] || 0;
     const currentOrder = routeOrder[currentPath] || 0;
-    directionRef.current = currentOrder >= prevOrder ? 1 : -1;
-    prevPathRef.current = currentPath;
+    setDirection(currentOrder >= prevOrder ? 1 : -1);
+    setPrevPath(currentPath);
   }
-
-  const direction = directionRef.current;
 
   return (
     <div className="app-container">

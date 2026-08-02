@@ -75,9 +75,9 @@ const RightSidebar = () => {
       .catch(() => {
         setProfile({ name: 'CPGeek Member', is_admin: false, is_manager: false, codeforces_handle: 'cpgeek_user', vjudge_handle: 'vj_user', reg_number: '2020331000' });
       });
-    } else if (!token && lastFetchedTokenRef.current !== null) {
+    } else if (!token) {
+      // Sidebar renders null without a token, so no state reset needed
       lastFetchedTokenRef.current = null;
-      setProfile(null);
     }
   }, [location.pathname]);
 

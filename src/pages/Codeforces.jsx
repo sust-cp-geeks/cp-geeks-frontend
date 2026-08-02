@@ -5,11 +5,11 @@ import './Codeforces.css';
 import '../components/Skeleton.css';
 
 const DEFAULT_LEADERBOARD = [
-  { user_id: 1, name: "Tourist SUST", handle: "tourist_sust", rating: 2450, maxRating: 2500, solvedCount: 420 },
-  { user_id: 2, name: "Mahir Ahmed", handle: "mahir_dp", rating: 1890, maxRating: 1950, solvedCount: 310 },
-  { user_id: 3, name: "Nusrat Sultana", handle: "nusrat_ac", rating: 1780, maxRating: 1820, solvedCount: 280 },
-  { user_id: 4, name: "Rafiul Hasan", handle: "rafi_codes", rating: 1650, maxRating: 1710, solvedCount: 240 },
-  { user_id: 5, name: "Tanvir Islam", handle: "tanvir_cf", rating: 1540, maxRating: 1600, solvedCount: 195 }
+  { user_id: 1, rank: 1, name: "Tourist SUST", codeforces_handle: "tourist_sust", current_rating: 2450, current_rank: "Master" },
+  { user_id: 2, rank: 2, name: "Mahir Ahmed", codeforces_handle: "mahir_dp", current_rating: 1890, current_rank: "Candidate Master" },
+  { user_id: 3, rank: 3, name: "Nusrat Sultana", codeforces_handle: "nusrat_ac", current_rating: 1780, current_rank: "Expert" },
+  { user_id: 4, rank: 4, name: "Rafiul Hasan", codeforces_handle: "rafi_codes", current_rating: 1650, current_rank: "Expert" },
+  { user_id: 5, rank: 5, name: "Tanvir Islam", codeforces_handle: "tanvir_cf", current_rating: 1540, current_rank: "Specialist" }
 ];
 
 const Codeforces = () => {
@@ -76,17 +76,18 @@ const Codeforces = () => {
     }
   };
 
+  // Standard Codeforces rank palette, tuned to stay readable on both themes
   const getRankColor = (rank) => {
-    if (!rank) return '#fff';
+    if (!rank) return 'inherit';
     const l = rank.toLowerCase();
-    if (l.includes('newbie')) return 'gray';
-    if (l.includes('pupil')) return 'green';
-    if (l.includes('specialist')) return '#03a89e'; // cyan
-    if (l.includes('expert')) return 'blue';
-    if (l.includes('candidate master')) return '#a0a'; // violet
-    if (l.includes('master')) return '#ff8c00'; // orange
-    if (l.includes('grandmaster')) return 'red';
-    return '#fff';
+    if (l.includes('newbie')) return 'var(--text-muted-more)';
+    if (l.includes('pupil')) return 'var(--badge-green-text)';
+    if (l.includes('specialist')) return '#03a89e';
+    if (l.includes('candidate master')) return '#c026d3';
+    if (l.includes('grandmaster')) return '#ef4444';
+    if (l.includes('master')) return '#f59e0b';
+    if (l.includes('expert')) return 'var(--badge-blue-text)';
+    return 'inherit';
   };
 
   const renderSolveCountBars = (periodData) => {

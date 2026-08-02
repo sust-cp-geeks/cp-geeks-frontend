@@ -184,64 +184,60 @@ export default function EventDetails() {
         </div>
       </div>
 
-      <div className="event-tabs" style={{ display: 'flex', gap: '10px', margin: '20px 0', flexWrap: 'wrap' }}>
-        <button 
-          className={`action-btn ${activeTab === 'rank' ? 'active-tab' : ''}`}
+      <div className="event-tabs">
+        <button
+          className={`event-tab-btn ${activeTab === 'rank' ? 'active-tab' : ''}`}
           onClick={() => setActiveTab('rank')}
-          style={{ padding: '10px 20px', background: activeTab === 'rank' ? 'rgba(96, 165, 250, 0.15)' : 'rgba(30,41,59,0.4)', color: '#60a5fa', border: activeTab === 'rank' ? '1px solid #60a5fa' : '1px solid rgba(96, 165, 250, 0.3)', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
         >
           See Current Rank
         </button>
         {canEdit && (
-          <button 
-            className={`action-btn ${activeTab === 'contests' ? 'active-tab' : ''}`}
+          <button
+            className={`event-tab-btn ${activeTab === 'contests' ? 'active-tab' : ''}`}
             onClick={() => setActiveTab('contests')}
-            style={{ padding: '10px 20px', background: activeTab === 'contests' ? 'rgba(96, 165, 250, 0.15)' : 'rgba(30,41,59,0.4)', color: '#60a5fa', border: activeTab === 'contests' ? '1px solid #60a5fa' : '1px solid rgba(96, 165, 250, 0.3)', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
           >
             Added Contests
           </button>
         )}
         {canEdit && (
-          <button 
-            className={`action-btn ${activeTab === 'edit' ? 'active-tab' : ''}`}
+          <button
+            className={`event-tab-btn ${activeTab === 'edit' ? 'active-tab' : ''}`}
             onClick={() => setActiveTab('edit')}
-            style={{ padding: '10px 20px', background: activeTab === 'edit' ? 'rgba(96, 165, 250, 0.15)' : 'rgba(30,41,59,0.4)', color: '#60a5fa', border: activeTab === 'edit' ? '1px solid #60a5fa' : '1px solid rgba(96, 165, 250, 0.3)', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
           >
             Edit Event
           </button>
         )}
         {canEdit && (
-          <button 
-            className={`action-btn ${activeTab === 'add_contest' ? 'active-tab' : ''}`}
+          <button
+            className={`event-tab-btn tab-success ${activeTab === 'add_contest' ? 'active-tab' : ''}`}
             onClick={() => setActiveTab('add_contest')}
-            style={{ padding: '10px 20px', background: activeTab === 'add_contest' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(30,41,59,0.4)', color: '#10b981', border: activeTab === 'add_contest' ? '1px solid #10b981' : '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
           >
             + Add Contest
           </button>
         )}
       </div>
 
-      <div className="tab-content" style={{ padding: '20px', background: 'rgba(30,41,59,0.4)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+      <div className="tab-content">
         {activeTab === 'rank' && (
           <div>
             {event.vjudge_contest_ids && event.vjudge_contest_ids.length > 0 ? (
               <EventStandings contestIds={event.vjudge_contest_ids} title={`${event.description} - TFC Standings`} />
             ) : (
-              <p style={{ color: 'rgba(255,255,255,0.6)', textAlign: 'center', padding: '2rem' }}>No contests have been added to this event yet.</p>
+              <p className="tab-empty-text">No contests have been added to this event yet.</p>
             )}
           </div>
         )}
 
         {activeTab === 'contests' && canEdit && (
           <div>
-            <h3 style={{ color: 'var(--primary-color)', marginBottom: '15px' }}>Added VJudge Contests</h3>
+            <h3 style={{ color: 'var(--primary-hover)', marginBottom: '15px' }}>Added VJudge Contests</h3>
             {event.vjudge_contest_ids && event.vjudge_contest_ids.length > 0 ? (
-              <ul style={{ listStyle: 'none', padding: 0, marginTop: '15px' }}>
+              <ul className="contest-id-list">
                 {event.vjudge_contest_ids.map(cid => (
-                  <li key={cid} style={{ background: 'rgba(255,255,255,0.05)', padding: '15px 20px', borderRadius: '8px', marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid rgba(255,255,255,0.1)' }}>
-                    <span style={{ fontSize: '1.1rem' }}>Contest ID: <strong style={{ color: 'var(--primary-color)' }}>{cid}</strong></span>
+                  <li key={cid} className="contest-id-item">
+                    <span style={{ fontSize: '1.1rem' }}>Contest ID: <strong style={{ color: 'var(--primary-hover)' }}>{cid}</strong></span>
                     {canEdit && (
-                      <button onClick={() => handleRemoveContest(cid)} style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', transition: 'all 0.2s' }}>
+                      <button onClick={() => handleRemoveContest(cid)} className="remove-contest-id-btn">
                         Remove
                       </button>
                     )}
@@ -249,17 +245,17 @@ export default function EventDetails() {
                 ))}
               </ul>
             ) : (
-              <p style={{ color: 'rgba(255,255,255,0.6)' }}>No contests added.</p>
+              <p className="tab-empty-text">No contests added.</p>
             )}
 
           </div>
         )}
 
         {activeTab === 'add_contest' && canEdit && (
-          <div className="create-form-modal" style={{ margin: 0, border: 'none', padding: 0 }}>
-            <h3 style={{ color: '#10b981', marginBottom: '15px' }}>Add a New Contest</h3>
+          <div className="create-form-modal" style={{ margin: 0, border: 'none', padding: 0, boxShadow: 'none' }}>
+            <h3 style={{ color: 'var(--badge-green-text)', marginBottom: '15px' }}>Add a New Contest</h3>
             <form onSubmit={handleAddContest} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ color: '#cbd5e1' }}>Enter VJudge Contest ID or URL:</label>
+              <label style={{ color: 'var(--text-muted)' }}>Enter VJudge Contest ID or URL:</label>
               <input 
                 type="text" 
                 value={newContestId} 
@@ -269,7 +265,7 @@ export default function EventDetails() {
                 style={{ width: '100%', maxWidth: '500px' }}
                 required 
               />
-              <button type="submit" className="save-btn" style={{ background: '#10b981', color: 'white', width: 'fit-content', padding: '12px 30px', marginTop: '10px' }}>
+              <button type="submit" className="save-btn" style={{ width: 'fit-content', padding: '12px 30px', marginTop: '10px' }}>
                 Add Contest
               </button>
             </form>
@@ -277,8 +273,8 @@ export default function EventDetails() {
         )}
 
         {activeTab === 'edit' && canEdit && (
-          <div className="create-form-modal" style={{ margin: 0, border: 'none', padding: 0 }}>
-            <h3 style={{ color: 'var(--primary-color)', marginBottom: '15px' }}>Edit Event Details</h3>
+          <div className="create-form-modal" style={{ margin: 0, border: 'none', padding: 0, boxShadow: 'none' }}>
+            <h3 style={{ color: 'var(--primary-hover)', marginBottom: '15px' }}>Edit Event Details</h3>
             <form onSubmit={handleUpdateEvent}>
               <div className="form-group">
                 <label>Event Description</label>

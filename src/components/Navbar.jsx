@@ -34,9 +34,9 @@ const Navbar = () => {
         }
       })
       .catch(console.error);
-    } else if (!token && lastFetchedTokenRef.current !== null) {
+    } else if (!token) {
+      // Name is only rendered when a token exists, so no state reset needed
       lastFetchedTokenRef.current = null;
-      setProfileName('');
     }
   }, [token]);
 
@@ -161,6 +161,7 @@ const Navbar = () => {
             className={`navbar-toggle${menuOpen ? ' open' : ''}`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
           >
             <span></span>
             <span></span>

@@ -63,9 +63,17 @@ export default function ScrollRevealObserver() {
 
     observeNewElements();
 
-    // Observe future DOM changes (dynamic card lists, page navigation)
+    // Observe future DOM changes (dynamic card lists, page navigation).
+    // Coalesce mutation bursts into one scan per frame — scanning the whole
+    // document synchronously on every mutation causes jank during renders.
+    let scanScheduled = false;
     const mutationObserver = new MutationObserver(() => {
-      observeNewElements();
+      if (scanScheduled) return;
+      scanScheduled = true;
+      requestAnimationFrame(() => {
+        scanScheduled = false;
+        observeNewElements();
+      });
     });
 
     mutationObserver.observe(document.body, {

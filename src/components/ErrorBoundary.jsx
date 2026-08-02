@@ -38,11 +38,11 @@ class ErrorBoundary extends React.Component {
           <h2 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#f87171',
+            color: 'var(--badge-red-text)',
             marginBottom: '0.5rem',
           }}>Something went wrong</h2>
           <p style={{
-            color: 'rgba(255, 255, 255, 0.5)',
+            color: 'var(--text-muted-more)',
             marginBottom: '2rem',
             maxWidth: '400px',
           }}>
@@ -51,15 +51,14 @@ class ErrorBoundary extends React.Component {
           <button
             onClick={this.handleReload}
             style={{
-              background: 'linear-gradient(135deg, var(--primary-color), var(--primary-hover))',
-              color: '#0f172a',
+              background: 'var(--primary-color)',
+              color: 'var(--btn-primary-text)',
               padding: '0.75rem 2rem',
               borderRadius: '9999px',
               fontWeight: 700,
               fontSize: '1rem',
               border: 'none',
               cursor: 'pointer',
-              boxShadow: '0 4px 15px rgba(165, 232, 222, 0.3)',
             }}
           >
             Reload Page

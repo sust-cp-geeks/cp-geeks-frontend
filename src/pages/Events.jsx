@@ -128,7 +128,7 @@ export default function Events() {
       </div>
 
       {showEventForm && (
-        <div className="create-form-modal" style={{ marginBottom: '1rem', marginTop: '1rem', border: '2px solid #3C3489' }}>
+        <div className="create-form-modal" style={{ marginBottom: '1rem', marginTop: '1rem' }}>
           <h3>Create New Event</h3>
           <form onSubmit={handleSaveEvent}>
             <div className="form-group">
