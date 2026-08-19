@@ -197,21 +197,23 @@
 }
 
 .auth-logout-btn {
-  background: none;
-  border: none;
+  background: var(--badge-red-bg);
+  border: 1px solid var(--badge-red-border);
   color: var(--badge-red-text);
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  padding: 0;
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
   transition: all 0.2s;
   font-family: inherit;
   white-space: nowrap;
 }
 
 .auth-logout-btn:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+  background: var(--badge-red-text);
+  color: #ffffff;
+  text-decoration: none;
 }
 
 /* ─── Mobile Overlay ─── */

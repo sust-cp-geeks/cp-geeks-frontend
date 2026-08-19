@@ -157,13 +157,14 @@
 }
 
 .cancel-btn {
-  background: transparent;
-  color: var(--text-normal);
-  border: 1px solid var(--card-border);
+  background: var(--badge-red-bg);
+  color: var(--badge-red-text);
+  border: 1px solid var(--badge-red-border);
 }
 
 .cancel-btn:hover {
-  background: var(--nav-link-bg-hover);
+  background: var(--badge-red-text);
+  color: #ffffff;
 }
 
 .save-btn {

@@ -155,16 +155,6 @@ const RightSidebar = () => {
         )}
       </div>
 
-      <div className="sidebar-widget">
-        <h3 className="widget-header">Pay attention</h3>
-        <div className="widget-body">
-          <ul className="attention-list">
-            <li><Link to="/announcements">Check latest announcements</Link></li>
-            <li><Link to="/events">Upcoming ICPC/NCPC Events</Link></li>
-            <li><Link to="/contest">Next Vjudge Contest</Link></li>
-          </ul>
-        </div>
-      </div>
     </aside>
   );
 };

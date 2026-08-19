@@ -31,11 +31,20 @@ const Problems = () => {
   // Modal states
   const [showItemModal, setShowItemModal] = useState(false);
   const [activeSubsection, setActiveSubsection] = useState(null);
-  
   const [itemType, setItemType] = useState('problem');
   const [itemTitle, setItemTitle] = useState('');
   const [itemUrl, setItemUrl] = useState('');
   const [itemPlatform, setItemPlatform] = useState('');
+
+  const [showSectionModal, setShowSectionModal] = useState(false);
+  const [sectionName, setSectionName] = useState('');
+  const [sectionDesc, setSectionDesc] = useState('');
+
+  const [showSubsectionModal, setShowSubsectionModal] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
+  const [subsectionName, setSubsectionName] = useState('');
+  const [subsectionDesc, setSubsectionDesc] = useState('');
+
   const showToast = useToast();
 
   const checkAdmin = () => {
@@ -50,7 +59,11 @@ const Problems = () => {
       const res = await fetch(`${API_URL}/api/problems`);
       if (res.ok) {
         const data = await res.json();
-        setSections(data.data?.length ? data.data : DEFAULT_SECTIONS);
+        if (Array.isArray(data.data)) {
+          setSections(data.data);
+        } else {
+          setSections(DEFAULT_SECTIONS);
+        }
       } else {
         setSections(DEFAULT_SECTIONS);
       }
@@ -71,11 +84,14 @@ const Problems = () => {
 
   const getToken = () => localStorage.getItem('token');
 
-  const handleAddSection = async () => {
-    const name = window.prompt("Enter new Section Name (e.g., Graph):");
-    if (!name) return;
-    const desc = window.prompt("Enter description (optional):") || "";
-    
+  const openSectionModal = () => {
+    setSectionName('');
+    setSectionDesc('');
+    setShowSectionModal(true);
+  };
+
+  const submitSection = async (e) => {
+    e.preventDefault();
     try {
       const res = await fetch(`${API_URL}/api/problems/sections`, {
         method: 'POST',
@@ -83,20 +99,30 @@ const Problems = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ name, description: desc })
+        body: JSON.stringify({ name: sectionName, description: sectionDesc })
       });
-      if (res.ok) fetchProblems();
-      else showToast('Failed to create section.', 'error');
+      if (res.ok) {
+        setShowSectionModal(false);
+        fetchProblems();
+      } else {
+        const errText = await res.text().catch(() => 'Unknown error');
+        showToast(`Failed to create section: ${errText}`, 'error');
+      }
     } catch (e) {
       console.error(e);
+      showToast('Network error.', 'error');
     }
   };
 
-  const handleAddSubsection = async (sectionId) => {
-    const name = window.prompt("Enter new Subsection Name (e.g., DFS):");
-    if (!name) return;
-    const desc = window.prompt("Enter description (optional):") || "";
-    
+  const openSubsectionModal = (sectionId) => {
+    setActiveSection(sectionId);
+    setSubsectionName('');
+    setSubsectionDesc('');
+    setShowSubsectionModal(true);
+  };
+
+  const submitSubsection = async (e) => {
+    e.preventDefault();
     try {
       const res = await fetch(`${API_URL}/api/problems/subsections`, {
         method: 'POST',
@@ -104,12 +130,18 @@ const Problems = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ section_id: sectionId, name, description: desc })
+        body: JSON.stringify({ section_id: activeSection, name: subsectionName, description: subsectionDesc })
       });
-      if (res.ok) fetchProblems();
-      else showToast('Failed to create subsection.', 'error');
+      if (res.ok) {
+        setShowSubsectionModal(false);
+        fetchProblems();
+      } else {
+        const errText = await res.text().catch(() => 'Unknown error');
+        showToast(`Failed to create subsection: ${errText}`, 'error');
+      }
     } catch (e) {
       console.error(e);
+      showToast('Network error.', 'error');
     }
   };
 
@@ -143,7 +175,9 @@ const Problems = () => {
         setShowItemModal(false);
         fetchProblems();
       } else {
-        showToast('Failed to add item.', 'error');
+        const errorText = await res.text().catch(() => 'Unknown error');
+        showToast(`Failed to add item: ${errorText}`, 'error');
+        console.error('Server error response:', errorText);
       }
     } catch (e) {
       console.error(e);
@@ -155,7 +189,7 @@ const Problems = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h1 className="page-title" style={{ margin: 0 }}>Practice Archive</h1>
         {isAdmin && (
-          <button onClick={handleAddSection} className="admin-btn-primary">
+          <button onClick={openSectionModal} className="admin-btn-primary">
             + Add New Section
           </button>
         )}
@@ -169,28 +203,14 @@ const Problems = () => {
             <div className="skeleton skeleton-title" style={{ marginTop: '2rem' }}></div>
             <div className="skeleton skeleton-card" style={{ height: '200px' }}></div>
           </div>
-        ) : !isAdmin ? (
-          <div className="coming-soon-card">
-            <div className="coming-soon-icon">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-            </div>
-            <h2>Problems Section Coming Soon</h2>
-            <p>We are currently indexing our curated collection of competitive programming problems, topic-wise practice sets, and editorial resources. Check back shortly!</p>
-          </div>
         ) : (
           <>
-            <div className="admin-preview-banner" style={{ background: 'var(--badge-blue-bg)', border: '1px dashed var(--badge-blue-border)', padding: '0.8rem 1.2rem', borderRadius: '0.5rem', marginBottom: '1.5rem', color: 'var(--badge-blue-text)', fontSize: '0.9rem', textAlign: 'center' }}>
-              <strong>Admin Notice:</strong> Students currently see the "Coming Soon" card. As an admin, you can view and build problem sections right here.
-            </div>
             {sections.length === 0 && <p className="empty-state">No sections constructed yet.</p>}
             {sections.map(sec => (
           <div key={sec.id} className="problem-section">
             <div className="section-header">
               <h2>{sec.name}</h2>
-              {isAdmin && <button onClick={() => handleAddSubsection(sec.id)} className="admin-btn-text">+ Subsection</button>}
+              {isAdmin && <button onClick={() => openSubsectionModal(sec.id)} className="admin-btn-text">+ Subsection</button>}
             </div>
             {sec.description && <p className="section-desc">{sec.description}</p>}
 
@@ -269,6 +289,50 @@ const Problems = () => {
               <div className="form-actions" style={{ marginTop: '1rem', display: 'flex', gap: '10px' }}>
                 <button type="button" onClick={() => setShowItemModal(false)} className="cancel-btn">Cancel</button>
                 <button type="submit" className="save-btn">Add It</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showSectionModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Add New Section</h2>
+            <form onSubmit={submitSection} className="modal-form">
+              <div className="form-group">
+                <label>Section Name</label>
+                <input required value={sectionName} onChange={e => setSectionName(e.target.value)} className="form-input" placeholder="e.g. Graph Theory" />
+              </div>
+              <div className="form-group">
+                <label>Description (Optional)</label>
+                <textarea value={sectionDesc} onChange={e => setSectionDesc(e.target.value)} className="form-textarea" placeholder="e.g. BFS, DFS, Dijkstra" rows="3" />
+              </div>
+              <div className="form-actions" style={{ marginTop: '1rem', display: 'flex', gap: '10px' }}>
+                <button type="button" onClick={() => setShowSectionModal(false)} className="cancel-btn">Cancel</button>
+                <button type="submit" className="save-btn">Create Section</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showSubsectionModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Add New Subsection</h2>
+            <form onSubmit={submitSubsection} className="modal-form">
+              <div className="form-group">
+                <label>Subsection Name</label>
+                <input required value={subsectionName} onChange={e => setSubsectionName(e.target.value)} className="form-input" placeholder="e.g. Shortest Paths" />
+              </div>
+              <div className="form-group">
+                <label>Description (Optional)</label>
+                <textarea value={subsectionDesc} onChange={e => setSubsectionDesc(e.target.value)} className="form-textarea" placeholder="e.g. Dijkstra and Bellman Ford" rows="3" />
+              </div>
+              <div className="form-actions" style={{ marginTop: '1rem', display: 'flex', gap: '10px' }}>
+                <button type="button" onClick={() => setShowSubsectionModal(false)} className="cancel-btn">Cancel</button>
+                <button type="submit" className="save-btn">Create Subsection</button>
               </div>
             </form>
           </div>

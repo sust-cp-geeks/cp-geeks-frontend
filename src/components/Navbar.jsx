@@ -31,6 +31,12 @@ const Navbar = () => {
       .then(data => {
         if (data.success && data.data) {
           setProfileName(data.data.name);
+        } else {
+          // Token is likely invalid, clear it
+          localStorage.removeItem('token');
+          localStorage.removeItem('role');
+          setProfileName('');
+          lastFetchedTokenRef.current = null;
         }
       })
       .catch(console.error);
@@ -75,9 +81,6 @@ const Navbar = () => {
           <ul className={`navbar-links${menuOpen ? ' open' : ''}`}>
             <li className={location.pathname === '/announcements' ? 'active' : ''}>
               <Link to="/announcements" onClick={() => setMenuOpen(false)}>Announcements</Link>
-            </li>
-            <li className={location.pathname === '/contest' ? 'active' : ''}>
-              <Link to="/contest" onClick={() => setMenuOpen(false)}>Contest</Link>
             </li>
             <li className={location.pathname === '/problems' ? 'active' : ''}>
               <Link to="/problems" onClick={() => setMenuOpen(false)}>Problems</Link>
