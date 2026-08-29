@@ -38,89 +38,6 @@
   padding: 1rem;
 }
 
-.profile-main {
-  text-align: center;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px dashed var(--card-border-nested);
-}
-
-.profile-name-link {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--title-color);
-  text-decoration: none;
-  transition: color 0.2s;
-  display: block;
-}
-
-.profile-name-link:hover {
-  color: var(--primary-hover);
-}
-
-.profile-role {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 0.3rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.profile-details {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1rem 0;
-}
-
-.profile-details li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.profile-details .label {
-  color: var(--text-muted);
-}
-
-.cf-handle, .vj-handle {
-  color: var(--primary-hover);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.cf-handle:hover, .vj-handle:hover {
-  text-decoration: underline;
-}
-
-.na-text {
-  color: var(--text-muted-more);
-  font-style: italic;
-}
-
-.widget-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.widget-link {
-  display: block;
-  text-align: center;
-  padding: 0.5rem;
-  background: var(--card-bg-nested);
-  border-radius: 0.5rem;
-  color: var(--text-normal);
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: all 0.2s;
-}
-
-.widget-link:hover {
-  background: var(--nav-link-bg-hover);
-  color: var(--primary-color);
-}
-
 .attention-list {
   list-style: none;
   padding: 0;
@@ -160,6 +77,10 @@
 
 .search-widget {
   overflow: visible;
+  /* Flex items honour z-index even when static; this keeps the dropdown above
+     the profile widget that follows it. */
+  position: relative;
+  z-index: 5;
 }
 
 .search-widget-body {
@@ -212,4 +133,99 @@
 .sidebar-search-results li:hover {
   background: var(--nav-link-bg-hover);
   color: var(--primary-color);
+}
+
+/* Search dropdown states */
+.sidebar-search-results .search-note {
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted-more);
+  cursor: default;
+}
+
+.sidebar-search-results .search-note:hover {
+  background: none;
+}
+
+.sidebar-search-results .search-hit {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.search-hit-name {
+  font-size: 0.85rem;
+  color: var(--text-normal);
+}
+
+.search-hit-reg {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted-more);
+  white-space: nowrap;
+}
+
+/* Compact identity card — mirrors the monogram on the profile page */
+.sidebar-me {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  border-radius: 0 0 0.75rem 0.75rem;
+  transition: background 0.2s ease;
+}
+
+.sidebar-me:hover {
+  background: var(--nav-link-bg-hover);
+}
+
+.sidebar-me-avatar {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--btn-primary-text);
+  background: var(--primary-color);
+  user-select: none;
+}
+
+.sidebar-me-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.sidebar-me-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-me-role {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted-more);
+}
+
+.sidebar-me-go {
+  flex-shrink: 0;
+  color: var(--text-muted-more);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-me:hover .sidebar-me-go {
+  color: var(--primary-color);
+  transform: translateX(2px);
 }

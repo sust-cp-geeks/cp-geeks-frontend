@@ -1,0 +1,297 @@
+/* Admin user review. Colours come from the theme tokens in index.css so both
+   themes stay readable. */
+
+.admin-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.admin-header h1 {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  color: var(--title-color);
+  margin: 0 0 0.4rem;
+}
+
+.admin-muted {
+  color: var(--text-muted-more);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.admin-hint {
+  color: var(--text-muted-more);
+  font-size: 0.78rem;
+  margin: 0.5rem 0 0;
+}
+
+.admin-hint-danger { color: var(--badge-red-text); }
+
+/* ── Tabs ─────────────────────────────────────────────────────────────── */
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.admin-tab {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.admin-tab:hover { color: var(--text-color); }
+
+.admin-tab.is-active {
+  color: var(--btn-primary-text);
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* ── User grid ────────────────────────────────────────────────────────── */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+
+.admin-user-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  padding: 1.1rem;
+  box-shadow: var(--card-shadow);
+}
+
+.admin-user-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.admin-user-top h3 {
+  margin: 0;
+  font-size: 1.02rem;
+  color: var(--text-color);
+}
+
+.admin-reg {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted-more);
+  white-space: nowrap;
+}
+
+.admin-user-email {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.admin-user-handles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted-more);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+.admin-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.admin-btn {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.42rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: var(--text-normal);
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
+  transition: opacity 0.2s ease;
+}
+
+.admin-btn:hover:not(:disabled) { opacity: 0.82; }
+.admin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.admin-btn-primary {
+  color: var(--btn-primary-text);
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.admin-btn-approve {
+  color: var(--badge-green-text);
+  background: var(--badge-green-bg);
+  border-color: var(--badge-green-border);
+}
+
+.admin-btn-reject {
+  color: var(--badge-red-text);
+  background: var(--badge-red-bg);
+  border-color: var(--badge-red-border);
+}
+
+.admin-link-btn {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0;
+  margin-left: 0.5rem;
+  color: var(--primary-hover);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.admin-link-danger { color: var(--badge-red-text); margin-left: 0; }
+
+.admin-inline-form { margin-top: 0.75rem; }
+
+.admin-danger {
+  margin-top: 0.9rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--card-border-nested);
+}
+
+/* ── Review dialog ────────────────────────────────────────────────────── */
+.admin-review-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.admin-review {
+  width: min(46rem, 100%);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.9rem;
+  padding: 1.4rem;
+  box-shadow: var(--card-shadow-hover);
+}
+
+.admin-review-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin-review-head h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--title-color);
+}
+
+.admin-review-sub {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted-more);
+  overflow-wrap: anywhere;
+}
+
+.admin-icon-btn {
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
+}
+
+.admin-ttl {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--badge-yellow-text);
+  margin: 0 0 0.75rem;
+}
+
+.admin-ttl.is-expired { color: var(--badge-red-text); }
+
+.admin-card-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.admin-card-pair figure { margin: 0; }
+
+.admin-card-pair img {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--card-border-nested);
+  background: var(--card-bg-nested);
+  display: block;
+}
+
+.admin-card-pair figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.76rem;
+  color: var(--text-muted-more);
+  text-align: center;
+}
+
+.admin-review-actions {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border-nested);
+}
+
+.admin-review-actions .form-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.5rem;
+  color: var(--text-normal);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.admin-inline-form .form-input {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.45rem;
+  color: var(--text-normal);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 40rem) {
+  .admin-review { padding: 1rem; }
+}

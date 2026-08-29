@@ -29,7 +29,7 @@ export default function EventStandings({ contestIds, title = "TFC Standings" }) 
         if (response.ok && data.success) {
           setResult(data.data);
         } else {
-          setError(data.message || 'Failed to fetch standings');
+          setError(data.error || data.message || 'Failed to fetch standings');
         }
       } catch (err) {
         console.error(err);
