@@ -1,4 +1,4 @@
-import { API_URL } from '../api';
+import { API_URL, toApiDate, normalizeApiDate, parseApiDate } from '../api';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastContext';
@@ -61,12 +61,10 @@ export default function EventDetails() {
 
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
-    const timeStr = time ? `${time}:00` : '00:00:00';
-    const event_date = `${date}T${timeStr}`;
-
     const payload = {
       description,
-      event_date,
+      // Empty when the event has no date — previously this built "T00:00:00".
+      event_date: toApiDate(date, time),
       vjudge_contest_ids: event.vjudge_contest_ids // keep same
     };
 
@@ -125,7 +123,7 @@ export default function EventDetails() {
   const updateContestIds = async (updatedIds) => {
     const payload = {
       description: event.description,
-      event_date: event.event_date,
+      event_date: normalizeApiDate(event.event_date),
       vjudge_contest_ids: updatedIds.length > 0 ? updatedIds : null // handle empty array properly
     };
     try {
@@ -147,8 +145,8 @@ export default function EventDetails() {
   const canEdit = role === 'admin' || role === 'manager';
 
   const dateData = (() => {
-    const d = new Date(event.event_date);
-    if(isNaN(d)) return null;
+    const d = parseApiDate(event.event_date);
+    if (!d) return null;
     return {
       day: d.getDate(),
       monthYear: d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),

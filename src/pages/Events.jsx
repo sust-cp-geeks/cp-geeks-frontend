@@ -1,4 +1,4 @@
-import { API_URL } from '../api';
+import { API_URL, toApiDate, parseApiDate } from '../api';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastContext';
@@ -6,8 +6,8 @@ import './Events.css';
 
 const formatDateBox = (isoString) => {
   if (!isoString) return null;
-  const d = new Date(isoString);
-  if (isNaN(d.getTime())) return null;
+  const d = parseApiDate(isoString);
+  if (!d) return null;
   
   const day = d.getDate();
   const monthYear = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
@@ -74,10 +74,7 @@ export default function Events() {
     e.preventDefault();
     if (!description.trim() || !date) return;
 
-    const timeStr = time ? `${time}:00` : '00:00:00';
-    const event_date = `${date}T${timeStr}`;
-
-    const payload = { description, event_date };
+    const payload = { description, event_date: toApiDate(date, time) };
 
     try {
       const res = await fetch(`${API_URL}/api/events`, {
@@ -91,7 +88,7 @@ export default function Events() {
         setShowEventForm(false);
         fetchEvents(token);
       } else {
-        showToast(data.message || 'Failed to create event', 'error');
+        showToast(data.error || data.message || 'Failed to create event', 'error');
       }
     } catch (err) {
       console.error(err);

@@ -129,7 +129,7 @@ export default function VjudgeRanker() {
         setResult(data.data);
         setSessionId(data.session_id);
       } else {
-        setError(data.message || 'An error occurred while fetching rankings.');
+        setError(data.error || data.message || 'An error occurred while fetching rankings.');
       }
     } catch (err) {
       console.error(err);

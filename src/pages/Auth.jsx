@@ -1,8 +1,10 @@
 import { API_URL } from '../api';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useToast } from '../components/ToastContext';
 import './Auth.css';
+
+const SUST_DOMAIN = '@student.sust.edu';
 
 function Auth() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +18,9 @@ function Auth() {
   const [resetName, setResetName] = useState('');
   const [resetCode, setResetCode] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  // Forgot-password shares the OTP email budget: 5 per address per hour.
+  const [resetCooldown, setResetCooldown] = useState(0);
 
   // Form states
   const [email, setEmail] = useState('');
@@ -27,6 +32,15 @@ function Auth() {
 
   const navigate = useNavigate();
   const showToast = useToast();
+
+  useEffect(() => {
+    if (resetCooldown <= 0) return;
+    const timer = setTimeout(() => setResetCooldown((n) => n - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [resetCooldown]);
+
+  // Checked as the user types so the door switch is visible before submitting.
+  const isSustEmail = email.trim().toLowerCase().endsWith(SUST_DOMAIN);
 
   const clearFields = () => {
     setEmail('');
@@ -65,16 +79,31 @@ function Auth() {
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
+    // Only a university address may register as plain JSON; anything else needs
+    // the ID card upload door, so send them there instead of earning a 400.
+    if (!isSustEmail) {
+      showToast('That address needs ID card verification — continuing to manual sign up.', 'info');
+      navigate('/auth/manual-signup');
+      return;
+    }
+    setSubmitting(true);
     try {
+      // Empty optional handles are omitted; the API validates them when present.
+      const payload = { reg_number: regNumber, name, email, password };
+      if (codeforcesHandle.trim()) payload.codeforces_handle = codeforcesHandle.trim();
+      if (vjudgeHandle.trim()) payload.vjudge_handle = vjudgeHandle.trim();
+
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reg_number: regNumber, name, email, password, codeforces_handle: codeforcesHandle, vjudge_handle: vjudgeHandle }),
+        body: JSON.stringify(payload),
       });
       if (response.ok) {
-        showToast('Registration successful! Please log in.', 'success');
+        // Registration lands on pending_verification — the OTP screen is next.
+        showToast('Account created — check your email for the verification code.', 'success');
+        const registeredEmail = email;
         clearFields();
-        setSearchParams({}, { replace: true });
+        navigate(`/auth/verify?email=${encodeURIComponent(registeredEmail)}`);
       } else {
         const errorData = await response.json().catch(() => ({}));
         showToast(`Registration failed: ${errorData.error || errorData.message || 'Something went wrong'}`, 'error');
@@ -82,11 +111,14 @@ function Auth() {
     } catch (err) {
       console.error("Network error:", err);
       showToast("Could not connect to the server.", 'error');
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleForgotPasswordSubmit = async (e) => {
     e.preventDefault();
+    if (resetCooldown > 0) return;
     try {
       const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
         method: 'POST',
@@ -96,6 +128,7 @@ function Auth() {
       if (response.ok) {
         const data = await response.json().catch(() => ({}));
         setResetName(data.name || 'User');
+        setResetCooldown(60);
         showToast(data.message || 'Password reset code sent!', 'success');
         // Push reset mode so back goes to forgot
         setSearchParams({ mode: 'reset' });
@@ -199,8 +232,8 @@ function Auth() {
                   placeholder="name@example.com" required
                 />
               </div>
-              <button type="submit" className="submit-btn" style={{ marginTop: '1.5rem' }}>
-                Send Reset Code
+              <button type="submit" className="submit-btn" disabled={resetCooldown > 0} style={{ marginTop: '1.5rem' }}>
+                {resetCooldown > 0 ? `Resend in ${resetCooldown}s` : 'Send Reset Code'}
               </button>
               <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
                 <a href="#" className="forgot-password-link" onClick={(e) => { e.preventDefault(); setSearchParams({}, { replace: false }); }}>
@@ -277,10 +310,18 @@ function Auth() {
               <div className="auth-links-below-btn">
                 <p className="auth-link-line">
                   Don't have a student Gmail?{' '}
-                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/auth/manual-verification'); }}>Click Here</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/auth/manual-signup'); }}>Click Here</a>
                 </p>
                 <p className="auth-link-line">
                   <a href="#" onClick={(e) => { e.preventDefault(); setSearchParams({ mode: 'forgot' }); }}>Forgot Password?</a>
+                </p>
+                <p className="auth-link-line">
+                  <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); navigate(`/auth/pending${email ? `?email=${encodeURIComponent(email)}` : ''}`); }}
+                  >
+                    Waiting for approval?
+                  </a>
                 </p>
               </div>
             </form>
@@ -303,7 +344,11 @@ function Auth() {
               </div>
 
               <div className="manual-signup-banner">
-                <span>If you don't have active student email please </span>
+                <span>
+                  {email && !isSustEmail
+                    ? 'That is not a student email — it needs ID card verification, so please '
+                    : "If you don't have active student email please "}
+                </span>
                 <button
                   type="button"
                   className="manual-signup-link-btn"
@@ -334,22 +379,27 @@ function Auth() {
                 <label htmlFor="signup-cf">Codeforces Handle (Optional)</label>
                 <input type="text" id="signup-cf" className="form-input"
                   value={codeforcesHandle} onChange={(e) => setCodeforcesHandle(e.target.value)}
+                  maxLength={50}
                   placeholder="tourist" />
               </div>
               <div className="form-group">
                 <label htmlFor="signup-vj">VJudge Handle (Optional)</label>
                 <input type="text" id="signup-vj" className="form-input"
                   value={vjudgeHandle} onChange={(e) => setVjudgeHandle(e.target.value)}
+                  maxLength={100}
                   placeholder="vjudge_handle" />
+                <p className="auth-field-hint">
+                  Used to match you to VJudge standings — without it you show as “unregistered”.
+                </p>
               </div>
-              <button type="submit" className="submit-btn" style={{ marginTop: '1.5rem' }}>
-                Sign Up
+              <button type="submit" className="submit-btn" disabled={submitting} style={{ marginTop: '1.5rem' }}>
+                {submitting ? 'Creating account…' : 'Sign Up'}
               </button>
 
               <div className="auth-links-below-btn">
                 <p className="auth-link-line">
                   Don't have a student Gmail?{' '}
-                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/auth/manual-verification'); }}>Click Here</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/auth/manual-signup'); }}>Click Here</a>
                 </p>
               </div>
             </form>

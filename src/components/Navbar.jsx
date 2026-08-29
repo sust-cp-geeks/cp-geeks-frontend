@@ -7,6 +7,7 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const token = localStorage.getItem('token') || '';
+  const role = localStorage.getItem('role') || '';
   const [profileName, setProfileName] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const lastFetchedTokenRef = useRef(null);
@@ -94,6 +95,11 @@ const Navbar = () => {
             <li className={location.pathname === '/vjudge-ranker' ? 'active' : ''}>
               <Link to="/vjudge-ranker" onClick={() => setMenuOpen(false)}>Vjudge Mesh</Link>
             </li>
+            {role === 'admin' && (
+              <li className={location.pathname === '/admin/users' ? 'active' : ''}>
+                <Link to="/admin/users" onClick={() => setMenuOpen(false)}>Admin</Link>
+              </li>
+            )}
 
             <li className="mobile-drawer-auth">
               {token ? (
