@@ -11,10 +11,7 @@
   --text-muted: #cbd5e1;
   --text-muted-more: #94a3b8;
   --title-color: #ffffff;
-  --accent: #8DD6D2;
-  --secondary-1: #8DD6D2;
-  --secondary-2: #68A3D4;
-  --secondary-3: #D4A2E0;
+  --accent: #d4a359;
   
   --card-bg: #162032;
   --card-border: rgba(212, 163, 89, 0.22);
@@ -26,9 +23,9 @@
 
   --input-bg: #162032;
   --input-border: rgba(255, 255, 255, 0.22);
-  --input-focus: #8DD6D2;
-  --primary-color: #D4A2E0;
-  --primary-hover: #8DD6D2;
+  --input-focus: #d4a359;
+  --primary-color: #d4a359;
+  --primary-hover: #e5b974;
   
   --nav-bg: rgba(13, 19, 31, 0.96);
   --nav-border: rgba(255, 255, 255, 0.12);
@@ -60,13 +57,13 @@
 }
 
 :root[data-theme="light"] {
-  --bg-color: #ffffff;
+  --bg-color: #f8fafc;
   --text-color: #020617;
   --text-normal: #0f172a;
   --text-muted: #1e293b;
   --text-muted-more: #334155;
   --title-color: #000000;
-  --accent: #8DD6D2;
+  --accent: #b45309;
   
   --card-bg: #ffffff;
   --card-border: rgba(15, 23, 42, 0.16);
@@ -78,9 +75,9 @@
 
   --input-bg: #ffffff;
   --input-border: #64748b;
-  --input-focus: #8DD6D2;
-  --primary-color: #D4A2E0;
-  --primary-hover: #8DD6D2;
+  --input-focus: #b45309;
+  --primary-color: #020617;
+  --primary-hover: #0f172a;
   
   --nav-bg: rgba(255, 255, 255, 0.98);
   --nav-border: #cbd5e1;
