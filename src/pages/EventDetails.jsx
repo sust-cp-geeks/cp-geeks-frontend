@@ -18,12 +18,14 @@ export default function EventDetails() {
   const [activeTab, setActiveTab] = useState('rank');
 
   // Edit Event State
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
 
   // Add Contest State
   const [newContestId, setNewContestId] = useState('');
+
+  // Merge Handles State
+  const [mergeInputs, setMergeInputs] = useState([]);
 
   const fetchEvent = useCallback(async (authToken = token) => {
     try {
@@ -33,11 +35,12 @@ export default function EventDetails() {
       const data = await res.json();
       if (data.success) {
         setEvent(data.data);
+        setTitle(data.data.title || '');
         setDescription(data.data.description);
-        if (data.data.event_date) {
-          const [d, t] = data.data.event_date.split('T');
-          setDate(d || '');
-          setTime(t ? t.substring(0, 5) : '');
+        if (data.data.merged_handles) {
+          setMergeInputs(data.data.merged_handles);
+        } else {
+          setMergeInputs([]);
         }
       } else {
         showToast('Event not found', 'error');
@@ -62,10 +65,10 @@ export default function EventDetails() {
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
     const payload = {
+      title,
       description,
-      // Empty when the event has no date — previously this built "T00:00:00".
-      event_date: toApiDate(date, time),
-      vjudge_contest_ids: event.vjudge_contest_ids // keep same
+      vjudge_contest_ids: event.vjudge_contest_ids, // keep same
+      merged_handles: event.merged_handles // keep same
     };
 
     try {
@@ -122,9 +125,10 @@ export default function EventDetails() {
 
   const updateContestIds = async (updatedIds) => {
     const payload = {
+      title: event.title,
       description: event.description,
-      event_date: normalizeApiDate(event.event_date),
-      vjudge_contest_ids: updatedIds.length > 0 ? updatedIds : null // handle empty array properly
+      vjudge_contest_ids: updatedIds.length > 0 ? updatedIds : null, // handle empty array properly
+      merged_handles: event.merged_handles
     };
     try {
       const res = await fetch(`${API_URL}/api/events/${id}`, {
@@ -139,45 +143,47 @@ export default function EventDetails() {
     }
   };
 
+  const updateMergedHandles = async (newMergedHandles) => {
+    const payload = {
+      title: event.title,
+      description: event.description,
+      vjudge_contest_ids: event.vjudge_contest_ids,
+      merged_handles: newMergedHandles.length > 0 ? newMergedHandles : null
+    };
+    try {
+      const res = await fetch(`${API_URL}/api/events/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Merged handles updated', 'success');
+        fetchEvent();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (loading) return <div className="events-page"><div className="events-header"><h1>Loading...</h1></div></div>;
   if (!event) return null;
 
   const canEdit = role === 'admin' || role === 'manager';
 
-  const dateData = (() => {
-    const d = parseApiDate(event.event_date);
-    if (!d) return null;
-    return {
-      day: d.getDate(),
-      monthYear: d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-      timeStr: d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-    };
-  })();
-
   return (
     <div className="events-page">
       <div className="events-header">
-        <h1>Event Details</h1>
+        <h1>{event.title}</h1>
         <Link to="/events" className="create-btn" style={{ textDecoration: 'none' }}>
           ← Back to Events
         </Link>
       </div>
 
       <div className="event-card-container">
-        <div className="event-card">
+        <div className="event-card" style={{ display: 'block' }}>
           <div className="event-description">
             {event.description}
-          </div>
-          <div className="event-actions">
-            <div className={`event-date-box ${!dateData ? 'no-date' : ''}`}>
-              {dateData && (
-                <>
-                  <div className="date-day">{dateData.day}</div>
-                  <div className="date-month-year">{dateData.monthYear}</div>
-                  <div className="date-time">{dateData.timeStr}</div>
-                </>
-              )}
-            </div>
           </div>
         </div>
       </div>
@@ -213,13 +219,21 @@ export default function EventDetails() {
             + Add Contest
           </button>
         )}
+        {canEdit && (
+          <button
+            className={`event-tab-btn ${activeTab === 'merge' ? 'active-tab' : ''}`}
+            onClick={() => setActiveTab('merge')}
+          >
+            Merge Handles
+          </button>
+        )}
       </div>
 
       <div className="tab-content">
         {activeTab === 'rank' && (
           <div>
             {event.vjudge_contest_ids && event.vjudge_contest_ids.length > 0 ? (
-              <EventStandings contestIds={event.vjudge_contest_ids} title={`${event.description} - TFC Standings`} />
+              <EventStandings contestIds={event.vjudge_contest_ids} title={`${event.description} - TFC Standings`} mergedHandles={event.merged_handles} />
             ) : (
               <p className="tab-empty-text">No contests have been added to this event yet.</p>
             )}
@@ -270,10 +284,148 @@ export default function EventDetails() {
           </div>
         )}
 
+        {activeTab === 'merge' && canEdit && (
+          <div className="create-form-modal" style={{ margin: 0, border: 'none', padding: 0, boxShadow: 'none' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+              <h3 style={{ color: 'var(--primary-hover)', margin: 0 }}>Merge Handles</h3>
+              <button
+                type="button"
+                className="save-btn"
+                style={{ padding: '8px 16px' }}
+                onClick={() => {
+                  const cleaned = mergeInputs
+                    .map(m => {
+                      const handles = [m.handles?.[0] || m.handle1 || '', m.handles?.[1] || m.handle2 || ''];
+                      if (m.handles?.[2] || m.handle3) handles.push(m.handles?.[2] || m.handle3 || '');
+                      return {
+                        name: (m.name || '').trim(),
+                        handles: handles.map(h => h.trim()).filter(Boolean)
+                      };
+                    })
+                    .filter(m => m.name && m.handles.length >= 2);
+                  updateMergedHandles(cleaned);
+                }}
+              >
+                Save Merged Handles
+              </button>
+            </div>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>Combine multiple handles for participants who used different accounts across contests.</p>
+            
+            <div className="merge-inputs-list" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {mergeInputs.map((mergeObj, index) => {
+                const handle1 = mergeObj.handles?.[0] || mergeObj.handle1 || '';
+                const handle2 = mergeObj.handles?.[1] || mergeObj.handle2 || '';
+                const handle3 = mergeObj.handles?.[2] || mergeObj.handle3 || '';
+                return (
+                  <div key={index} className="merge-input-row-card" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px', alignItems: 'center', background: 'var(--bg-card)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Handle 1"
+                        value={handle1}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, handle1: val, handles: [val, handle2, handle3].filter(Boolean) } : m));
+                        }}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Handle 2"
+                        value={handle2}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, handle2: val, handles: [handle1, val, handle3].filter(Boolean) } : m));
+                        }}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Handle 3 (Optional)"
+                        value={handle3}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, handle3: val, handles: [handle1, handle2, val].filter(Boolean) } : m));
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Merged Name"
+                        value={mergeObj.name || ''}
+                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setMergeInputs(prev => prev.map((m, i) => i === index ? { ...m, name: val } : m));
+                        }}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        className="remove-contest-btn"
+                        style={{ padding: '0.6rem 0.8rem', width: '100%' }}
+                        onClick={() => {
+                          setMergeInputs(mergeInputs.filter((_, i) => i !== index));
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <button
+              type="button"
+              className="add-merge-btn"
+              onClick={() => setMergeInputs([...mergeInputs, { handles: [], name: '' }])}
+              style={{
+                background: 'var(--badge-green-bg)',
+                color: 'var(--badge-green-text)',
+                border: '1px dashed var(--badge-green-border)',
+                borderRadius: '6px',
+                padding: '0.6rem 1rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                marginTop: '15px',
+                width: '100%',
+                textAlign: 'center',
+                transition: 'background 0.2s'
+              }}
+            >
+              + Add Merge Rule
+            </button>
+          </div>
+        )}
+
         {activeTab === 'edit' && canEdit && (
           <div className="create-form-modal" style={{ margin: 0, border: 'none', padding: 0, boxShadow: 'none' }}>
             <h3 style={{ color: 'var(--primary-hover)', marginBottom: '15px' }}>Edit Event Details</h3>
             <form onSubmit={handleUpdateEvent}>
+              <div className="form-group">
+                <label>Event Title</label>
+                <input 
+                  type="text"
+                  className="form-input" 
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+              </div>
               <div className="form-group">
                 <label>Event Description</label>
                 <textarea 
@@ -283,27 +435,6 @@ export default function EventDetails() {
                   onChange={(e) => setDescription(e.target.value)}
                   required
                 />
-              </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <div className="form-group" style={{ flex: 1 }}>
-                  <label>Date (Required)</label>
-                  <input 
-                    type="date" 
-                    className="form-input" 
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="form-group" style={{ flex: 1 }}>
-                  <label>Time (Optional)</label>
-                  <input 
-                    type="time" 
-                    className="form-input" 
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                  />
-                </div>
               </div>
               <div className="form-actions">
                 <button type="submit" className="save-btn" style={{ width: 'auto', padding: '12px 30px' }}>

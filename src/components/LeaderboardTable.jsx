@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import './LeaderboardTable.css';
 
 export default function LeaderboardTable({ result }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -117,8 +118,8 @@ export default function LeaderboardTable({ result }) {
                                       <span className="lbl">Penalty</span>
                                       <span className="val font-mono">{detail.penalty}</span>
                                     </div>
-                                    <div className="breakdown-stat" style={{ minWidth: '80px' }}>
-                                      <span className="lbl">Participated</span>
+                                    <div className="breakdown-stat">
+                                      <span className="lbl">Status</span>
                                       <span
                                         className="val font-bold"
                                         style={{

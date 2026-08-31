@@ -2,7 +2,7 @@ import { API_URL } from '../api';
 import React, { useState, useEffect } from 'react';
 import LeaderboardTable from './LeaderboardTable';
 
-export default function EventStandings({ contestIds, title = "TFC Standings" }) {
+export default function EventStandings({ contestIds, title = "TFC Standings", mergedHandles }) {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -22,6 +22,7 @@ export default function EventStandings({ contestIds, title = "TFC Standings" }) 
           body: JSON.stringify({
             title,
             contest_ids: contestIds,
+            merged_handles: mergedHandles && mergedHandles.length > 0 ? mergedHandles : null
           })
         });
 
@@ -40,7 +41,7 @@ export default function EventStandings({ contestIds, title = "TFC Standings" }) 
     };
 
     fetchStandings();
-  }, [contestIds, title]);
+  }, [contestIds, title, mergedHandles]);
 
   if (loading) return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>Loading TFC Standings...</div>;
   if (error) return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--badge-red-text)' }}>{error}</div>;

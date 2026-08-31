@@ -4,35 +4,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastContext';
 import './Events.css';
 
-const formatDateBox = (isoString) => {
-  if (!isoString) return null;
-  const d = parseApiDate(isoString);
-  if (!d) return null;
-  
-  const day = d.getDate();
-  const monthYear = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-  let timeStr = null;
-  if (d.getHours() !== 0 || d.getMinutes() !== 0) {
-    timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-  }
-  return { day, monthYear, timeStr };
-};
-
 const DEFAULT_EVENTS = [
   {
     event_id: 1,
-    description: "SUST IUPC 2026 Onsite Programming Contest & Fest",
-    event_date: "2026-05-12T09:00:00.000Z"
+    title: "SUST IUPC 2026",
+    description: "SUST IUPC 2026 Onsite Programming Contest & Fest"
   },
   {
     event_id: 2,
-    description: "ICPC Dhaka Regional Preliminary Contest 2026",
-    event_date: "2026-06-01T10:00:00.000Z"
+    title: "ICPC Regional",
+    description: "ICPC Dhaka Regional Preliminary Contest 2026"
   },
   {
     event_id: 3,
-    description: "SUST Intra University Junior Programming Contest",
-    event_date: "2026-06-20T14:00:00.000Z"
+    title: "Intra SUST",
+    description: "SUST Intra University Junior Programming Contest"
   }
 ];
 
@@ -45,9 +31,8 @@ export default function Events() {
 
   // Create Event Form States
   const [showEventForm, setShowEventForm] = useState(false);
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
 
   const fetchEvents = useCallback((authToken = token) => {
     fetch(`${API_URL}/api/events`, {
@@ -72,9 +57,9 @@ export default function Events() {
 
   const handleSaveEvent = async (e) => {
     e.preventDefault();
-    if (!description.trim() || !date) return;
+    if (!title.trim() || !description.trim()) return;
 
-    const payload = { description, event_date: toApiDate(date, time) };
+    const payload = { title, description };
 
     try {
       const res = await fetch(`${API_URL}/api/events`, {
@@ -84,7 +69,7 @@ export default function Events() {
       });
       const data = await res.json();
       if (data.success) {
-        setDescription(''); setDate(''); setTime('');
+        setTitle(''); setDescription('');
         setShowEventForm(false);
         fetchEvents(token);
       } else {
@@ -129,21 +114,15 @@ export default function Events() {
           <h3>Create New Event</h3>
           <form onSubmit={handleSaveEvent}>
             <div className="form-group">
+              <label>Event Title (Required)</label>
+              <input type="text" className="form-input" value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="Enter event title" />
+            </div>
+            <div className="form-group">
               <label>Event Description</label>
               <textarea 
                 className="form-textarea" rows="4" placeholder="Enter event details..."
                 value={description} onChange={(e) => setDescription(e.target.value)} required
               />
-            </div>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <div className="form-group" style={{ flex: 1 }}>
-                <label>Date (Required)</label>
-                <input type="date" className="form-input" value={date} onChange={(e) => setDate(e.target.value)} required />
-              </div>
-              <div className="form-group" style={{ flex: 1 }}>
-                <label>Time (Optional)</label>
-                <input type="time" className="form-input" value={time} onChange={(e) => setTime(e.target.value)} />
-              </div>
             </div>
             <div className="form-actions">
               <button type="button" className="cancel-btn" onClick={() => setShowEventForm(false)}>Cancel</button>
@@ -156,12 +135,14 @@ export default function Events() {
       <div className="events-list">
         {events.length > 0 ? (
           events.map((event) => {
-            const dateData = formatDateBox(event.event_date);
             return (
               <div key={event.event_id} className="event-card-container">
                 <div className="event-card">
-                  <div className="event-description">
-                    {event.description}
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--primary-color)' }}>{event.title}</h3>
+                    <div className="event-description">
+                      {event.description}
+                    </div>
                   </div>
                   
                   <div className="event-actions">
@@ -173,17 +154,6 @@ export default function Events() {
                         <button className="action-btn delete-btn" onClick={() => handleDeleteEvent(event.event_id)}>
                           Delete
                         </button>
-                      )}
-                    </div>
-                    <div className={`event-date-box ${!dateData ? 'no-date' : ''}`}>
-                      {dateData ? (
-                        <>
-                          <div className="date-day">{dateData.day}</div>
-                          <div className="date-month-year">{dateData.monthYear}</div>
-                          {dateData.timeStr && <div className="date-time">{dateData.timeStr}</div>}
-                        </>
-                      ) : (
-                        <span></span>
                       )}
                     </div>
                   </div>
