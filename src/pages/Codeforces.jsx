@@ -1,4 +1,4 @@
-import { API_URL } from '../api';
+import { API_URL, parseApiDate } from '../api';
 import React, { useState, useEffect, useRef } from 'react';
 import './Codeforces.css';
 
@@ -108,6 +108,69 @@ const Codeforces = () => {
                 >
                   <span className="bar-count">{count > 0 ? count : ''}</span>
                 </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const formatContestDate = (isoString) => {
+    const d = parseApiDate(isoString);
+    if (!d) return '';
+    return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+  };
+
+  // Every contest since the user's first rated one, flagged attended or not.
+  // Three states, not two: a contest they were never eligible for (a pupil
+  // cannot enter Div. 1, or the round was unrated) must not be shown as missed.
+  const renderContestAttendance = (attendance, summary) => {
+    if (!attendance?.length || !summary) return null;
+
+    const statusOf = (c) => {
+      if (c.participated) return 'attended';
+      return c.eligible ? 'missed' : 'ineligible';
+    };
+
+    return (
+      <div className="contest-attendance-section">
+        <h3>Contest Attendance</h3>
+
+        <div className="attendance-summary">
+          <span className="attendance-chip attended">
+            {summary.participated} attended
+          </span>
+          <span className="attendance-chip missed">
+            {summary.missed} missed
+          </span>
+          {summary.ineligible > 0 && (
+            <span className="attendance-chip ineligible">
+              {summary.ineligible} not eligible
+            </span>
+          )}
+        </div>
+
+        <div className="attendance-list">
+          {attendance.map((c) => (
+            <div key={c.contest_id} className={`attendance-item ${statusOf(c)}`}>
+              <div className="attendance-main">
+                <span className="attendance-name">{c.contest_name}</span>
+                <span className="attendance-date">{formatContestDate(c.date)}</span>
+              </div>
+              <div className="attendance-meta">
+                {c.participated ? (
+                  <>
+                    <span>Rank: {c.rank}</span>
+                    <span className={c.rating_change >= 0 ? 'positive-change' : 'negative-change'}>
+                      {c.rating_change > 0 ? '+' : ''}{c.rating_change}
+                    </span>
+                  </>
+                ) : (
+                  <span className="attendance-label">
+                    {c.eligible ? 'Missed' : 'Not eligible'}
+                  </span>
+                )}
               </div>
             </div>
           ))}
@@ -240,6 +303,11 @@ const Codeforces = () => {
                     <p>No recent contests.</p>
                   )}
                 </div>
+
+                {renderContestAttendance(
+                  profileStats.contest_attendance,
+                  profileStats.attendance_summary
+                )}
               </div>
             ) : (
               <div>Could not load profile stats.</div>
