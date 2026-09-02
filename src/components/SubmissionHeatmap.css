@@ -1,0 +1,104 @@
+.heatmap-section {
+  background: var(--card-bg-nested);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--card-border-nested);
+  margin-top: 1.5rem;
+}
+
+.heatmap-section h3 {
+  margin-bottom: 0.35rem;
+  color: var(--title-color);
+}
+
+.heatmap-note {
+  margin: 0 0 1rem 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* 53 weeks never fits a phone, so the calendar scrolls inside the card
+   rather than widening the page */
+.heatmap-scroll {
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+
+.heatmap-inner {
+  display: inline-block;
+  min-width: min-content;
+}
+
+.heatmap-months {
+  display: grid;
+  grid-template-columns: repeat(53, 13px);
+  margin-left: 30px;
+  margin-bottom: 0.25rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.heatmap-month {
+  grid-row: 1;
+  white-space: nowrap;
+}
+
+.heatmap-body {
+  display: flex;
+  gap: 4px;
+}
+
+.heatmap-weekdays {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 26px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.heatmap-grid {
+  display: flex;
+  gap: 3px;
+}
+
+.heatmap-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heatmap-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--card-border);
+}
+
+/* One hue, five steps: empty is the card's own border colour so a blank day
+   reads as absence rather than as a value */
+.heatmap-cell.level-1 { background: var(--badge-green-text); opacity: 0.3; }
+.heatmap-cell.level-2 { background: var(--badge-green-text); opacity: 0.55; }
+.heatmap-cell.level-3 { background: var(--badge-green-text); opacity: 0.8; }
+.heatmap-cell.level-4 { background: var(--badge-green-text); opacity: 1; }
+
+.heatmap-cell.is-empty {
+  background: transparent;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.heatmap-legend span:first-child {
+  margin-right: 0.25rem;
+}
+
+.heatmap-legend span:last-child {
+  margin-left: 0.25rem;
+}
