@@ -95,6 +95,9 @@ const Navbar = () => {
             <li className={location.pathname === '/codeforces' ? 'active' : ''}>
               <Link to="/codeforces" onClick={() => setMenuOpen(false)}>Codeforces</Link>
             </li>
+            <li className={location.pathname === '/atcoder' ? 'active' : ''}>
+              <Link to="/atcoder" onClick={() => setMenuOpen(false)}>AtCoder</Link>
+            </li>
             <li className={location.pathname === '/events' ? 'active' : ''}>
               <Link to="/events" onClick={() => setMenuOpen(false)}>Events</Link>
             </li>

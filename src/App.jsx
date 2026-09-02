@@ -21,6 +21,7 @@ const Announcements = lazy(() => import('./pages/Announcements'));
 const Contest = lazy(() => import('./pages/Contest'));
 const Discussion = lazy(() => import('./pages/Discussion'));
 const Codeforces = lazy(() => import('./pages/Codeforces'));
+const Atcoder = lazy(() => import('./pages/Atcoder'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Events = lazy(() => import('./pages/Events'));
 const EventDetails = lazy(() => import('./pages/EventDetails'));
@@ -35,6 +36,7 @@ const routeOrder = {
   '/discussion': 4,
   '/problems': 5,
   '/codeforces': 6,
+  '/atcoder': 6.5,
   '/events': 7,
   '/vjudge-ranker': 8,
   '/profile': 9,
@@ -110,6 +112,8 @@ function AppContent() {
                 <Route path="/discussion" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Discussion /></AnimatedPage>} />
                 <Route path="/problems" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Problems /></AnimatedPage>} />
                 <Route path="/codeforces" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Codeforces /></AnimatedPage>} />
+
+                <Route path="/atcoder" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Atcoder /></AnimatedPage>} />
                 <Route path="/profile" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Profile /></AnimatedPage>} />
                 <Route path="/profile/:id" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Profile /></AnimatedPage>} />
                 <Route path="/events" element={<AnimatedPage direction={direction} locationKey={location.pathname}><Events /></AnimatedPage>} />

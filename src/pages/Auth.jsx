@@ -29,6 +29,7 @@ function Auth() {
   const [regNumber, setRegNumber] = useState('');
   const [codeforcesHandle, setCodeforcesHandle] = useState('');
   const [vjudgeHandle, setVjudgeHandle] = useState('');
+  const [atcoderHandle, setAtcoderHandle] = useState('');
 
   const navigate = useNavigate();
   const showToast = useToast();
@@ -92,6 +93,7 @@ function Auth() {
       const payload = { reg_number: regNumber, name, email, password };
       if (codeforcesHandle.trim()) payload.codeforces_handle = codeforcesHandle.trim();
       if (vjudgeHandle.trim()) payload.vjudge_handle = vjudgeHandle.trim();
+      if (atcoderHandle.trim()) payload.atcoder_handle = atcoderHandle.trim();
 
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
@@ -390,6 +392,17 @@ function Auth() {
                   placeholder="vjudge_handle" />
                 <p className="auth-field-hint">
                   Used to match you to VJudge standings — without it you show as “unregistered”.
+                </p>
+              </div>
+              <div className="form-group">
+                <label htmlFor="signup-at">AtCoder Handle (Optional)</label>
+                <input type="text" id="signup-at" className="form-input"
+                  value={atcoderHandle} onChange={(e) => setAtcoderHandle(e.target.value)}
+                  maxLength={100}
+                  placeholder="atcoder_handle" />
+                <p className="auth-field-hint">
+                  Checked against AtCoder when you sign up. Your rating and contest
+                  history appear on the AtCoder page.
                 </p>
               </div>
               <button type="submit" className="submit-btn" disabled={submitting} style={{ marginTop: '1.5rem' }}>

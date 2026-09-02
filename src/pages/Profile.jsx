@@ -15,6 +15,7 @@ function Profile() {
   const [name, setName] = useState('');
   const [vjudgeHandle, setVjudgeHandle] = useState('');
   const [cfHandle, setCfHandle] = useState('');
+  const [atHandle, setAtHandle] = useState('');
   // Server 400s are written for humans, so they are shown on the field.
   const [fieldError, setFieldError] = useState('');
 
@@ -47,6 +48,7 @@ function Profile() {
         setName(data.name || '');
         setVjudgeHandle(data.vjudge_handle || '');
         setCfHandle(data.codeforces_handle || '');
+        setAtHandle(data.atcoder_handle || '');
       } else if (response.status !== 401) {
         // 401 is handled globally by the session guard in api.js — it clears
         // both token and role and redirects, which this branch did not.
@@ -102,7 +104,8 @@ function Profile() {
           name: trimmedName,
           // An empty string is the documented way to clear a handle.
           vjudge_handle: vjudgeHandle.trim(),
-          codeforces_handle: cfHandle.trim()
+          codeforces_handle: cfHandle.trim(),
+          atcoder_handle: atHandle.trim()
         })
       });
 
@@ -155,6 +158,14 @@ function Profile() {
       handle: profile?.vjudge_handle,
       href: profile?.vjudge_handle
         ? `https://vjudge.net/user/${profile.vjudge_handle}`
+        : null,
+    },
+    {
+      key: 'at',
+      platform: 'AtCoder',
+      handle: profile?.atcoder_handle,
+      href: profile?.atcoder_handle
+        ? `https://atcoder.jp/users/${profile.atcoder_handle}`
         : null,
     },
   ];
@@ -230,6 +241,19 @@ function Profile() {
                       className="form-input"
                       value={vjudgeHandle}
                       onChange={(e) => setVjudgeHandle(e.target.value)}
+                      maxLength={100}
+                      placeholder="e.g. tourist — leave blank to remove"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="edit-atcoder">AtCoder Handle</label>
+                    <input
+                      type="text"
+                      id="edit-atcoder"
+                      className="form-input"
+                      value={atHandle}
+                      onChange={(e) => setAtHandle(e.target.value)}
                       maxLength={100}
                       placeholder="e.g. tourist — leave blank to remove"
                     />

@@ -91,6 +91,7 @@ function ManualSignup() {
   const [showPassword, setShowPassword] = useState(false);
   const [codeforcesHandle, setCodeforcesHandle] = useState('');
   const [vjudgeHandle, setVjudgeHandle] = useState('');
+  const [atcoderHandle, setAtcoderHandle] = useState('');
 
   const [front, setFront] = useState({ file: null, preview: null });
   const [back, setBack] = useState({ file: null, preview: null });
@@ -133,6 +134,7 @@ function ManualSignup() {
       body.append('password', password);
       if (codeforcesHandle.trim()) body.append('codeforces_handle', codeforcesHandle.trim());
       if (vjudgeHandle.trim()) body.append('vjudge_handle', vjudgeHandle.trim());
+      if (atcoderHandle.trim()) body.append('atcoder_handle', atcoderHandle.trim());
       body.append('id_card_front', front.file);
       body.append('id_card_back', back.file);
 
@@ -265,6 +267,22 @@ function ManualSignup() {
             </div>
             <p className="upload-subtext" style={{ marginTop: '-0.75rem' }}>
               Used to match you to VJudge standings — without it you show as “unregistered”.
+            </p>
+
+            <div className="form-group">
+              <label htmlFor="ms-at">AtCoder Handle (Optional)</label>
+              <input
+                type="text"
+                id="ms-at"
+                className="form-input"
+                value={atcoderHandle}
+                onChange={(e) => setAtcoderHandle(e.target.value)}
+                placeholder="atcoder_handle"
+              />
+            </div>
+            <p className="upload-subtext" style={{ marginTop: '-0.75rem' }}>
+              Checked against AtCoder when you sign up. Your rating and contest history
+              appear on the AtCoder page.
             </p>
 
             <IdCardDropzone
