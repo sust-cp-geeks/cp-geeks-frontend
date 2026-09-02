@@ -127,7 +127,9 @@ export default function EventDetails() {
     const payload = {
       title: event.title,
       description: event.description,
-      vjudge_contest_ids: updatedIds.length > 0 ? updatedIds : null, // handle empty array properly
+      // Send [] rather than null to clear: this PUT is a partial update, so a
+      // null means "leave unchanged" and removing the last one is silently lost.
+      vjudge_contest_ids: updatedIds,
       merged_handles: event.merged_handles
     };
     try {
@@ -148,7 +150,7 @@ export default function EventDetails() {
       title: event.title,
       description: event.description,
       vjudge_contest_ids: event.vjudge_contest_ids,
-      merged_handles: newMergedHandles.length > 0 ? newMergedHandles : null
+      merged_handles: newMergedHandles // [] clears; null would mean "leave unchanged"
     };
     try {
       const res = await fetch(`${API_URL}/api/events/${id}`, {
