@@ -1,5 +1,7 @@
 import { API_URL, parseApiDate } from '../api';
 import React, { useState, useEffect, useRef } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import SubmissionHeatmap from '../components/SubmissionHeatmap';
 import './Codeforces.css';
 
 import '../components/Skeleton.css';
@@ -15,12 +17,15 @@ const DEFAULT_LEADERBOARD = [
 const Codeforces = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedUserId = searchParams.get('user');
   const [profileStats, setProfileStats] = useState(null);
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [error, setError] = useState(null);
+  const [attendanceFilter, setAttendanceFilter] = useState('all');
 
   const profileCache = useRef({});
+  const profileRef = useRef(null);
 
   const fetchLeaderboard = async () => {
     try {
@@ -49,7 +54,7 @@ const Codeforces = () => {
   }, []);
 
   const fetchProfile = async (userId) => {
-    setSelectedUserId(userId);
+    setAttendanceFilter('all');
     if (profileCache.current[userId]) {
       setProfileStats(profileCache.current[userId]);
       return;
@@ -75,6 +80,20 @@ const Codeforces = () => {
       setLoadingProfile(false);
     }
   };
+
+  // The open profile is held in the url so a stats view can be opened in its
+  // own tab and two members compared side by side.
+  useEffect(() => {
+    if (selectedUserId) fetchProfile(selectedUserId);
+  }, [selectedUserId]);
+
+  // Clicking a row from halfway down the leaderboard would otherwise drop the
+  // profile in above the viewport, so bring it into view once it has loaded.
+  useEffect(() => {
+    if (selectedUserId && profileStats && profileRef.current) {
+      profileRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [selectedUserId, profileStats]);
 
   // Standard Codeforces rank palette, tuned to stay readable on both themes
   const getRankColor = (rank) => {
@@ -133,26 +152,39 @@ const Codeforces = () => {
       return c.eligible ? 'missed' : 'ineligible';
     };
 
+    const chips = [
+      { key: 'all', label: `All ${summary.total_contests}` },
+      { key: 'attended', label: `${summary.participated} attended` },
+      { key: 'missed', label: `${summary.missed} missed` },
+      ...(summary.ineligible > 0
+        ? [{ key: 'ineligible', label: `${summary.ineligible} not eligible` }]
+        : [])
+    ];
+
+    const shown = attendanceFilter === 'all'
+      ? attendance
+      : attendance.filter((c) => statusOf(c) === attendanceFilter);
+
     return (
       <div className="contest-attendance-section">
         <h3>Contest Attendance</h3>
 
         <div className="attendance-summary">
-          <span className="attendance-chip attended">
-            {summary.participated} attended
-          </span>
-          <span className="attendance-chip missed">
-            {summary.missed} missed
-          </span>
-          {summary.ineligible > 0 && (
-            <span className="attendance-chip ineligible">
-              {summary.ineligible} not eligible
-            </span>
-          )}
+          {chips.map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              className={`attendance-chip ${key} ${attendanceFilter === key ? 'is-active' : ''}`}
+              aria-pressed={attendanceFilter === key}
+              onClick={() => setAttendanceFilter(key)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         <div className="attendance-list">
-          {attendance.map((c) => (
+          {shown.map((c) => (
             <div key={c.contest_id} className={`attendance-item ${statusOf(c)}`}>
               <div className="attendance-main">
                 <span className="attendance-name">{c.contest_name}</span>
@@ -174,6 +206,9 @@ const Codeforces = () => {
               </div>
             </div>
           ))}
+          {shown.length === 0 && (
+            <p className="attendance-empty">No contests in this category.</p>
+          )}
         </div>
       </div>
     );
@@ -221,12 +256,13 @@ const Codeforces = () => {
                       </td>
                       <td>{user.current_rating || 'Unrated'}</td>
                       <td>
-                        <button 
+
+                        <Link
                           className="view-btn"
-                          onClick={() => fetchProfile(user.user_id)}
+                          to={`/codeforces?user=${user.user_id}`}
                         >
                           View Stats
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   ))}
@@ -242,8 +278,8 @@ const Codeforces = () => {
         </div>
 
         {selectedUserId && (
-          <div className="cf-profile-section">
-            <button className="close-profile-btn" onClick={() => setSelectedUserId(null)}>
+          <div className="cf-profile-section" ref={profileRef}>
+            <button className="close-profile-btn" onClick={() => setSearchParams({})}>
               &times;
             </button>
             {loadingProfile ? (
@@ -282,6 +318,8 @@ const Codeforces = () => {
                     {renderSolveCountBars(profileStats.solve_counts.last_1_year)}
                   </div>
                 </div>
+
+                <SubmissionHeatmap handle={profileStats.codeforces_handle} />
 
                 <div className="recent-contests-section">
                   <h3>Recent Contests</h3>

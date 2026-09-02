@@ -86,6 +86,11 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.2s, transform 0.1s;
+  /* it is an anchor now, so it can be opened in a new tab — these keep it
+     looking exactly like the button it replaced */
+  display: inline-block;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .view-btn:hover {
@@ -99,6 +104,9 @@
 
 /* Profile Section */
 .cf-profile-section {
+  /* Above the leaderboard: opening ?user=<id> in a tab should land on the
+     stats, not on a leaderboard that grows with every new member. */
+  order: -1;
   position: relative;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -335,6 +343,37 @@
   font-size: 0.85rem;
   font-weight: 600;
   border: 1px solid transparent;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s, box-shadow 0.2s;
+}
+
+.attendance-chip:hover {
+  opacity: 0.85;
+}
+
+/* the "all" chip is neutral — it is the unfiltered state, not a status */
+.attendance-chip.all {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--text-muted);
+}
+
+/* the chosen filter keeps its colour and gains a ring; the others recede so it
+   is obvious which one the list is currently narrowed to */
+.attendance-chip.is-active {
+  box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 3px currentColor;
+}
+
+.attendance-summary:has(.is-active) .attendance-chip:not(.is-active) {
+  opacity: 0.45;
+}
+
+.attendance-empty {
+  margin: 0;
+  padding: 0.75rem 0;
+  color: var(--text-muted);
+  font-style: italic;
 }
 
 .attendance-chip.attended {
@@ -362,7 +401,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  max-height: 420px;
+  max-height: 560px;
   overflow-y: auto;
   padding-right: 0.25rem;
 }
