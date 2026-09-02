@@ -1,19 +1,19 @@
 .heatmap-section {
   background: var(--card-bg-nested);
-  padding: 1.5rem;
-  border-radius: 8px;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--card-border-nested);
-  margin-top: 1.5rem;
+  margin-top: var(--space-6);
 }
 
 .heatmap-section h3 {
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--space-1);
   color: var(--title-color);
 }
 
 .heatmap-note {
-  margin: 0 0 1rem 0;
-  font-size: 0.85rem;
+  margin: 0 0 var(--space-4) 0;
+  font-size: var(--text-sm);
   color: var(--text-muted);
 }
 
@@ -21,7 +21,7 @@
    rather than widening the page */
 .heatmap-scroll {
   overflow-x: auto;
-  padding-bottom: 0.35rem;
+  padding-bottom: var(--space-1);
 }
 
 .heatmap-inner {
@@ -33,8 +33,8 @@
   display: grid;
   grid-template-columns: repeat(53, 13px);
   margin-left: 30px;
-  margin-bottom: 0.25rem;
-  font-size: 0.7rem;
+  margin-bottom: var(--space-1);
+  font-size: var(--text-2xs);
   color: var(--text-muted);
 }
 
@@ -53,7 +53,7 @@
   flex-direction: column;
   justify-content: space-around;
   width: 26px;
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   color: var(--text-muted);
 }
 
@@ -90,15 +90,15 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  margin-top: 0.75rem;
-  font-size: 0.7rem;
+  margin-top: var(--space-3);
+  font-size: var(--text-2xs);
   color: var(--text-muted);
 }
 
 .heatmap-legend span:first-child {
-  margin-right: 0.25rem;
+  margin-right: var(--space-1);
 }
 
 .heatmap-legend span:last-child {
-  margin-left: 0.25rem;
+  margin-left: var(--space-1);
 }

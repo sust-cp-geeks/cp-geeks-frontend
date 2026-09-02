@@ -1,14 +1,14 @@
 .page-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: var(--space-12) var(--space-8);
   animation: fadeIn 0.4s ease-out;
 }
 
 .page-title {
-  font-size: 2.5rem;
+  font-size: var(--text-4xl);
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
   color: var(--primary-hover);
   display: inline-block;
 }
@@ -18,7 +18,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
-  border-radius: 1rem;
+  border-radius: var(--radius-2xl);
   overflow: hidden;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
 }
@@ -33,18 +33,18 @@
   background: var(--widget-header-bg);
   color: var(--text-color);
   font-weight: 700;
-  padding: 1rem 1.5rem;
-  font-size: 0.875rem;
+  padding: var(--row-py) var(--row-px);
+  font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   border-bottom: 1px solid var(--card-border);
 }
 
 .custom-table td {
-  padding: 1rem 1.5rem;
+  padding: var(--row-py) var(--row-px);
   border-bottom: 1px solid var(--card-border-nested);
   color: var(--text-normal);
-  font-size: 0.95rem;
+  font-size: var(--text-base);
 }
 
 .custom-table tbody tr {

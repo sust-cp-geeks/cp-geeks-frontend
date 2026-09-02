@@ -16,7 +16,7 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 14px 20px;
   min-width: 280px;
   max-width: 420px;
@@ -54,7 +54,7 @@
 
 .toast-message {
   flex: 1;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.4;
 }

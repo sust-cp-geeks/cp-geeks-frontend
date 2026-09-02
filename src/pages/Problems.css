@@ -10,7 +10,7 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
@@ -26,7 +26,7 @@
   color: var(--primary-hover);
   border: 1px solid var(--primary-hover);
   padding: 4px 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 13px;
   transition: all 0.2s;
@@ -44,9 +44,9 @@
 .problem-section {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -68,20 +68,20 @@
 .section-desc {
   color: var(--text-muted);
   font-size: 14px;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .subsections-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .problem-subsection {
   background: var(--card-bg-nested);
   border: 1px solid var(--card-border-nested);
-  border-radius: 8px;
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
 }
 
 .subsection-header {
@@ -131,7 +131,7 @@
   text-decoration: none;
   color: var(--primary-hover);
   padding: 6px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   transition: background 0.2s;
 }
 
@@ -150,15 +150,15 @@
   border: 1px solid var(--badge-blue-border);
   font-size: 11px;
   padding: 2px 6px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .empty-state {
   text-align: center;
   color: var(--text-muted);
-  padding: 3rem;
+  padding: var(--space-12);
   background: var(--card-bg-nested);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px dashed var(--card-border);
 }
 
@@ -177,8 +177,8 @@
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   backdrop-filter: blur(16px);
-  padding: 2rem;
-  border-radius: 12px;
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
   width: 100%;
   max-width: 400px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
@@ -186,7 +186,7 @@
 
 .modal-content h2 {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
   color: var(--title-color);
 }
 
@@ -194,26 +194,26 @@
 .coming-soon-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 16px;
-  padding: 4rem 2rem;
+  border-radius: var(--radius-2xl);
+  padding: var(--space-16) var(--space-8);
   text-align: center;
-  margin: 2rem auto;
+  margin: var(--space-8) auto;
   max-width: 700px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .coming-soon-icon {
   color: #60a5fa;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
   animation: pulse 2s infinite ease-in-out;
 }
 
 .coming-soon-card h2 {
-  font-size: 2rem;
+  font-size: var(--text-3xl);
   color: #60a5fa;
   margin: 0;
   font-weight: 800;
@@ -221,7 +221,7 @@
 
 .coming-soon-card p {
   color: var(--text-normal);
-  font-size: 1.05rem;
+  font-size: var(--text-base);
   line-height: 1.6;
   max-width: 540px;
   margin: 0;

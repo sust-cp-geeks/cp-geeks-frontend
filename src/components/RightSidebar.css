@@ -3,8 +3,8 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem 0;
+  gap: var(--space-6);
+  padding: var(--space-6) 0;
 }
 
 @media (max-width: 768px) {
@@ -16,15 +16,15 @@
 .sidebar-widget {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .widget-header {
   background: var(--widget-header-bg);
-  padding: 0.8rem 1rem;
-  font-size: 0.95rem;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
   font-weight: 700;
   color: var(--primary-hover);
   border-bottom: 1px solid var(--card-border);
@@ -35,7 +35,7 @@
 }
 
 .widget-body {
-  padding: 1rem;
+  padding: var(--space-4);
 }
 
 .attention-list {
@@ -45,8 +45,8 @@
 }
 
 .attention-list li {
-  margin-bottom: 0.5rem;
-  padding-left: 1rem;
+  margin-bottom: var(--space-2);
+  padding-left: var(--space-4);
   position: relative;
 }
 
@@ -60,7 +60,7 @@
 .attention-list a {
   color: var(--text-normal);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   transition: color 0.2s;
 }
 
@@ -89,12 +89,12 @@
 
 .sidebar-search-input {
   width: 100%;
-  padding: 0.6rem 1rem;
-  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   color: var(--text-color);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   outline: none;
   transition: all 0.2s;
 }
@@ -110,12 +110,12 @@
   top: 100%;
   left: 0;
   right: 0;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   list-style: none;
-  padding: 0.5rem 0;
+  padding: var(--space-2) 0;
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
@@ -123,10 +123,10 @@
 }
 
 .sidebar-search-results li {
-  padding: 0.5rem 1rem;
+  padding: var(--space-2) var(--space-4);
   cursor: pointer;
   color: var(--text-normal);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   transition: background 0.2s, color 0.2s;
 }
 
@@ -137,8 +137,8 @@
 
 /* Search dropdown states */
 .sidebar-search-results .search-note {
-  padding: 0.6rem 1rem;
-  font-size: 0.8rem;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
   color: var(--text-muted-more);
   cursor: default;
 }
@@ -151,17 +151,17 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .search-hit-name {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-normal);
 }
 
 .search-hit-reg {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   color: var(--text-muted-more);
   white-space: nowrap;
 }
@@ -170,7 +170,7 @@
 .sidebar-me {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   text-decoration: none;
   border-radius: 0 0 0.75rem 0.75rem;
   transition: background 0.2s ease;
@@ -188,7 +188,7 @@
   place-items: center;
   border-radius: 50%;
   font-family: var(--font-display);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   color: var(--btn-primary-text);
   background: var(--primary-color);
@@ -200,11 +200,11 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  gap: var(--space-1);
 }
 
 .sidebar-me-name {
-  font-size: 0.88rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-color);
   overflow: hidden;
@@ -213,7 +213,7 @@
 }
 
 .sidebar-me-role {
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted-more);

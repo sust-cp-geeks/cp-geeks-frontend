@@ -1,5 +1,5 @@
 .events-page {
-  padding: 2rem;
+  padding: var(--space-8);
   max-width: 1400px;
   margin: 0 auto;
   font-family: var(--font-family);
@@ -10,11 +10,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
 }
 
 .events-header h1 {
-  font-size: 2.5rem;
+  font-size: var(--text-4xl);
   font-weight: 800;
   color: var(--primary-hover);
   margin: 0;
@@ -24,8 +24,8 @@
   background: var(--primary-color);
   color: var(--btn-primary-text);
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -41,9 +41,9 @@
 .create-form-modal {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  margin-bottom: var(--space-8);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   border: 1px solid var(--card-border);
   animation: slideDown 0.3s ease-out;
@@ -52,26 +52,26 @@
 
 .create-form-modal h3 {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
   color: var(--primary-hover);
 }
 
 .form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: var(--space-5);
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
   font-weight: 600;
   color: var(--primary-hover);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .form-input, .form-textarea {
   width: 100%;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--input-border);
   background-color: var(--input-bg);
   color: var(--text-color);
@@ -90,13 +90,13 @@
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
 }
 
 .cancel-btn, .save-btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -128,23 +128,23 @@
 .events-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .event-card-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .event-card {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: 1.5rem;
+  gap: var(--space-6);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   border: 1px solid var(--card-border);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -157,7 +157,7 @@
 
 .event-description {
   flex: 1;
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   color: var(--text-color);
   line-height: 1.6;
   display: flex;
@@ -169,18 +169,18 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .admin-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .action-btn {
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
   border: none;
@@ -221,8 +221,8 @@
 .event-date-box {
   background: var(--card-bg-nested);
   border: 1px solid var(--card-border-nested);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
   min-width: 100px;
   display: flex;
   flex-direction: column;
@@ -238,64 +238,64 @@
 }
 
 .date-day {
-  font-size: 2.5rem;
+  font-size: var(--text-4xl);
   font-weight: 800;
   line-height: 1;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--space-1);
 }
 
 .date-month-year {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .date-time {
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
 }
 
 /* Teams styling */
 .teams-container {
-  padding-left: 2rem;
+  padding-left: var(--space-8);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
   animation: slideDown 0.3s ease-out;
 }
 
 .team-card {
   background: var(--card-bg-nested);
-  border-radius: 12px;
-  padding: 1.25rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
   border: 1px solid var(--card-border-nested);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .team-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
   border-bottom: 1px solid var(--card-border-nested);
-  padding-bottom: 0.75rem;
+  padding-bottom: var(--space-3);
 }
 
 .team-id-badge {
   background: var(--primary-color);
   color: var(--btn-primary-text);
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-2xl);
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
 .team-coach {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   color: var(--text-color);
   opacity: 0.8;
   font-weight: 600;
@@ -304,13 +304,13 @@
 .team-members {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .team-member {
   background: var(--card-bg);
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--card-border);
   display: flex;
   align-items: center;
@@ -319,7 +319,7 @@
 .member-link {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--space-1);
   text-decoration: none;
   color: var(--primary-hover);
   transition: opacity 0.2s;
@@ -331,11 +331,11 @@
 
 .member-name {
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
 }
 
 .member-reg {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-family: 'JetBrains Mono', monospace;
   opacity: 0.7;
 }
@@ -348,9 +348,9 @@
 
 .team-admin-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-2);
   justify-content: flex-end;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
 }
 
 .edit-team-btn {
@@ -363,21 +363,21 @@
 }
 
 .no-teams {
-  padding: 1rem;
+  padding: var(--space-4);
   color: var(--text-muted);
   font-style: italic;
   background: var(--card-bg-nested);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px dashed var(--card-border);
   text-align: center;
 }
 
 .empty-state {
   text-align: center;
-  padding: 4rem 2rem;
+  padding: var(--space-16) var(--space-8);
   color: var(--text-muted);
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: var(--radius-2xl);
   border: 1px solid var(--card-border);
 }
 
@@ -394,7 +394,7 @@
   background: var(--card-bg-nested);
   color: var(--badge-blue-text);
   border: 1px solid var(--card-border-nested);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   font-weight: 700;
   font-family: var(--font-family);
@@ -426,14 +426,14 @@
 .tab-content {
   padding: 20px;
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--card-border);
 }
 
 .tab-empty-text {
   color: var(--text-muted);
   text-align: center;
-  padding: 2rem;
+  padding: var(--space-8);
 }
 
 .contest-id-list {
@@ -445,7 +445,7 @@
 .contest-id-item {
   background: var(--card-bg-nested);
   padding: 15px 20px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
@@ -458,7 +458,7 @@
   color: var(--badge-red-text);
   border: 1px solid var(--badge-red-border);
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 700;
   transition: opacity 0.2s ease;
