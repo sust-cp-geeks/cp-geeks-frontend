@@ -2,21 +2,15 @@ import { API_URL, parseApiDate } from '../api';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SubmissionHeatmap from '../components/SubmissionHeatmap';
+import { rankClassFor } from '../utils/rank';
 import './Codeforces.css';
 
 import '../components/Skeleton.css';
 
-const DEFAULT_LEADERBOARD = [
-  { user_id: 1, rank: 1, name: "Tourist SUST", codeforces_handle: "tourist_sust", current_rating: 2450, current_rank: "Master" },
-  { user_id: 2, rank: 2, name: "Mahir Ahmed", codeforces_handle: "mahir_dp", current_rating: 1890, current_rank: "Candidate Master" },
-  { user_id: 3, rank: 3, name: "Nusrat Sultana", codeforces_handle: "nusrat_ac", current_rating: 1780, current_rank: "Expert" },
-  { user_id: 4, rank: 4, name: "Rafiul Hasan", codeforces_handle: "rafi_codes", current_rating: 1650, current_rank: "Expert" },
-  { user_id: 5, rank: 5, name: "Tanvir Islam", codeforces_handle: "tanvir_cf", current_rating: 1540, current_rank: "Specialist" }
-];
-
 const Codeforces = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
+  const [leaderboardError, setLeaderboardError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedUserId = searchParams.get('user');
   const [profileStats, setProfileStats] = useState(null);
@@ -35,12 +29,18 @@ const Codeforces = () => {
       });
       if (response.ok) {
         const result = await response.json();
-        setLeaderboard(result.data?.length ? result.data : DEFAULT_LEADERBOARD);
+        setLeaderboard(result.data || []);
+        setLeaderboardError(null);
       } else {
-        setLeaderboard(DEFAULT_LEADERBOARD);
+        // this endpoint asks codeforces for every rating as the page loads, so
+        // a codeforces outage lands here. say so — an empty table reads as
+        // "nobody has joined", which is a different and wrong story
+        setLeaderboard([]);
+        setLeaderboardError('Could not load ratings from Codeforces. It may be down — try again shortly.');
       }
     } catch {
-      setLeaderboard(DEFAULT_LEADERBOARD);
+      setLeaderboard([]);
+      setLeaderboardError('Could not reach the server. Check your connection and try again.');
     } finally {
       setLoadingLeaderboard(false);
     }
@@ -95,22 +95,18 @@ const Codeforces = () => {
     }
   }, [selectedUserId, profileStats]);
 
-  // Standard Codeforces rank palette, tuned to stay readable on both themes
-  const getRankColor = (rank) => {
-    if (!rank) return 'inherit';
-    const l = rank.toLowerCase();
-    if (l.includes('newbie')) return 'var(--text-muted-more)';
-    if (l.includes('pupil')) return 'var(--badge-green-text)';
-    if (l.includes('specialist')) return '#03a89e';
-    if (l.includes('candidate master')) return '#c026d3';
-    if (l.includes('grandmaster')) return '#ef4444';
-    if (l.includes('master')) return '#f59e0b';
-    if (l.includes('expert')) return 'var(--badge-blue-text)';
-    return 'inherit';
-  };
-
   const renderSolveCountBars = (periodData) => {
     if (!periodData) return null;
+    // an empty window used to render seven blank tracks, which reads as a
+    // broken chart rather than a quiet month
+    if (!periodData.total) {
+      return (
+        <div className="solve-bars-container">
+          <h4>Total Solves: 0</h4>
+          <p className="solve-bars-empty">No solves in this period</p>
+        </div>
+      );
+    }
     const maxVal = Math.max(...Object.values(periodData.buckets));
 
     return (
@@ -256,7 +252,7 @@ const Codeforces = () => {
                     <tr key={user.user_id}>
                       <td>#{user.rank}</td>
                       <td>{user.name}</td>
-                      <td style={{ color: getRankColor(user.current_rank || 'unrated') }}>
+                      <td className={rankClassFor('codeforces', user.current_rating, user.current_rank)}>
                         {user.codeforces_handle}
                       </td>
                       <td>{user.current_rating || 'Unrated'}</td>
@@ -273,7 +269,9 @@ const Codeforces = () => {
                   ))}
                   {leaderboard.length === 0 && (
                     <tr>
-                      <td colSpan="5" className="text-center">No users found.</td>
+                      <td colSpan="5" className="text-center">
+                        {leaderboardError || 'No members have linked a Codeforces handle yet.'}
+                      </td>
                     </tr>
                   )}
                 </tbody>
@@ -296,15 +294,21 @@ const Codeforces = () => {
             ) : profileStats ? (
               <div className="profile-stats-card">
                 <div className="profile-stats-header">
-                  <h2 style={{ color: getRankColor(profileStats.current_rank) }}>
+                  <h2 className={rankClassFor('codeforces', profileStats.current_rating, profileStats.current_rank)}>
                     {profileStats.codeforces_handle}
                   </h2>
                   <div className="rank-badges">
                     <span className="badge current-badge">
-                      Rating: {profileStats.current_rating || 'Unrated'} ({profileStats.current_rank || 'N/A'})
+                      Rating:{' '}
+                      <strong className={rankClassFor('codeforces', profileStats.current_rating, profileStats.current_rank)}>
+                        {profileStats.current_rating || 'Unrated'} ({profileStats.current_rank || 'N/A'})
+                      </strong>
                     </span>
                     <span className="badge max-badge">
-                      Max: {profileStats.max_rating || 'Unrated'} ({profileStats.max_rank || 'N/A'})
+                      Max:{' '}
+                      <strong className={rankClassFor('codeforces', profileStats.max_rating, profileStats.max_rank)}>
+                        {profileStats.max_rating || 'Unrated'} ({profileStats.max_rank || 'N/A'})
+                      </strong>
                     </span>
                   </div>
                 </div>
