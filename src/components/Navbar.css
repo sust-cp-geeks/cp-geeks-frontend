@@ -16,15 +16,15 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.8rem clamp(0.8rem, 2vw, 2.5rem);
-  gap: clamp(0.4rem, 1vw, 1rem);
+  padding: var(--space-3) clamp(var(--space-3), 2vw, var(--space-10));
+  gap: clamp(var(--space-2), 1vw, var(--space-4));
 }
 
 .navbar-logo a {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 800;
   letter-spacing: 0.5px;
   text-decoration: none;
@@ -36,7 +36,7 @@
 
 .navbar-logo a span {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-style: italic;
   font-weight: 600;
   color: var(--text-color);
@@ -62,7 +62,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.4rem;
+  padding: var(--space-2);
   z-index: 110;
   flex-shrink: 0;
 }
@@ -93,11 +93,13 @@
 .navbar-links {
   display: flex;
   list-style: none;
-  gap: clamp(0.3rem, 1vw, 1.2rem);
+  gap: clamp(var(--space-1), 1vw, var(--space-5));
   margin: 0 auto;
   padding: 0;
   flex-wrap: nowrap;
-  min-width: 0;
+  /* never squeezed below their content — nowrap means a squeeze becomes a
+     spill over whatever sits to the right */
+  flex-shrink: 0;
 }
 
 .navbar-links li a {
@@ -108,7 +110,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 500;
-  padding: 0.5rem clamp(0.2rem, 0.4vw, 0.5rem);
+  padding: var(--space-2) clamp(var(--space-1), 0.4vw, var(--space-2));
   border-radius: 0;
   transition: all 0.25s ease;
   display: inline-block;
@@ -143,14 +145,17 @@
   display: flex;
   align-items: center;
   gap: clamp(6px, 1vw, 12px);
-  flex-shrink: 0;
+  /* this side gives way, the links do not: the greeting is the one piece of
+     the bar whose width we do not control */
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .navbar-auth .auth-btn {
   text-decoration: none;
   background: transparent;
   color: var(--text-color);
-  padding: 0.55rem clamp(0.7rem, 1vw, 1.4rem);
+  padding: var(--space-2) clamp(var(--space-3), 1vw, var(--space-6));
   border-radius: 0;
   font-family: var(--font-mono);
   font-size: clamp(0.65rem, 0.7vw, 0.7rem);
@@ -178,22 +183,34 @@
 .auth-user-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
+  gap: var(--space-2);
+  font-size: var(--text-base);
   color: var(--text-color);
   white-space: nowrap;
-  flex-shrink: 0;
+  /* the greeting carries a name of any length, so this block has to be able to
+     give way — the divider and the logout button below opt back out */
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .user-greeting {
   font-weight: 600;
   color: var(--badge-blue-text);
   white-space: nowrap;
+  /* a long name truncates rather than shoving the nav links sideways */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.auth-user-info .divider,
+.auth-user-info .auth-logout-btn {
+  flex-shrink: 0;
 }
 
 .divider {
   color: var(--card-border);
-  margin: 0 0.5rem;
+  margin: 0 var(--space-2);
 }
 
 .auth-logout-btn {
@@ -201,10 +218,10 @@
   border: 1px solid var(--badge-red-border);
   color: var(--badge-red-text);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   cursor: pointer;
-  padding: 0.4rem 1rem;
-  border-radius: 0.5rem;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
   transition: all 0.2s;
   font-family: inherit;
   white-space: nowrap;
@@ -236,8 +253,8 @@
 /* ─── Mobile / Zoomed-in / Minimized Breakpoint ─── */
 @media (max-width: 1250px) {
   .navbar-container {
-    padding: 0.7rem 1.2rem;
-    gap: 1rem;
+    padding: var(--space-3) var(--space-5);
+    gap: var(--space-4);
   }
 
   .navbar-toggle {
@@ -255,7 +272,7 @@
     background: var(--bg-color);
     border-bottom: 1px solid var(--nav-border);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-    padding: 0.8rem 0;
+    padding: var(--space-3) 0;
     gap: 0;
     z-index: 105;
     max-height: calc(100vh - 70px);
@@ -268,9 +285,9 @@
 
   .navbar-links li a {
     display: block;
-    padding: 0.9rem 2rem;
+    padding: var(--space-4) var(--space-8);
     border-radius: 0;
-    font-size: 1rem;
+    font-size: var(--text-base);
     border-bottom: 1px solid var(--card-border-nested);
   }
 
@@ -293,26 +310,26 @@
 
   .mobile-drawer-auth {
     display: block;
-    padding: 1rem 2rem;
+    padding: var(--space-4) var(--space-8);
     border-top: 1px solid var(--nav-border);
-    margin-top: 0.5rem;
+    margin-top: var(--space-2);
   }
 
   .mobile-auth-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: var(--space-3);
   }
 
   .mobile-user-info {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     font-weight: 600;
   }
 
   .mobile-auth-actions {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: var(--space-5);
   }
 
   .mobile-profile-link {
@@ -320,7 +337,7 @@
     padding: 0 !important;
     border: none !important;
     display: inline !important;
-    font-size: 0.95rem !important;
+    font-size: var(--text-base) !important;
     font-weight: 600 !important;
   }
 
@@ -328,7 +345,7 @@
     display: inline-block;
     text-align: center;
     width: 100%;
-    padding: 0.7rem 1.2rem;
+    padding: var(--space-3) var(--space-5);
     background: var(--card-bg-nested);
     border: 1px solid var(--card-border);
     color: var(--text-color);
@@ -342,19 +359,19 @@
   }
 
   .navbar-auth .auth-btn {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.9rem;
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--text-sm);
   }
 }
 
 @media (max-width: 600px) {
   .navbar-container {
-    padding: 0.6rem 1rem;
-    gap: 0.5rem;
+    padding: var(--space-2) var(--space-4);
+    gap: var(--space-2);
   }
 
   .navbar-logo a {
-    font-size: 1.2rem;
+    font-size: var(--text-xl);
     gap: 8px;
   }
 
@@ -367,31 +384,32 @@
   }
 
   .navbar-auth .auth-btn {
-    padding: 0.45rem 1rem;
-    font-size: 0.85rem;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
   }
 
   .auth-user-info {
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
   }
 }
 
 .theme-toggle-btn {
+  flex-shrink: 0;
   background: transparent;
   border: 1px solid var(--card-border);
   color: var(--text-color);
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 0.5rem 0.9rem;
+  padding: var(--space-2) var(--space-4);
   border-radius: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
   transition: all 0.3s ease;
-  margin-right: 0.25rem;
+  margin-right: var(--space-1);
 }
 
 .theme-toggle-btn:hover {
