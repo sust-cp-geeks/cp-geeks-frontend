@@ -74,7 +74,13 @@ const Navbar = () => {
         <div className="navbar-container">
           <div className="navbar-logo">
             <Link to="/">
-              <img src="/logo.png" alt="Logo" className="navbar-logo-img" />
+              {/* The mark is dark navy, which vanishes against the dark navbar,
+                  so the dark theme gets the light-on-transparent variant. */}
+              <img
+                src={theme === 'light' ? '/logo.png' : '/logo-dark.png'}
+                alt="Logo"
+                className="navbar-logo-img"
+              />
               <span>SUST CPGEEKS</span>
             </Link>
           </div>
