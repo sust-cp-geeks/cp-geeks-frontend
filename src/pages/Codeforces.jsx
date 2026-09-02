@@ -117,7 +117,12 @@ const Codeforces = () => {
       <div className="solve-bars-container">
         <h4>Total Solves: {periodData.total}</h4>
         <div className="solve-bars">
-          {Object.entries(periodData.buckets).map(([bucket, count]) => (
+          {/* The API sends these as an object, and its keys sort as strings —
+              "500-999" lands after "3000+". Order by the lower bound instead of
+              trusting key order, which JSON does not guarantee anyway. */}
+          {Object.entries(periodData.buckets)
+            .sort(([a], [b]) => parseInt(a, 10) - parseInt(b, 10))
+            .map(([bucket, count]) => (
             <div key={bucket} className="solve-bar-wrapper">
               <span className="bucket-label">{bucket}</span>
               <div className="bar-track">
