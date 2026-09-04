@@ -160,8 +160,8 @@
 }
 
 .stat-card {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   text-align: center;
@@ -172,7 +172,7 @@
 
 .stat-label {
   font-size: var(--text-sm);
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
   margin-bottom: var(--space-1);
   letter-spacing: 0.5px;
@@ -287,8 +287,8 @@
   grid-template-columns: 1fr 1fr 1fr 1fr auto;
   gap: 12px;
   align-items: center;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-nested);
+  border: 1px solid var(--card-border-nested);
   border-radius: var(--radius-lg);
   padding: 10px 14px;
   transition: all 0.2s ease;
