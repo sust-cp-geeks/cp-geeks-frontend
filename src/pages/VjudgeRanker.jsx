@@ -200,7 +200,14 @@ export default function VjudgeRanker() {
                         className="form-input"
                         placeholder="Contest ID or URL"
                         value={inputObj.value}
-                        style={{ margin: 0, padding: '0.6rem 0.8rem', fontSize: '0.9rem' }}
+                        style={{ 
+                          margin: 0, 
+                          padding: '0.8rem 1rem', 
+                          fontSize: '1rem',
+                          fontWeight: '600',
+                          border: '2px solid var(--secondary-cyan)',
+                          backgroundColor: 'var(--secondary-cyan-bg)'
+                        }}
                         onChange={(e) => {
                           const val = e.target.value;
                           setContestInputs(prev => prev.map((item, i) => i === index ? { ...item, value: val } : item));
@@ -221,8 +228,10 @@ export default function VjudgeRanker() {
                         style={{
                           margin: 0,
                           padding: '0.6rem 0.8rem',
-                          fontSize: '0.9rem',
-                          borderColor: inputObj.title ? 'var(--badge-green-border)' : undefined
+                          fontSize: '0.85rem',
+                          borderColor: inputObj.title ? 'var(--badge-green-border)' : 'var(--card-border-nested)',
+                          backgroundColor: 'var(--card-bg-nested)',
+                          color: 'var(--text-muted)'
                         }}
                         onChange={(e) => {
                           const val = e.target.value;

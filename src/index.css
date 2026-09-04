@@ -49,28 +49,36 @@
   --text-muted: #cbd5e1;
   --text-muted-more: #94a3b8;
   --title-color: #ffffff;
-  --accent: #d4a359;
+  --accent: #8DE0DB;
   
   --card-bg: #162032;
-  --card-border: rgba(212, 163, 89, 0.22);
-  --card-border-glow: rgba(212, 163, 89, 0.5);
+  --card-border: rgba(141, 224, 219, 0.22);
+  --card-border-glow: rgba(141, 224, 219, 0.5);
   --card-bg-nested: #111a28;
   --card-border-nested: rgba(255, 255, 255, 0.1);
   --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
-  --card-shadow-hover: 0 12px 30px -4px rgba(0, 0, 0, 0.55), 0 0 20px 2px rgba(212, 163, 89, 0.18);
+  --card-shadow-hover: 0 12px 30px -4px rgba(0, 0, 0, 0.55), 0 0 20px 2px rgba(141, 224, 219, 0.18);
 
   --input-bg: #162032;
   --input-border: rgba(255, 255, 255, 0.22);
-  --input-focus: #d4a359;
-  --primary-color: #d4a359;
-  --primary-hover: #e5b974;
+  --input-focus: #8DE0DB;
+  --primary-color: #8DE0DB;
+  --primary-hover: #7BC9C4;
+
+  --secondary-cyan: #8DE0DB;
+  --secondary-cyan-bg: rgba(141, 224, 219, 0.15);
+  --secondary-cyan-border: rgba(141, 224, 219, 0.35);
+
+  --secondary-pink: #D494D6;
+  --secondary-pink-bg: rgba(212, 148, 214, 0.15);
+  --secondary-pink-border: rgba(212, 148, 214, 0.35);
   
   --nav-bg: rgba(13, 19, 31, 0.96);
   --nav-border: rgba(255, 255, 255, 0.12);
   --nav-link: #f8fafc;
-  --nav-link-hover: #d4a359;
+  --nav-link-hover: #8DE0DB;
   --nav-link-bg-hover: rgba(255, 255, 255, 0.08);
-  --nav-link-active-bg: rgba(212, 163, 89, 0.18);
+  --nav-link-active-bg: rgba(141, 224, 219, 0.18);
   
   --widget-header-bg: #111a28;
 
@@ -116,28 +124,36 @@
   --text-muted: #1e293b;
   --text-muted-more: #334155;
   --title-color: #000000;
-  --accent: #b45309;
+  --accent: #0F8C8A;
   
   --card-bg: #ffffff;
   --card-border: rgba(15, 23, 42, 0.16);
-  --card-border-glow: rgba(180, 83, 9, 0.45);
+  --card-border-glow: rgba(15, 140, 138, 0.45);
   --card-bg-nested: #f1f5f9;
   --card-border-nested: #cbd5e1;
   --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --card-shadow-hover: 0 12px 28px -5px rgba(15, 23, 42, 0.15), 0 4px 12px -2px rgba(180, 83, 9, 0.12);
+  --card-shadow-hover: 0 12px 28px -5px rgba(15, 23, 42, 0.15), 0 4px 12px -2px rgba(15, 140, 138, 0.12);
 
   --input-bg: #ffffff;
   --input-border: #64748b;
-  --input-focus: #b45309;
-  --primary-color: #020617;
-  --primary-hover: #0f172a;
+  --input-focus: #0F8C8A;
+  --primary-color: #0F8C8A;
+  --primary-hover: #0C7A78;
+
+  --secondary-cyan: #0F8C8A;
+  --secondary-cyan-bg: rgba(141, 224, 219, 0.25);
+  --secondary-cyan-border: rgba(15, 140, 138, 0.45);
+
+  --secondary-pink: #A849AB;
+  --secondary-pink-bg: rgba(212, 148, 214, 0.25);
+  --secondary-pink-border: rgba(168, 73, 171, 0.45);
   
   --nav-bg: rgba(255, 255, 255, 0.98);
   --nav-border: #cbd5e1;
   --nav-link: #0f172a;
-  --nav-link-hover: #b45309;
+  --nav-link-hover: #0F8C8A;
   --nav-link-bg-hover: rgba(15, 23, 42, 0.06);
-  --nav-link-active-bg: rgba(180, 83, 9, 0.12);
+  --nav-link-active-bg: rgba(15, 140, 138, 0.12);
   
   --widget-header-bg: #e2e8f0;
 

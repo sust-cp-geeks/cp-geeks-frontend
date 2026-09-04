@@ -22,8 +22,8 @@
 }
 
 .create-btn {
-  background-color: var(--primary-color);
-  color: var(--bg-color);
+  background-color: var(--secondary-pink);
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   font-size: 14px;
@@ -35,7 +35,8 @@
 }
 
 .create-btn:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--secondary-pink);
+  opacity: 0.9;
   transform: translateY(-2px);
 }
 
@@ -147,8 +148,9 @@
 
 .announcement-card {
   display: flex;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: var(--secondary-cyan-bg);
+  border: 1px solid var(--secondary-cyan-border);
+  border-left: 4px solid var(--secondary-cyan) !important;
   border-radius: var(--radius-xl);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -171,13 +173,13 @@
 
 .announcement-date-box {
   width: 150px;
-  background: var(--card-bg-nested);
+  background: rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: var(--space-6);
-  color: var(--primary-hover);
+  color: var(--secondary-cyan);
   flex-shrink: 0;
 }
 

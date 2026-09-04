@@ -11,8 +11,8 @@
 
 .scroll-progress-bar-fill {
   height: 100%;
-  background: var(--accent, #d4a359);
-  box-shadow: 0 0 10px rgba(212, 163, 89, 0.4);
+  background: var(--accent, #8DE0DB);
+  box-shadow: 0 0 10px rgba(141, 224, 219, 0.4);
   transition: width 0.08s ease-out;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;

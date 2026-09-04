@@ -6,19 +6,20 @@
 }
 
 .admin-btn-primary {
-  background-color: var(--primary-hover);
-  color: white;
+  background-color: var(--secondary-pink);
+  color: #ffffff;
   border: none;
   padding: 8px 16px;
   border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
 .admin-btn-primary:hover {
-  background-color: var(--primary-color);
+  background-color: var(--secondary-pink);
+  opacity: 0.9;
 }
 
 .admin-btn-text {
@@ -42,8 +43,9 @@
 }
 
 .problem-section {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: var(--secondary-cyan-bg);
+  border: 1px solid var(--secondary-cyan-border);
+  border-left: 4px solid var(--secondary-cyan) !important;
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   margin-bottom: var(--space-8);
