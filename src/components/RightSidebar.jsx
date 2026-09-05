@@ -36,7 +36,11 @@ const RightSidebar = () => {
     setSearchState('loading');
     debounceTimerRef.current = setTimeout(async () => {
       try {
-        const res = await fetch(`${API_URL}/api/users/search?name=${encodeURIComponent(val)}`);
+        // member search is no longer public, so it needs the token
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${API_URL}/api/users/search?name=${encodeURIComponent(val)}`, {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+        });
         const data = await res.json().catch(() => ({}));
         if (data.success && Array.isArray(data.data)) {
           setSearchResults(data.data);
