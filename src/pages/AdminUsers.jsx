@@ -151,6 +151,23 @@ function AdminUsers() {
   const token = localStorage.getItem('token') || '';
   const role = localStorage.getItem('role') || '';
 
+  // The server refuses an admin changing their own role, so the control is
+  // hidden for yourself rather than offered and then rejected. Login stores
+  // only the token and role, so the id comes from the token's payload — this
+  // decides whether to draw a button, not what anyone is allowed to do, which
+  // the server settles for itself.
+  const myId = (() => {
+    try {
+      const t = localStorage.getItem('token');
+      if (!t) return null;
+      return JSON.parse(atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).user_id ?? null;
+    } catch {
+      return null;
+    }
+  })();
+
+  const roleOf = (u) => (u.is_admin ? 'admin' : u.is_manager ? 'manager' : 'member');
+
   const [status, setStatus] = useState('pending');
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -301,6 +318,33 @@ function AdminUsers() {
                     </button>
                   </div>
                   <p className="admin-hint">This ends the user's sessions.</p>
+                </div>
+              )}
+
+              {u.user_id !== myId && (
+                <div className="admin-roles">
+                  <span className="admin-roles-label">Role</span>
+                  <div className="admin-btn-row">
+                    {[
+                      ['member', { is_admin: false, is_manager: false }],
+                      ['manager', { is_admin: false, is_manager: true }],
+                      ['admin', { is_admin: true, is_manager: false }],
+                    ].map(([name, body]) => (
+                      <button
+                        key={name}
+                        type="button"
+                        className={`admin-btn admin-role-btn${roleOf(u) === name ? ' is-current' : ''}`}
+                        disabled={roleOf(u) === name}
+                        onClick={() => act(u.user_id, '/role', 'PUT', body)}
+                      >
+                        {name}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="admin-hint">
+                    A manager can post announcements and events. An admin can also
+                    approve members and see ID cards. Changing this signs them out.
+                  </p>
                 </div>
               )}
 
