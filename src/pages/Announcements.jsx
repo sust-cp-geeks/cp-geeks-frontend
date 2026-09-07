@@ -34,35 +34,9 @@ const formatDateBox = (isoString) => {
   return { day, monthYear, timeStr };
 };
 
-const DEFAULT_ANNOUNCEMENTS = [
-  {
-    post_id: 101,
-    title: "SUST IUPC 2026 Selection Contest",
-    content: "SUST IUPC 2026 Selection Contest will be held on April 28th at 8:00 PM BST. All registered students are required to participate.",
-    category: "Contest",
-    event_date: "2026-04-28T20:00:00.000Z",
-    created_at: "2026-04-20T10:00:00.000Z"
-  },
-  {
-    post_id: 102,
-    title: "Weekly Practice Round #14 Announced",
-    content: "Weekly Practice Round #14 is now live on Codeforces. Target ratings: 800-2000.",
-    category: "Update",
-    event_date: "2026-04-27T20:00:00.000Z",
-    created_at: "2026-04-18T12:00:00.000Z"
-  },
-  {
-    post_id: 103,
-    title: "ICPC Dhaka Regional 2026 Team Formation",
-    content: "Registration for SUST Team Formation Contest (TFC) for ICPC Dhaka Regional is open now.",
-    category: "Contest",
-    event_date: "2026-05-05T15:00:00.000Z",
-    created_at: "2026-04-15T09:00:00.000Z"
-  }
-];
-
 export default function Announcements() {
   const [announcements, setAnnouncements] = useState([]);
+  const [loadError, setLoadError] = useState(null);
   const role = localStorage.getItem('role') || '';
   const token = localStorage.getItem('token') || '';
   const showToast = useToast();
@@ -99,19 +73,19 @@ export default function Announcements() {
       .then(res => res.json())
       .then(data => {
         if (data.success && Array.isArray(data.data)) {
-          // Placeholder data would misrepresent an empty filter result, so it
-          // only stands in for an unfiltered list that came back empty.
-          setAnnouncements(
-            data.data.length > 0 ? data.data : (isFiltered ? [] : DEFAULT_ANNOUNCEMENTS)
-          );
+          setAnnouncements(data.data);
+          setLoadError(null);
         } else {
-          setAnnouncements(isFiltered ? [] : DEFAULT_ANNOUNCEMENTS);
+          // a quiet noticeboard is not the same as one we could not read
+          setAnnouncements([]);
+          setLoadError('Could not load announcements. Try again shortly.');
         }
       })
       .catch(() => {
-        setAnnouncements(isFiltered ? [] : DEFAULT_ANNOUNCEMENTS);
+        setAnnouncements([]);
+        setLoadError('Could not reach the server. Check your connection.');
       });
-  }, [token, filterCategory, filterUpcoming, isFiltered]);
+  }, [token, filterCategory, filterUpcoming]);
 
   useEffect(() => {
     fetchAnnouncements(token);
@@ -391,9 +365,9 @@ export default function Announcements() {
           })
         ) : (
           <div className="empty-state">
-            {isFiltered
+            {loadError || (isFiltered
               ? 'No announcements match these filters.'
-              : 'No announcements available at the moment.'}
+              : 'No announcements yet.')}
           </div>
         )}
       </div>

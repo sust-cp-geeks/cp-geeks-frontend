@@ -4,26 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastContext';
 import './Events.css';
 
-const DEFAULT_EVENTS = [
-  {
-    event_id: 1,
-    title: "SUST IUPC 2026",
-    description: "SUST IUPC 2026 Onsite Programming Contest & Fest"
-  },
-  {
-    event_id: 2,
-    title: "ICPC Regional",
-    description: "ICPC Dhaka Regional Preliminary Contest 2026"
-  },
-  {
-    event_id: 3,
-    title: "Intra SUST",
-    description: "SUST Intra University Junior Programming Contest"
-  }
-];
-
 export default function Events() {
   const [events, setEvents] = useState([]);
+  const [loadError, setLoadError] = useState(null);
   const role = localStorage.getItem('role') || '';
   const token = localStorage.getItem('token') || '';
   const navigate = useNavigate();
@@ -42,12 +25,16 @@ export default function Events() {
       .then(data => {
         if (data.success && Array.isArray(data.data)) {
           setEvents(data.data);
+          setLoadError(null);
         } else {
-          setEvents(DEFAULT_EVENTS);
+          // no events and could-not-load are different situations
+          setEvents([]);
+          setLoadError('Could not load events. Try again shortly.');
         }
       })
       .catch(() => {
-        setEvents(DEFAULT_EVENTS);
+        setEvents([]);
+        setLoadError('Could not reach the server. Check your connection.');
       });
   }, [token]);
 
@@ -162,7 +149,7 @@ export default function Events() {
             );
           })
         ) : (
-          <div className="empty-state">No events available at the moment.</div>
+          <div className="empty-state">{loadError || 'No events available at the moment.'}</div>
         )}
       </div>
     </div>

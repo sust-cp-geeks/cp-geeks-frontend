@@ -6,27 +6,11 @@ import './Problems.css';
 
 import '../components/Skeleton.css';
 
-const DEFAULT_SECTIONS = [
-  {
-    id: 1,
-    name: "Graph Theory & Trees",
-    description: "BFS, DFS, Dijkstra, Segment Trees, and LCA",
-    subsections: [
-      {
-        id: 11,
-        name: "Shortest Paths",
-        items: [
-          { id: 101, title: "Dijkstra Algorithm Practice", url: "https://codeforces.com", platform: "Codeforces", item_type: "problem" }
-        ]
-      }
-    ]
-  }
-];
-
 const Problems = () => {
   const [sections, setSections] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   
   // Modal states
   const [showItemModal, setShowItemModal] = useState(false);
@@ -59,16 +43,16 @@ const Problems = () => {
       const res = await fetch(`${API_URL}/api/problems`);
       if (res.ok) {
         const data = await res.json();
-        if (Array.isArray(data.data)) {
-          setSections(data.data);
-        } else {
-          setSections(DEFAULT_SECTIONS);
-        }
+        setSections(Array.isArray(data.data) ? data.data : []);
+        setLoadError(null);
       } else {
-        setSections(DEFAULT_SECTIONS);
+        // an empty list and a failed request are different things to be told
+        setSections([]);
+        setLoadError('Could not load the problem list. Try again shortly.');
       }
     } catch {
-      setSections(DEFAULT_SECTIONS);
+      setSections([]);
+      setLoadError('Could not reach the server. Check your connection.');
     } finally {
       setLoading(false);
     }
@@ -205,7 +189,9 @@ const Problems = () => {
           </div>
         ) : (
           <>
-            {sections.length === 0 && <p className="empty-state">No sections constructed yet.</p>}
+            {sections.length === 0 && (
+              <p className="empty-state">{loadError || 'No sections constructed yet.'}</p>
+            )}
             {sections.map(sec => (
           <div key={sec.id} className="problem-section">
             <div className="section-header">
