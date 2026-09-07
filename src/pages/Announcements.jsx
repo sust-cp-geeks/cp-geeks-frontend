@@ -50,6 +50,10 @@ export default function Announcements() {
   const [linkUrl, setLinkUrl] = useState('');
   const [linkLabel, setLinkLabel] = useState('');
   const [isPinned, setIsPinned] = useState(false);
+  // null while creating, a post_id while editing — the same form serves both
+  const [editingId, setEditingId] = useState(null);
+  // which card is asking "are you sure?"; deletion has no undo
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
@@ -102,6 +106,60 @@ export default function Announcements() {
       .catch(() => setCategories([]));
   }, []);
 
+  const resetForm = () => {
+    setTitle('');
+    setCategory('');
+    setDescription('');
+    setLinkUrl('');
+    setLinkLabel('');
+    setIsPinned(false);
+    setDate('');
+    setTime('');
+    setEditingId(null);
+    setShowForm(false);
+  };
+
+  const startEdit = (a) => {
+    setEditingId(a.post_id);
+    setTitle(a.title || '');
+    setCategory(a.category || '');
+    setDescription(a.content || '');
+    setLinkUrl(a.link_url || '');
+    setLinkLabel(a.link_label || '');
+    setIsPinned(Boolean(a.is_pinned));
+    // split the stored string rather than going through Date. the api sends a
+    // naive timestamp and toApiDate builds one, so string handling round-trips
+    // exactly; a Date would apply the timezone and quietly shift the time by
+    // six hours every time someone edited an unrelated field.
+    const [d, t] = String(a.event_date || '').split('T');
+    setDate(d || '');
+    setTime(t ? t.slice(0, 5) : '');
+    setShowForm(true);
+    setConfirmDeleteId(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/api/announcements/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        setConfirmDeleteId(null);
+        // if the post being edited was the one deleted, close the form too
+        if (editingId === id) resetForm();
+        fetchAnnouncements(token);
+      } else {
+        showToast(data.error || data.message || 'Could not delete the announcement.', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Could not reach the server. Try again shortly.', 'error');
+    }
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     if (!title.trim() || !description.trim() || !category) return;
@@ -118,8 +176,11 @@ export default function Announcements() {
     };
 
     try {
-      const res = await fetch(`${API_URL}/api/announcements`, {
-        method: 'POST',
+      const editing = editingId !== null;
+      const res = await fetch(
+        editing ? `${API_URL}/api/announcements/${editingId}` : `${API_URL}/api/announcements`,
+        {
+        method: editing ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -129,23 +190,18 @@ export default function Announcements() {
       
       const data = await res.json();
       if (data.success) {
-        // Reset form and refetch
-        setTitle('');
-        setCategory('');
-        setDescription('');
-        setLinkUrl('');
-        setLinkLabel('');
-        setIsPinned(false);
-        setDate('');
-        setTime('');
-        setShowForm(false);
+        resetForm();
         fetchAnnouncements(token);
       } else {
-        showToast(data.error || data.message || 'Failed to create announcement', 'error');
+        showToast(
+          data.error || data.message ||
+            (editing ? 'Failed to update announcement' : 'Failed to create announcement'),
+          'error'
+        );
       }
     } catch (err) {
       console.error(err);
-      showToast('An error occurred while creating the announcement.', 'error');
+      showToast('An error occurred while saving the announcement.', 'error');
     }
   };
 
@@ -187,7 +243,7 @@ export default function Announcements() {
 
       {showForm && (
         <div className="create-form-modal">
-          <h3>Create New Announcement</h3>
+          <h3>{editingId ? 'Edit Announcement' : 'Create New Announcement'}</h3>
           <form onSubmit={handleCreate}>
             <div className="form-group">
               <label htmlFor="ann-title">Title</label>
@@ -283,11 +339,11 @@ export default function Announcements() {
               </div>
             </div>
             <div className="form-actions">
-              <button type="button" className="cancel-btn" onClick={() => setShowForm(false)}>
+              <button type="button" className="cancel-btn" onClick={resetForm}>
                 Cancel
               </button>
               <button type="submit" className="save-btn">
-                Save changes
+                {editingId ? 'Save changes' : 'Publish announcement'}
               </button>
             </div>
           </form>
@@ -342,6 +398,49 @@ export default function Announcements() {
                     <span>{a.author_name || 'Unknown'}</span>
                     {a.updated_at && <span className="ann-edited">· edited</span>}
                   </div>
+
+                  {canCreate && (
+                    <div className="ann-actions">
+                      {confirmDeleteId === a.post_id ? (
+                        <>
+                          {/* deleting is permanent — there is no undo and no
+                              recycle bin, so it takes a second deliberate click */}
+                          <span className="ann-confirm-text">Delete permanently?</span>
+                          <button
+                            type="button"
+                            className="ann-action ann-action-danger"
+                            onClick={() => handleDelete(a.post_id)}
+                          >
+                            Yes, delete
+                          </button>
+                          <button
+                            type="button"
+                            className="ann-action"
+                            onClick={() => setConfirmDeleteId(null)}
+                          >
+                            Keep
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            className="ann-action"
+                            onClick={() => startEdit(a)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            className="ann-action ann-action-danger"
+                            onClick={() => setConfirmDeleteId(a.post_id)}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  )}
                 </div>
                 
                 <div className={`announcement-date-box ${!dateData ? 'no-date' : ''}`}>
