@@ -1,0 +1,38 @@
+name: CI
+
+# main is the only long-lived branch here and pushing it deploys to vercel, so
+# this is the last chance to catch a broken build before members see it.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: lint and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # the version comes from engines.node in package.json rather than being
+      # written here. vercel reads that same field, so ci, a laptop and the
+      # deploy cannot end up on three different node versions — which is exactly
+      # how the backend once went red on a file nobody had touched.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: npm
+
+      # ci, not install: it installs exactly what package-lock.json pins and
+      # fails if the lockfile is out of step, instead of quietly resolving
+      # something newer than what was tested
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
