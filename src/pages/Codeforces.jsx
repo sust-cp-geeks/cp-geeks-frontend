@@ -136,6 +136,13 @@ const Codeforces = () => {
     );
   };
 
+  // matches the atcoder page, so "last updated" reads the same on both
+  const formatSynced = (isoString) => {
+    const d = parseApiDate(isoString);
+    if (!d) return null;
+    return d.toLocaleString('en-US', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
+  };
+
   const formatContestDate = (isoString) => {
     const d = parseApiDate(isoString);
     if (!d) return '';
@@ -313,6 +320,19 @@ const Codeforces = () => {
                   </div>
                 </div>
 
+                {/* The backend serves the last synced values when Codeforces is
+                    unreachable, rather than failing the whole page. Say so — a
+                    six-hour-old rating presented as current is worse than a
+                    slightly awkward banner. */}
+                {profileStats.stale && (
+                  <div className="cf-error" style={{ marginBottom: '1rem' }}>
+                    {profileStats.sync_error
+                      ? `Codeforces could not be reached, and the last refresh of this handle failed: ${profileStats.sync_error}`
+                      : 'Codeforces is unreachable right now. Rating and rank below are from our last successful sync; recent activity is unavailable until it returns.'}
+                    {profileStats.synced_at && ` Last updated ${formatSynced(profileStats.synced_at)}.`}
+                  </div>
+                )}
+                {!profileStats.stale && (
                 <div className="stats-grid">
                   <div className="stats-box">
                     <h3>Last 1 Month</h3>
@@ -327,8 +347,11 @@ const Codeforces = () => {
                     {renderSolveCountBars(profileStats.solve_counts.last_1_year)}
                   </div>
                 </div>
+                )}
 
+                {!profileStats.stale && (
                 <SubmissionHeatmap handle={profileStats.codeforces_handle} />
+                )}
 
                 <div className="recent-contests-section">
                   <h3>Recent Contests</h3>
