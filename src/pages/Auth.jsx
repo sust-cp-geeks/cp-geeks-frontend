@@ -336,13 +336,13 @@ function Auth() {
                 <label htmlFor="signup-name">Full Name</label>
                 <input type="text" id="signup-name" className="form-input"
                   value={name} onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe" required />
+                  placeholder="Your official name" required />
               </div>
               <div className="form-group">
                 <label htmlFor="signup-reg">Registration Number</label>
                 <input type="text" id="signup-reg" className="form-input"
                   value={regNumber} onChange={(e) => setRegNumber(e.target.value)}
-                  placeholder="2019331000" required />
+                  placeholder="2021331xxx" required />
               </div>
 
               <div className="manual-signup-banner">

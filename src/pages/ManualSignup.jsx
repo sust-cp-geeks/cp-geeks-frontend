@@ -174,7 +174,7 @@ function ManualSignup() {
                 className="form-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="John Doe"
+                placeholder="Your official name"
                 required
               />
             </div>
@@ -187,7 +187,7 @@ function ManualSignup() {
                 className="form-input"
                 value={regNumber}
                 onChange={(e) => setRegNumber(e.target.value)}
-                placeholder="2021331000"
+                placeholder="2021331xxx"
                 required
               />
             </div>

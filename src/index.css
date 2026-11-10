@@ -523,10 +523,6 @@ html {
 
 /* ─── Global Mobile Responsive & Scaling Overrides ─── */
 @media (max-width: 1024px) {
-  .app-container {
-    padding-bottom: 70px !important;
-  }
-
   /* Prevent layout container squeezing */
   .layout-container {
     width: 100% !important;

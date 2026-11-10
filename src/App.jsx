@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import MobileBottomNav from './components/MobileBottomNav';
 import RightSidebar from './components/RightSidebar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -127,7 +126,6 @@ function AppContent() {
         <RightSidebar />
       </div>
       <Footer />
-      <MobileBottomNav />
       <ScrollToTop />
       <ScrollRevealObserver />
     </div>
