@@ -14,13 +14,18 @@
 }
 
 .table-wrapper {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
   overflow: hidden;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--clay-card-shadow);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.table-wrapper:hover {
+  box-shadow: var(--clay-card-shadow-hover);
 }
 
 .custom-table {

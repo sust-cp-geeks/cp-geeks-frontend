@@ -14,14 +14,19 @@
 }
 
 .profile-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
-  border-radius: 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
   padding: var(--space-8) var(--space-8) var(--space-10);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--clay-card-shadow);
   animation: slideUp 0.4s ease-out forwards;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.profile-card:hover {
+  box-shadow: var(--clay-card-shadow-hover);
 }
 
 
@@ -42,7 +47,7 @@
 
 .edit-profile-btn {
   padding: var(--space-2) var(--space-5);
-  background: transparent;
+  background: var(--glass-bg);
   color: var(--primary-hover);
   border: 1px solid var(--primary-hover);
   border-radius: var(--radius-lg);
@@ -50,12 +55,19 @@
   white-space: nowrap;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .edit-profile-btn:hover {
   background: var(--nav-link-bg-hover);
   transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.edit-profile-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .profile-actions {
@@ -71,7 +83,8 @@
   font-size: var(--text-base);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cancel-btn {
@@ -83,18 +96,30 @@
 .cancel-btn:hover {
   background: var(--badge-red-text);
   color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.cancel-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .save-btn {
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   color: var(--btn-primary-text);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .save-btn:hover {
   background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.save-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .profile-loading, .profile-error {
@@ -143,8 +168,10 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--btn-primary-text);
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   user-select: none;
+  box-shadow: var(--clay-btn-shadow);
+  border: 2px solid rgba(255, 255, 255, 0.25);
 }
 
 .profile-identity-text {
@@ -181,6 +208,7 @@
   color: var(--badge-blue-text);
   background: var(--badge-blue-bg);
   border: 1px solid var(--badge-blue-border);
+  box-shadow: var(--clay-badge-shadow);
 }
 
 .role-badge.is-admin {
@@ -260,16 +288,20 @@
   align-items: center;
   gap: var(--space-1) var(--space-3);
   padding: var(--space-4) var(--space-4);
-  border-radius: 0.65rem;
-  background: var(--card-bg-nested);
+  border-radius: var(--radius-xl);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--card-border-nested);
+  box-shadow: var(--clay-btn-shadow);
   text-decoration: none;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 a.handle-card:hover {
   border-color: var(--primary-color);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
 }
 
 .handle-platform {

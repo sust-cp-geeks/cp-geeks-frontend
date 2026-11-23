@@ -19,6 +19,20 @@
   font-weight: 800;
   margin: 0;
   color: var(--primary-hover);
+  font-family: var(--font-display);
+  letter-spacing: var(--heading-letter-spacing);
+  position: relative;
+}
+
+.announcements-header h1::after {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 60px;
+  margin-top: var(--space-3);
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 12px rgba(141,224,219,0.5);
 }
 
 .create-btn {
@@ -32,6 +46,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: var(--font-family);
+  box-shadow: var(--clay-btn-shadow);
 }
 
 .create-btn:hover {
@@ -41,13 +56,14 @@
 }
 
 .create-form-modal {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-xl);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
   padding: var(--space-6);
   margin-bottom: var(--space-8);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--clay-modal-shadow);
   color: var(--text-color);
 }
 
@@ -92,7 +108,7 @@
 .form-textarea:focus {
   outline: none;
   border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+  box-shadow: var(--clay-input-shadow-focus);
 }
 
 .form-textarea {
@@ -132,7 +148,8 @@
   font-weight: 600;
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s;
+  transition: background-color 0.2s ease, transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--clay-btn-shadow);
 }
 
 .save-btn:hover {
@@ -148,17 +165,20 @@
 
 .announcement-card {
   display: flex;
-  background: var(--secondary-cyan-bg);
-  border: 1px solid var(--secondary-cyan-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-left: 4px solid var(--secondary-cyan) !important;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--clay-card-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .announcement-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+  box-shadow: var(--clay-card-shadow-hover);
 }
 
 .announcement-description {
@@ -215,7 +235,8 @@
 /* ── Announcement card detail (author, pin, link, relations) ─────────────── */
 .announcement-card.is-pinned {
   border-color: var(--badge-yellow-border);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  border-left-color: var(--badge-yellow-text) !important;
+  box-shadow: var(--clay-card-shadow), 0 0 16px rgba(251, 191, 36, 0.15);
 }
 
 .ann-badges {
@@ -235,6 +256,7 @@
   color: var(--badge-blue-text);
   background: var(--badge-blue-bg);
   border: 1px solid var(--badge-blue-border);
+  box-shadow: var(--clay-badge-shadow);
 }
 
 .ann-badge-pinned {
@@ -285,11 +307,14 @@
   color: var(--badge-green-text);
   background: var(--badge-green-bg);
   border: 1px solid var(--badge-green-border);
-  transition: opacity 0.2s ease;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ann-link-btn:hover {
-  opacity: 0.85;
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: var(--clay-btn-shadow-hover);
 }
 
 .ann-byline {

@@ -1,7 +1,9 @@
 /* ── Skeleton Loading Placeholders ── */
 .skeleton {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--glass-bg-subtle, rgba(30, 41, 59, 0.6));
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
+  box-shadow: var(--clay-btn-shadow);
   position: relative;
   overflow: hidden;
 }

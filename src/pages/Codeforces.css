@@ -14,6 +14,24 @@
   font-size: var(--text-4xl);
   color: var(--primary-hover);
   margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: var(--heading-letter-spacing);
+  position: relative;
+  display: inline-block;
+}
+
+.cf-header h1::after {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 50px;
+  margin-top: var(--space-2);
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 12px rgba(141,224,219,0.5);
 }
 
 .cf-header p {
@@ -38,11 +56,13 @@
 
 /* Leaderboard Section */
 .cf-leaderboard-section {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-xl);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
   padding: var(--space-6);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--clay-card-shadow);
 }
 
 .cf-leaderboard-section h2 {
@@ -82,26 +102,27 @@
 .view-btn {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   color: var(--btn-primary-text);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s, transform 0.1s;
-  /* it is an anchor now, so it can be opened in a new tab — these keep it
-     looking exactly like the button it replaced */
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-block;
   text-decoration: none;
   white-space: nowrap;
+  box-shadow: var(--clay-btn-shadow);
 }
 
 .view-btn:hover {
   opacity: 0.95;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
 }
 
 .view-btn:active {
-  transform: translateY(0);
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 /* Profile Section */
@@ -110,11 +131,13 @@
      stats, not on a leaderboard that grows with every new member. */
   order: -1;
   position: relative;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-xl);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
   padding: var(--space-8);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--clay-card-shadow);
   animation: slideUp 0.4s ease-out;
 }
 
@@ -184,10 +207,13 @@
 }
 
 .stats-box {
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--card-border-nested);
+  box-shadow: var(--clay-card-shadow);
 }
 
 .stats-box h3 {
@@ -262,10 +288,13 @@
 
 /* Recent Contests */
 .recent-contests-section {
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--card-border-nested);
+  box-shadow: var(--clay-card-shadow);
 }
 
 .recent-contests-section h3 {
@@ -280,13 +309,22 @@
 }
 
 .contest-item {
-  background: var(--card-bg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-4);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   border-left: 4px solid var(--primary-color);
-  border-top: 1px solid var(--card-border);
-  border-right: 1px solid var(--card-border);
-  border-bottom: 1px solid var(--card-border);
+  border-top: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--clay-btn-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contest-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
 }
 
 .contest-name {
@@ -325,10 +363,13 @@
 /* --- contest attendance ------------------------------------------------- */
 
 .contest-attendance-section {
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--card-border-nested);
+  box-shadow: var(--clay-card-shadow);
   margin-top: var(--space-6);
 }
 
@@ -352,24 +393,26 @@
   border: 1px solid transparent;
   font-family: inherit;
   cursor: pointer;
-  transition: opacity 0.2s, box-shadow 0.2s;
+  box-shadow: var(--clay-badge-shadow);
+  transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
 .attendance-chip:hover {
-  opacity: 0.85;
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
 /* the "all" chip is neutral — it is the unfiltered state, not a status */
 .attendance-chip.all {
-  background: var(--card-bg);
-  border-color: var(--card-border);
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
   color: var(--text-muted);
 }
 
 /* the chosen filter keeps its colour and gains a ring; the others recede so it
    is obvious which one the list is currently narrowed to */
 .attendance-chip.is-active {
-  box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 3px currentColor;
+  box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 3px currentColor, var(--clay-badge-shadow);
 }
 
 .attendance-summary:has(.is-active) .attendance-chip:not(.is-active) {
@@ -398,8 +441,8 @@
 /* neutral on purpose — these are contests they could not enter, so shading
    them red would read as though they skipped something */
 .attendance-chip.ineligible {
-  background: var(--card-bg);
-  border-color: var(--card-border);
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
   color: var(--text-muted);
 }
 
@@ -418,11 +461,19 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  background: var(--card-bg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-md);
-  border: 1px solid var(--card-border);
-  border-left: 4px solid var(--card-border);
+  border: 1px solid var(--glass-border);
+  border-left: 4px solid var(--glass-border);
+  box-shadow: var(--clay-badge-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.attendance-item:hover {
+  transform: translateY(-1px);
 }
 
 .attendance-item.attended {

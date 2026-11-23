@@ -1,8 +1,11 @@
 .heatmap-section {
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--card-border-nested);
+  box-shadow: var(--clay-card-shadow);
   margin-top: var(--space-6);
 }
 

@@ -9,17 +9,34 @@
 }
 
 .auth-layout-container {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: calc(100vh - 140px);
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  border: 1px solid var(--card-border);
-  background: var(--card-bg);
+  border: 1px solid var(--frost-shimmer-border, var(--glass-border));
+  border-top-color: rgba(255, 255, 255, 0.3);
+  border-left-color: rgba(255, 255, 255, 0.22);
+  background: var(--glass-bg);
   border-radius: var(--radius-2xl);
   overflow: hidden;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--clay-modal-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.auth-layout-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: var(--frost-highlight);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-side {
@@ -83,11 +100,13 @@
 
 .login-card.manual-verification-card {
   max-width: 100%;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
   padding: var(--space-10);
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--clay-card-shadow);
 }
 
 .manual-verification-card .login-header h1 {
@@ -121,9 +140,10 @@
   grid-template-columns: 1fr 1fr;
   border: 1px solid var(--card-border);
   background: var(--input-bg);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   padding: 0;
+  box-shadow: var(--clay-input-shadow);
 }
 
 .auth-toggle-btn {
@@ -196,7 +216,7 @@
 
 .form-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15);
+  box-shadow: var(--clay-input-shadow-focus);
 }
 
 .submit-btn {
@@ -210,15 +230,16 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
   margin-top: var(--space-4);
   border-radius: var(--radius-lg);
+  box-shadow: var(--clay-btn-shadow);
 }
 
 .submit-btn:hover:not(:disabled) {
-  opacity: 0.88;
-  transform: none;
-  box-shadow: none;
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: var(--clay-btn-shadow-hover);
   background: var(--text-color);
 }
 
@@ -349,6 +370,7 @@
   transition: all 0.3s ease;
   background: var(--input-bg);
   position: relative;
+  box-shadow: var(--clay-input-shadow);
 }
 
 .upload-dropzone:hover {
@@ -491,7 +513,7 @@
   border-radius: var(--radius-lg);
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.35);
+  box-shadow: var(--clay-btn-shadow);
 }
 
 .discord-btn:hover {

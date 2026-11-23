@@ -17,13 +17,32 @@
   font-weight: 800;
   color: var(--primary-hover);
   margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  letter-spacing: var(--heading-letter-spacing);
+  position: relative;
+  display: inline-block;
+}
+
+.ranker-header h1::after {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 50px;
+  margin-top: var(--space-2);
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 12px rgba(141,224,219,0.5);
 }
 
 .subtitle {
-  font-size: var(--text-lg);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
   color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
+  letter-spacing: 0.04em;
 }
 
 .ranker-grid {
@@ -50,11 +69,18 @@
 }
 
 .ranker-form-card, .ranker-results-summary {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: var(--space-6) var(--space-2);
-  transition: transform 0.2s;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  box-shadow: var(--clay-card-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ranker-form-card:hover, .ranker-results-summary:hover {
+  box-shadow: var(--clay-card-shadow-hover);
 }
 
 .ranker-form-card h2, .ranker-results-summary h2 {
@@ -116,13 +142,14 @@
 .analyze-btn {
   width: 100%;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  color: white;
-  border: none;
+  color: var(--btn-primary-text);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: var(--space-4);
   border-radius: var(--radius-lg);
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,11 +158,12 @@
 
 .analyze-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  box-shadow: var(--clay-btn-shadow-hover);
 }
 
 .analyze-btn:active:not(:disabled) {
-  transform: translateY(0);
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .analyze-btn:disabled {
@@ -160,14 +188,23 @@
 }
 
 .stat-card {
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--card-border-nested);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: var(--space-5);
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: var(--clay-btn-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
 }
 
 .stat-label {
@@ -181,8 +218,8 @@
 .stat-val {
   font-size: var(--text-3xl);
   font-weight: 800;
-  color: #3b82f6;
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+  color: var(--primary-hover);
+  text-shadow: 0 0 10px rgba(141, 224, 219, 0.25);
 }
 
 .action-buttons-row {
@@ -199,17 +236,23 @@
   width: 100%;
   background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: var(--space-4);
   border-radius: var(--radius-lg);
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .download-pdf-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.download-pdf-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .download-pdf-no-details-btn {
@@ -220,17 +263,23 @@
   width: 100%;
   background: linear-gradient(135deg, #475569, #334155);
   color: white;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: var(--space-4);
   border-radius: var(--radius-lg);
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .download-pdf-no-details-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(71, 85, 105, 0.4);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.download-pdf-no-details-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .pdf-icon {

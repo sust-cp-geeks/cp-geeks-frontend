@@ -12,20 +12,20 @@
 
 .toast {
   pointer-events: auto;
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: 14px 20px;
   min-width: 280px;
   max-width: 420px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--clay-card-shadow);
   display: flex;
   align-items: center;
   gap: 12px;
   animation: toastSlideIn 0.3s ease-out forwards;
-  border-left: 3px solid;
+  border-left: 4px solid;
 }
 
 .toast.toast-exiting {

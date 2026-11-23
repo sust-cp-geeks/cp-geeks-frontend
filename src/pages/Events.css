@@ -18,6 +18,20 @@
   font-weight: 800;
   color: var(--primary-hover);
   margin: 0;
+  font-family: var(--font-display);
+  letter-spacing: var(--heading-letter-spacing);
+  position: relative;
+}
+
+.events-header h1::after {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 60px;
+  margin-top: var(--space-3);
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 12px rgba(141,224,219,0.5);
 }
 
 .create-btn {
@@ -40,13 +54,14 @@
 }
 
 .create-form-modal {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  border-radius: var(--radius-xl);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-2xl);
   padding: var(--space-8);
   margin-bottom: var(--space-8);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  border: 1px solid var(--card-border);
+  box-shadow: var(--clay-modal-shadow);
+  border: 1px solid var(--glass-border);
   animation: slideDown 0.3s ease-out;
   color: var(--text-color);
 }
@@ -85,7 +100,7 @@
 .form-input:focus, .form-textarea:focus {
   outline: none;
   border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+  box-shadow: var(--clay-input-shadow-focus);
 }
 
 .form-actions {
@@ -139,22 +154,24 @@
 }
 
 .event-card {
-  background: var(--secondary-cyan-bg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border-radius: var(--radius-2xl);
   padding: var(--space-6);
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: var(--space-6);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--secondary-cyan-border);
+  box-shadow: var(--clay-card-shadow);
+  border: 1px solid var(--glass-border);
   border-left: 4px solid var(--secondary-cyan) !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .event-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: var(--clay-card-shadow-hover);
 }
 
 .event-description {
@@ -186,7 +203,8 @@
   font-weight: 600;
   cursor: pointer;
   border: none;
-  transition: all 0.2s ease;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: var(--font-family);
 }
 
@@ -197,7 +215,14 @@
 }
 
 .add-team-btn:hover {
-  opacity: 0.8;
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.add-team-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .delete-btn {
@@ -207,22 +232,36 @@
 }
 
 .delete-btn:hover {
-  opacity: 0.8;
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.delete-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .expand-btn {
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
   color: var(--text-color);
   border: 1px solid var(--card-border-nested);
 }
 
 .expand-btn:hover {
   background: var(--nav-link-bg-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.expand-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
 }
 
 .event-date-box {
-  background: rgba(0, 0, 0, 0.1);
-  border: 1px solid transparent;
+  background: var(--glass-bg-subtle, rgba(0, 0, 0, 0.1));
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: var(--space-4);
   min-width: 100px;
@@ -232,6 +271,7 @@
   justify-content: center;
   text-align: center;
   color: var(--secondary-cyan);
+  box-shadow: var(--clay-badge-shadow);
 }
 
 .event-date-box.no-date {
@@ -400,7 +440,8 @@
   cursor: pointer;
   font-weight: 700;
   font-family: var(--font-family);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--clay-btn-shadow);
 }
 
 .event-tab-btn:hover {
@@ -427,9 +468,12 @@
 
 .tab-content {
   padding: 20px;
-  background: var(--card-bg);
+  background: var(--glass-bg);
   border-radius: var(--radius-xl);
-  border: 1px solid var(--card-border);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--clay-card-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 .tab-empty-text {

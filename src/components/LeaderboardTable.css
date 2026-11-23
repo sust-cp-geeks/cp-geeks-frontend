@@ -1,11 +1,12 @@
 /* Leaderboard section */
 .leaderboard-section {
-  background: var(--card-bg, rgba(15, 23, 42, 0.8));
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
   padding: var(--space-8);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--clay-card-shadow);
   animation: slideUp 0.4s ease-out;
 }
 
@@ -42,13 +43,13 @@
   font-size: var(--text-base);
   outline: none;
   transition: all 0.3s ease;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: var(--clay-input-shadow);
 }
 
 .search-input:focus {
   border-color: var(--primary-color, #3b82f6);
   background: var(--input-bg);
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  box-shadow: var(--clay-input-shadow-focus);
 }
 
 .clear-search-btn {
@@ -79,8 +80,11 @@
   width: 100%;
   overflow-x: auto;
   border-radius: var(--radius-xl);
-  border: 1px solid var(--card-border-nested);
-  background: var(--card-bg-nested);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--clay-input-shadow);
 }
 
 .leaderboard-table {
@@ -159,21 +163,21 @@
   background: linear-gradient(135deg, rgba(253, 224, 71, 0.2), rgba(234, 179, 8, 0.4));
   color: #fde047;
   border: 1px solid rgba(253, 224, 71, 0.5);
-  box-shadow: 0 0 15px rgba(253, 224, 71, 0.2);
+  box-shadow: var(--clay-badge-shadow), 0 0 15px rgba(253, 224, 71, 0.2);
 }
 
 .podium-badge.silver {
   background: linear-gradient(135deg, rgba(226, 232, 240, 0.2), rgba(148, 163, 184, 0.4));
   color: #f8fafc;
   border: 1px solid rgba(226, 232, 240, 0.4);
-  box-shadow: 0 0 10px rgba(226, 232, 240, 0.15);
+  box-shadow: var(--clay-badge-shadow), 0 0 10px rgba(226, 232, 240, 0.15);
 }
 
 .podium-badge.bronze {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.4));
   color: #fcd34d;
   border: 1px solid rgba(245, 158, 11, 0.4);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.15);
+  box-shadow: var(--clay-badge-shadow), 0 0 10px rgba(245, 158, 11, 0.15);
 }
 
 .regular-rank {
@@ -190,6 +194,7 @@
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   border: 1px solid var(--badge-blue-border);
+  box-shadow: var(--clay-badge-shadow);
 }
 
 .top-tier .user-handle {
@@ -207,8 +212,9 @@
   font-size: var(--text-sm);
   cursor: pointer;
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   transition: all 0.2s ease;
+  box-shadow: var(--clay-btn-shadow);
 }
 
 .details-toggle-btn:hover {
@@ -244,17 +250,20 @@
 }
 
 .breakdown-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: var(--space-5);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
+  box-shadow: var(--clay-card-shadow);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .breakdown-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--card-border-glow);
+  box-shadow: var(--clay-card-shadow-hover);
 }
 
 .breakdown-contest-name {
@@ -279,9 +288,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
   padding: var(--space-2) var(--space-1);
   border-radius: var(--radius-lg);
+  box-shadow: var(--clay-btn-shadow);
   flex: 1;
 }
 

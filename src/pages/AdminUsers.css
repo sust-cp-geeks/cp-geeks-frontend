@@ -46,17 +46,24 @@
   border-radius: var(--radius-full);
   cursor: pointer;
   color: var(--text-muted);
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--card-border-nested);
-  transition: background 0.2s ease, color 0.2s ease;
+  box-shadow: var(--clay-badge-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.admin-tab:hover { color: var(--text-color); }
+.admin-tab:hover {
+  color: var(--text-color);
+  transform: translateY(-1px);
+}
 
 .admin-tab.is-active {
   color: var(--btn-primary-text);
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   border-color: var(--primary-color);
+  box-shadow: var(--clay-btn-shadow);
 }
 
 /* ── User grid ────────────────────────────────────────────────────────── */
@@ -67,11 +74,19 @@
 }
 
 .admin-user-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-4);
-  box-shadow: var(--card-shadow);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-5);
+  box-shadow: var(--clay-card-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.admin-user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--clay-card-shadow-hover);
 }
 
 .admin-user-top {
@@ -127,17 +142,28 @@
   border-radius: var(--radius-lg);
   cursor: pointer;
   color: var(--text-normal);
-  background: var(--card-bg-nested);
+  background: var(--glass-bg-subtle, var(--card-bg-nested));
   border: 1px solid var(--card-border-nested);
-  transition: opacity 0.2s ease;
+  box-shadow: var(--clay-btn-shadow);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.admin-btn:hover:not(:disabled) { opacity: 0.82; }
+.admin-btn:hover:not(:disabled) {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: var(--clay-btn-shadow-hover);
+}
+
+.admin-btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: var(--clay-btn-shadow-active);
+}
+
 .admin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .admin-btn-primary {
   color: var(--btn-primary-text);
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   border-color: var(--primary-color);
 }
 
@@ -188,15 +214,19 @@
   padding: var(--space-8) var(--space-4);
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .admin-review {
   width: min(46rem, 100%);
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 0.9rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
   padding: var(--space-6);
-  box-shadow: var(--card-shadow-hover);
+  box-shadow: var(--clay-modal-shadow);
 }
 
 .admin-review-head {
