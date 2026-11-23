@@ -7,6 +7,7 @@ import ScrollToTop from './components/ScrollToTop';
 import ScrollRevealObserver from './components/ScrollRevealObserver';
 import ScrollProgressBar from './components/ScrollProgressBar';
 import OfflineBanner from './components/OfflineBanner';
+import InteractiveBackground from './components/InteractiveBackground';
 import { ToastProvider, useToast } from './components/ToastContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import { onSessionEnded } from './api';
@@ -91,6 +92,7 @@ function AppContent() {
 
   return (
     <div className="app-container">
+      <InteractiveBackground />
       <ScrollProgressBar />
       <OfflineBanner />
       <Navbar />

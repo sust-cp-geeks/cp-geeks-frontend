@@ -509,13 +509,11 @@ body {
   font-family: var(--font-family);
   background-color: var(--bg-color);
   background-image:
-    var(--dot-pattern),
     radial-gradient(ellipse at 10% 15%, rgba(141, 224, 219, 0.18) 0%, transparent 40%),
     radial-gradient(ellipse at 88% 35%, rgba(212, 148, 214, 0.15) 0%, transparent 45%),
     radial-gradient(ellipse at 50% 90%, rgba(141, 224, 219, 0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 20% 70%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
     radial-gradient(ellipse at 75% 10%, rgba(212, 148, 214, 0.1) 0%, transparent 35%);
-  background-size: 28px 28px, auto, auto, auto, auto, auto;
   background-attachment: fixed;
   color: var(--text-color);
   min-height: 100vh;
@@ -528,13 +526,11 @@ body {
 
 :root[data-theme="light"] body {
   background-image:
-    var(--dot-pattern),
     radial-gradient(ellipse at 10% 15%, rgba(15, 140, 138, 0.14) 0%, transparent 40%),
     radial-gradient(ellipse at 88% 35%, rgba(168, 73, 171, 0.12) 0%, transparent 45%),
     radial-gradient(ellipse at 50% 90%, rgba(15, 140, 138, 0.1) 0%, transparent 50%),
     radial-gradient(ellipse at 20% 70%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
     radial-gradient(ellipse at 75% 10%, rgba(168, 73, 171, 0.08) 0%, transparent 35%);
-  background-size: 28px 28px, auto, auto, auto, auto, auto;
   background-attachment: fixed;
 }
 
@@ -544,10 +540,23 @@ body {
   overflow-x: hidden;
 }
 
+/* ── Interactive Particle Grid Canvas ── */
+.interactive-bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 .layout-container {
