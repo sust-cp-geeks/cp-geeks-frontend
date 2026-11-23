@@ -74,7 +74,7 @@
 }
 
 .form-side {
-  padding: var(--space-16) var(--space-12);
+  padding: var(--space-10) var(--space-8);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -83,12 +83,17 @@
 
 .login-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 450px;
+  padding: var(--space-8);
+  border-radius: var(--radius-2xl);
+  box-sizing: border-box;
   animation: slideUp 0.5s ease forwards;
-  /* Neutralize the global card shadow from index.css — inside the auth
-     layout this card is a transparent wrapper, and the shadow paints
-     ghost edges over the inputs */
-  box-shadow: none;
+  position: relative;
+}
+
+.login-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Standalone card used by Manual Signup / Manual Verification pages */
@@ -196,7 +201,7 @@
 
 .form-input {
   width: 100%;
-  padding: var(--space-3) var(--space-3);
+  padding: var(--space-3) var(--space-4);
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   color: var(--text-color);
@@ -558,11 +563,12 @@
   }
 
   .form-side {
-    padding: var(--space-6) var(--space-4);
+    padding: var(--space-6) var(--space-3);
   }
 
   .login-card {
     max-width: 100%;
+    padding: var(--space-6) var(--space-4);
   }
 
   .auth-toggle-wrapper {

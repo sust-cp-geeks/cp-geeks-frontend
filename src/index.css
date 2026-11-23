@@ -761,7 +761,7 @@ body {
 .cf-profile-section::before,
 .problem-section::before,
 .auth-layout-container::before,
-.login-card.manual-verification-card::before {
+.login-card::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -1097,7 +1097,8 @@ html {
 .content-section > *,
 .table-wrapper > *,
 .cf-leaderboard-section > *,
-.cf-profile-section > * {
+.cf-profile-section > *,
+.login-card > * {
   position: relative;
   z-index: 1;
 }
