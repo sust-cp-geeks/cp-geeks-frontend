@@ -10,6 +10,7 @@ const ICONS = {
   success: '✓',
   error: '✕',
   info: 'i',
+  warning: '⚠',
 };
 
 export function ToastProvider({ children }) {

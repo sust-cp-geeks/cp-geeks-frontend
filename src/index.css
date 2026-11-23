@@ -1123,11 +1123,9 @@ html {
   animation: gradientShift 5s linear infinite;
 }
 
-/* ── Active nav link: glowing underline instead of flat ── */
+/* ── Active nav link: glass button ── */
 .navbar-links li.active a::after {
-  background: var(--accent-gradient) !important;
-  box-shadow: 0 0 8px rgba(141,224,219,0.6);
-  height: 2px !important;
+  display: none !important;
 }
 
 /* ── Widget header: styled eyebrow label ── */
